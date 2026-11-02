@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     }
     if (!['00', '200', 200].includes(json.result)) {
       const msg = json.resultMessage || json.message || '관광정보 API 오류'
-      throw new Error(/apis*key/i.test(msg) ? '관광정보 API 키가 올바르지 않아요 (Vercel 환경변수 VISITJEJU_API_KEY 를 확인하세요)' : msg)
+      throw new Error(/api\s*key/i.test(msg) ? '관광정보 API 키가 올바르지 않아요 (Vercel 환경변수 VISITJEJU_API_KEY 를 확인하세요)' : msg)
     }
     return json
   }
@@ -61,16 +61,19 @@ function compact(i) {
   if (lat > 126 && lat < 127 && lng > 33 && lng < 34) [lat, lng] = [lng, lat] // 위·경도가 뒤바뀐 데이터
   if (!i.contentsid || !i.title || !(lat > 33 && lat < 34) || !(lng > 126 && lng < 127)) return null
   const photo = i.repPhoto?.photoid ?? {}
+  // 원본에 "<" 같은 글자가 그대로 들어 있어 실제 문자로 바꾸고, "*"·"-" 같은 '값 없음' 표시는 비웁니다
+  const text = (v) => String(v ?? '').replace(/\\u([0-9a-f]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16))).trim()
+  const val = (v) => { const s = text(v); return /^[-*]*$/.test(s) ? '' : s }
   return {
     id: i.contentsid,
-    title: String(i.title).trim(),
+    title: text(i.title),
     cat: i.contentscd?.label ?? '기타',
     region: i.region1cd?.label ?? '',
     area: i.region2cd?.label ?? '',
-    addr: i.roadaddress || i.address || '',
-    tag: i.tag ?? '',
-    intro: i.introduction ?? '',
-    tel: i.phoneno ?? '',
+    addr: val(i.roadaddress) || val(i.address),
+    tag: val(i.tag),
+    intro: val(i.introduction),
+    tel: val(i.phoneno),
     lat, lng,
     img: photo.imgpath ?? '',
     thumb: photo.thumbnailpath ?? '',
