@@ -5,11 +5,13 @@ import { ErrorBox, PageHead, Skeletons, useEvents } from '../components/common'
 import { useCultureStore } from '../store/useCultureStore'
 import { categoryCounts, inCategory } from '../lib/festival'
 import { addDays, diffDays, fmtRange, overlaps, presetRange, todayKey } from '../lib/date'
+import { catLabel, useT } from '../i18n'
 
 // 기본은 오늘부터 7일(오늘 포함) 안에 열리는 행사 — 날짜를 바꾸면 다른 날의 행사도 볼 수 있어요
 const DEFAULT_SPAN = 6
 
 export default function MapPage() {
+  const { t } = useT()
   const { events, status, error, retry } = useEvents()
   const [sp, setSp] = useSearchParams()
   const today = todayKey()
@@ -22,8 +24,8 @@ export default function MapPage() {
   const span = diffDays(from, to) // 하루면 0
 
   // 관광지(비짓제주) 레이어 — 켰을 때만 불러옵니다
-  const showPlaces = sp.get("places") === "1"
-  const [placeCat, setPlaceCat] = useState("")
+  const showPlaces = sp.get('places') === '1'
+  const [placeCat, setPlaceCat] = useState('')
   const places = useCultureStore((s) => s.places)
   const placesStatus = useCultureStore((s) => s.placesStatus)
   const placesError = useCultureStore((s) => s.placesError)
@@ -44,19 +46,19 @@ export default function MapPage() {
     for (const [k, v] of Object.entries(patch)) (v ? next.set(k, v) : next.delete(k))
     setSp(next, { replace: true })
   }
-  const setRange = (f, t) => set({ from: f === today ? '' : f, to: t === addDays(today, DEFAULT_SPAN) ? '' : t })
+  const setRange = (f, t2) => set({ from: f === today ? '' : f, to: t2 === addDays(today, DEFAULT_SPAN) ? '' : t2 })
   const shift = (days) => {
     const f = addDays(from, days)
     setRange(f < today ? today : f, addDays(f < today ? today : f, span))
   }
 
   const presets = [
-    ['오늘', today, today],
-    ['내일', addDays(today, 1), addDays(today, 1)],
-    ['이번 주말', ...presetRange('weekend', today)],
-    ['7일 이내', today, addDays(today, DEFAULT_SPAN)],
-    ['다음 7일', addDays(today, 7), addDays(today, 13)],
-    ['이번 달', ...presetRange('month', today)],
+    [t('when.today'), today, today],
+    [t('map.p.tomorrow'), addDays(today, 1), addDays(today, 1)],
+    [t('when.weekend'), ...presetRange('weekend', today)],
+    [t('when.week'), today, addDays(today, DEFAULT_SPAN)],
+    [t('map.p.next7'), addDays(today, 7), addDays(today, 13)],
+    [t('when.month'), ...presetRange('month', today)],
   ]
 
   const cats = useMemo(() => {
@@ -70,46 +72,47 @@ export default function MapPage() {
 
   return (
     <>
-      <PageHead kicker="행사 지도" title="어디서 열리나요?" sub={`${fmtRange(from, to)} 에 열리는 행사를 지도에서 확인해요.`} />
+      <PageHead kicker={t('map.kicker')} title={t('map.title')} sub={t('map.sub', { range: fmtRange(from, to) })} />
 
       <div className="mapbar">
-        <div className="chiprow" role="group" aria-label="기간 바로 선택">
-          <span className="chiprow-label">기간</span>
-          {presets.map(([label, f, t]) => (
-            <button key={label} type="button" className={`chip ${f === from && t === to ? 'on' : ''}`} aria-pressed={f === from && t === to} onClick={() => setRange(f, t)}>{label}</button>
+        <div className="chiprow" role="group" aria-label={t('map.periodAria')}>
+          <span className="chiprow-label">{t('map.period')}</span>
+          {presets.map(([label, f, e]) => (
+            <button key={label} type="button" className={`chip ${f === from && e === to ? 'on' : ''}`} aria-pressed={f === from && e === to} onClick={() => setRange(f, e)}>{label}</button>
           ))}
         </div>
 
         <div className="daterange">
-          <button type="button" className="btn small" onClick={() => shift(-(span + 1))} disabled={from <= today} aria-label="이전 기간">‹</button>
-          <input type="date" value={from} min={today} onChange={(e) => e.target.value && setRange(e.target.value, to < e.target.value ? e.target.value : to)} aria-label="시작일" />
+          <button type="button" className="btn small" onClick={() => shift(-(span + 1))} disabled={from <= today} aria-label={t('map.prev')}>‹</button>
+          <input type="date" value={from} min={today} onChange={(e) => e.target.value && setRange(e.target.value, to < e.target.value ? e.target.value : to)} aria-label={t('ev.from')} />
           <span>~</span>
-          <input type="date" value={to} min={from} onChange={(e) => e.target.value && setRange(from, e.target.value)} aria-label="종료일" />
-          <button type="button" className="btn small" onClick={() => shift(span + 1)} aria-label="다음 기간">›</button>
+          <input type="date" value={to} min={from} onChange={(e) => e.target.value && setRange(from, e.target.value)} aria-label={t('ev.to')} />
+          <button type="button" className="btn small" onClick={() => shift(span + 1)} aria-label={t('map.next')}>›</button>
         </div>
 
-        <div className="chiprow" role="group" aria-label="분류">
-          <span className="chiprow-label">분류</span>
-          <button type="button" className={`chip ${cat === '' ? 'on' : ''}`} onClick={() => set({ cat: '' })}>전체</button>
+        <div className="chiprow" role="group" aria-label={t('map.catAria')}>
+          <span className="chiprow-label">{t('f.cat')}</span>
+          <button type="button" className={`chip ${cat === '' ? 'on' : ''}`} onClick={() => set({ cat: '' })}>{t('common.all')}</button>
           {cats.map((c) => (
-            <button key={c} type="button" className={`chip ${cat === c ? 'on' : ''}`} aria-pressed={cat === c} onClick={() => set({ cat: cat === c ? '' : c })}>{c}</button>
+            <button key={c} type="button" className={`chip ${cat === c ? 'on' : ''}`} aria-pressed={cat === c} onClick={() => set({ cat: cat === c ? '' : c })}>{catLabel(c)}</button>
           ))}
-          <button type="button" className={`chip ${free ? 'on' : ''}`} aria-pressed={free} onClick={() => set({ pay: free ? '' : 'FREE' })}>무료만</button>        </div>
+          <button type="button" className={`chip ${free ? 'on' : ''}`} aria-pressed={free} onClick={() => set({ pay: free ? '' : 'FREE' })}>{t('map.freeOnly')}</button>
+        </div>
 
-        <div className="chiprow" role="group" aria-label="관광지 레이어">
-          <span className="chiprow-label">관광지</span>
-          <button type="button" className={`chip ${showPlaces ? 'on' : ''}`} aria-pressed={showPlaces} onClick={() => set({ places: showPlaces ? '' : '1' })}>관광지 함께 보기</button>
+        <div className="chiprow" role="group" aria-label={t('map.placesAria')}>
+          <span className="chiprow-label">{t('map.places')}</span>
+          <button type="button" className={`chip ${showPlaces ? 'on' : ''}`} aria-pressed={showPlaces} onClick={() => set({ places: showPlaces ? '' : '1' })}>{t('map.placesToggle')}</button>
           {showPlaces && placesStatus === 'ready' && (
             <>
-              <button type="button" className={`chip ${placeCat === '' ? 'on' : ''}`} onClick={() => setPlaceCat('')}>전체</button>
+              <button type="button" className={`chip ${placeCat === '' ? 'on' : ''}`} onClick={() => setPlaceCat('')}>{t('common.all')}</button>
               {placeCats.map(([c, n]) => (
                 <button key={c} type="button" className={`chip ${placeCat === c ? 'on' : ''}`} aria-pressed={placeCat === c} onClick={() => setPlaceCat(placeCat === c ? '' : c)}>{c} {n}</button>
               ))}
-              <span className="muted">초록 점 {shownPlaces.length}곳 · 비짓제주</span>
+              <span className="muted">{t('map.dots', { n: shownPlaces.length })}</span>
             </>
           )}
-          {showPlaces && (placesStatus === 'loading' || placesStatus === 'idle') && <span className="muted">관광지 불러오는 중…</span>}
-          {showPlaces && placesStatus === 'error' && <span className="muted">관광지를 불러오지 못했어요 ({placesError}) <button type="button" className="linkbtn" onClick={() => loadPlaces(true)}>다시 시도</button></span>}
+          {showPlaces && (placesStatus === 'loading' || placesStatus === 'idle') && <span className="muted">{t('map.placesLoading')}</span>}
+          {showPlaces && placesStatus === 'error' && <span className="muted">{t('map.placesFail', { e: t(placesError) })} <button type="button" className="linkbtn" onClick={() => loadPlaces(true)}>{t('common.retry')}</button></span>}
         </div>
       </div>
 

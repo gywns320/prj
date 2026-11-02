@@ -1,8 +1,9 @@
 // 날짜는 모두 한국 시간(KST) 기준의 'YYYY-MM-DD' 문자열(dayKey)로 다룹니다.
 // 문자열끼리 그대로 비교(<, >)해도 날짜 순서가 맞습니다.
+import { dateParts, tr } from '../i18n'
+
 const DAY = 86400000
 const KST = 9 * 3600000
-const WD = ['일', '월', '화', '수', '목', '금', '토']
 
 export const dayKey = (ms) => new Date(ms + KST).toISOString().slice(0, 10)
 export const todayKey = () => dayKey(Date.now())
@@ -25,26 +26,25 @@ export const daysInMonth = (month) => {
   return new Date(Date.UTC(y, m, 0)).getUTCDate()
 }
 
+// 표기(연·월·일·요일 순서와 글자)는 현재 언어에 맞춥니다 — i18n/messages.js 의 DATE
 export function fmtDay(key) {
   const [y, m, d] = key.split('-').map(Number)
-  const year = String(y) === todayKey().slice(0, 4) ? '' : `${y}년 `
-  return `${year}${m}월 ${d}일(${WD[weekday(key)]})`
+  const f = dateParts()
+  return f.day(y, m, d, f.wd[weekday(key)], String(y) !== todayKey().slice(0, 4))
 }
 export const fmtRange = (s, e) => (s === e ? fmtDay(s) : `${fmtDay(s)} ~ ${fmtDay(e)}`)
 export const fmtMonth = (month) => {
   const [y, m] = month.split('-').map(Number)
-  return `${y}년 ${m}월`
+  return dateParts().month(y, m)
 }
+// 날짜 칸 이름이나 '7일(월)' 같은 짧은 표기
+export const fmtDayShort = (key) => dateParts().dayShort(Number(key.slice(8)), dateParts().wd[weekday(key)])
+export const fmtMonthDay = (key) => dateParts().md(Number(key.slice(5, 7)), Number(key.slice(8)))
+export const weekdayNames = () => dateParts().wd
 
 // ── 기간 프리셋 ──────────────────────────────────────────
-export const WHEN = {
-  all: '전체',
-  today: '오늘',
-  weekend: '이번 주말',
-  week: '7일 이내',
-  month: '이번 달',
-  custom: '날짜 지정',
-}
+// 값은 문구 키(when.xxx) 의 이름 — 보이는 글자는 tr('when.' + key) 로
+export const WHEN = { all: 'all', today: 'today', weekend: 'weekend', week: 'week', month: 'month', custom: 'custom' }
 
 export function presetRange(when, today = todayKey()) {
   switch (when) {
@@ -67,11 +67,11 @@ export const overlaps = (ev, from, to) => ev.startKey <= to && ev.endKey >= from
 
 // 행사의 현재 상태 — 카드의 배지에 사용
 export function eventStatus(ev, today = todayKey()) {
-  if (ev.endKey < today) return { kind: 'ended', label: '종료' }
+  if (ev.endKey < today) return { kind: 'ended', label: tr('st.ended') }
   if (ev.startKey > today) {
     const d = diffDays(today, ev.startKey)
-    return { kind: 'soon', label: d === 1 ? '내일 시작' : `D-${d}` }
+    return { kind: 'soon', label: d === 1 ? tr('st.tomorrow') : tr('st.dday', { n: d }) }
   }
-  if (ev.endKey === today) return { kind: 'last', label: ev.startKey === today ? '오늘' : '오늘 마감' }
-  return { kind: 'live', label: '진행중' }
+  if (ev.endKey === today) return { kind: 'last', label: ev.startKey === today ? tr('st.today') : tr('st.last') }
+  return { kind: 'live', label: tr('st.live') }
 }

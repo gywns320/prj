@@ -3,6 +3,8 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import EventCard from './EventCard'
 import { Empty, catHue } from './common'
+import { placeMapUrl } from '../lib/geo'
+import { tr, useT } from '../i18n'
 
 const JEJU_CENTER = [33.38, 126.55]
 
@@ -10,6 +12,7 @@ const JEJU_CENTER = [33.38, 126.55]
 // - 같은 장소(약 100m 이내)의 행사는 한 핀으로 묶고 개수를 보여줍니다
 // - 좌표가 없는 행사는 지도 대신 아래 목록으로 보여줍니다
 export default function MapView({ events, places = [] }) {
+  const { t } = useT()
   const elRef = useRef(null)
   const mapRef = useRef(null)
   const layerRef = useRef(null)
@@ -66,14 +69,15 @@ export default function MapView({ events, places = [] }) {
         html: `<span style="--h:${catHue(p.list[0].category)}">${p.list.length > 1 ? p.list.length : ''}</span>`, // 숫자만 들어가므로 안전
         iconSize: [34, 34], iconAnchor: [17, 17],
       })
-      const marker = L.marker([p.lat, p.lng], { icon, riseOnHover: true, alt: `${p.list[0].name} 외 ${p.list.length}건` })
+      const marker = L.marker([p.lat, p.lng], { icon, riseOnHover: true, alt: t('mv.more', { name: p.list[0].name, n: p.list.length }) })
       // 툴팁에는 외부 데이터가 들어가므로 HTML 이 아닌 텍스트 노드로 넣습니다
       const tip = document.createElement('span')
-      tip.textContent = p.list[0].name + (p.list.length > 1 ? ` 외 ${p.list.length - 1}건` : '')
+      tip.textContent = p.list.length > 1 ? t('mv.more', { name: p.list[0].name, n: p.list.length - 1 }) : p.list[0].name
       marker.bindTooltip(tip, { direction: 'top', offset: [0, -16] })
       marker.on('click', () => setSelected(p.key))
       marker.addTo(layer)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- t 는 언어가 바뀌면 화면 전체가 다시 만들어지므로 의존성에 넣지 않음
   }, [pins, selected])
 
   // ③ 보이는 행사가 바뀌면(날짜 변경 등) 핀들이 한눈에 들어오게 지도를 맞춤 — 핀을 눌렀을 때는 움직이지 않음
@@ -89,23 +93,23 @@ export default function MapView({ events, places = [] }) {
 
   return (
     <div className="mapview">
-      <div ref={elRef} className="leafmap" role="region" aria-label="행사 위치 지도" />
+      <div ref={elRef} className="leafmap" role="region" aria-label={t('mv.region')} />
 
       <div className="map-side">
         <div className="map-side-head">
           <p className="muted">
-            {active ? `이 장소의 행사 ${active.list.length}건` : `지도에 표시된 행사 ${placed.length}건 · 핀 ${pins.length}곳`}
+            {active ? t('mv.here', { n: active.list.length }) : t('mv.summary', { n: placed.length, pins: pins.length })}
           </p>
-          {active && <button type="button" className="linkbtn" onClick={() => setSelected(null)}>전체 보기</button>}
+          {active && <button type="button" className="linkbtn" onClick={() => setSelected(null)}>{t('mv.showAll')}</button>}
         </div>
 
         {shown.length === 0
-          ? <Empty title="이 기간에 지도에 표시할 행사가 없어요">날짜를 바꿔 보세요.</Empty>
+          ? <Empty title={t('mv.none')}>{t('mv.noneHint')}</Empty>
           : shown.map((e) => <EventCard key={e.seq} event={e} compact />)}
 
         {!active && unplaced.length > 0 && (
           <details className="unplaced">
-            <summary>위치 정보가 없는 행사 {unplaced.length}건</summary>
+            <summary>{t('mv.unplaced', { n: unplaced.length })}</summary>
             <div className="stack">{unplaced.map((e) => <EventCard key={e.seq} event={e} compact />)}</div>
           </details>
         )}
@@ -130,10 +134,10 @@ function placePopup(p) {
   meta.className = 'muted'
   meta.textContent = [p.category, p.region].filter(Boolean).join(' · ')
   const link = document.createElement('a')
-  link.href = `https://map.naver.com/p/search/${encodeURIComponent(`${p.title} ${p.region}`.trim())}`
+  link.href = placeMapUrl(p)
   link.target = '_blank'
   link.rel = 'noopener noreferrer'
-  link.textContent = '지도에서 보기 ↗'
+  link.textContent = tr('mv.open')
   box.append(title, meta, link)
   return box
 }

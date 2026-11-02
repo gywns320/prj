@@ -1,5 +1,7 @@
 // Open-Meteo 예보 API (https://open-meteo.com) — 키가 필요 없고 CORS 를 허용해 브라우저에서 바로 호출합니다.
 // 예보는 오늘부터 최대 16일까지 제공됩니다.
+import { tr } from '../i18n'
+
 const BASE = 'https://api.open-meteo.com/v1/forecast'
 
 // 날씨를 보여줄 대표 지점. 행사에는 좌표가 부정확한 경우가 많아 가장 가까운 지점의 예보를 씁니다.
@@ -23,18 +25,19 @@ export function nearestPlace(pos, regionName) {
 
 // WMO 날씨 코드 → 한글 설명·아이콘·종류
 export function describe(code) {
-  if (code === 0) return { label: '맑음', icon: '☀️', kind: 'clear' }
-  if (code === 1) return { label: '대체로 맑음', icon: '🌤️', kind: 'clear' }
-  if (code === 2) return { label: '구름 조금', icon: '⛅', kind: 'cloud' }
-  if (code === 3) return { label: '흐림', icon: '☁️', kind: 'cloud' }
-  if (code === 45 || code === 48) return { label: '안개', icon: '🌫️', kind: 'fog' }
-  if (code >= 51 && code <= 57) return { label: '이슬비', icon: '🌦️', kind: 'rain' }
-  if (code >= 61 && code <= 67) return { label: '비', icon: '🌧️', kind: 'rain' }
-  if (code >= 71 && code <= 77) return { label: '눈', icon: '🌨️', kind: 'snow' }
-  if (code >= 80 && code <= 82) return { label: '소나기', icon: '🌧️', kind: 'rain' }
-  if (code === 85 || code === 86) return { label: '눈 소나기', icon: '🌨️', kind: 'snow' }
-  if (code >= 95) return { label: '뇌우', icon: '⛈️', kind: 'storm' }
-  return { label: '알 수 없음', icon: '🌡️', kind: 'cloud' }
+  const w = (key, icon, kind) => ({ label: tr(`w.${key}`), icon, kind })
+  if (code === 0) return w('clear', '☀️', 'clear')
+  if (code === 1) return w('mostlyClear', '🌤️', 'clear')
+  if (code === 2) return w('partly', '⛅', 'cloud')
+  if (code === 3) return w('overcast', '☁️', 'cloud')
+  if (code === 45 || code === 48) return w('fog', '🌫️', 'fog')
+  if (code >= 51 && code <= 57) return w('drizzle', '🌦️', 'rain')
+  if (code >= 61 && code <= 67) return w('rain', '🌧️', 'rain')
+  if (code >= 71 && code <= 77) return w('snow', '🌨️', 'snow')
+  if (code >= 80 && code <= 82) return w('shower', '🌧️', 'rain')
+  if (code === 85 || code === 86) return w('snowShower', '🌨️', 'snow')
+  if (code >= 95) return w('storm', '⛈️', 'storm')
+  return w('unknown', '🌡️', 'cloud')
 }
 
 // 우산이 필요한 날: 강수확률이 높거나 강수량이 꽤 많을 때
@@ -61,10 +64,10 @@ async function load(place) {
   })
   let res
   try { res = await fetch(`${BASE}?${qs}`) }
-  catch { throw new Error('날씨 서버에 연결할 수 없어요') }
-  if (!res.ok) throw new Error(`날씨 서버가 응답하지 않아요 (${res.status})`)
+  catch { throw new Error('err.weatherNet') }
+  if (!res.ok) throw new Error(`err.weatherHttp:${res.status}`)
   const j = await res.json().catch(() => null)
-  if (!j?.daily?.time || !j.current) throw new Error('날씨 응답을 읽을 수 없어요')
+  if (!j?.daily?.time || !j.current) throw new Error('err.weatherParse')
 
   const d = j.daily
   return {

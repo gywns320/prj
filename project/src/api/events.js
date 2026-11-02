@@ -10,12 +10,12 @@ async function call(params) {
   const qs = new URLSearchParams(params)
   let res
   try { res = await fetch(`/api/event?${qs}`) }
-  catch { throw new Error('네트워크에 연결할 수 없어요') }
-  if (!res.ok) throw new Error(`행사 서버가 응답하지 않아요 (${res.status})`)
+  catch { throw new Error('err.net') }
+  if (!res.ok) throw new Error(`err.eventsHttp:${res.status}`)
   let data
   try { data = await res.json() }
-  catch { throw new Error('행사 서버 응답을 읽을 수 없어요 — 프록시(npm run dev)로 실행했는지 확인해 주세요') }
-  if (data.resultCode !== '00') throw new Error(data.resultMsg || data.message || '행사 정보를 가져오지 못했어요')
+  catch { throw new Error('err.eventsParse') }
+  if (data.resultCode !== '00') throw new Error(data.resultMsg || data.message || 'err.eventsFail')
   return data
 }
 
@@ -29,7 +29,7 @@ export async function fetchEvents() {
 export async function fetchEvent(seq) {
   const data = await call({ event: seq })
   const raw = data.event ?? data.evnet
-  if (!raw) throw new Error('행사를 찾을 수 없어요')
+  if (!raw) throw new Error('err.eventNone')
   return {
     ...normalize(raw),
     images: (data.images ?? []).filter((i) => i.image !== false).map((i) => ({

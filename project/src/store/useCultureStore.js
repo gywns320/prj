@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { fetchEvents } from '../api/events'
 import { fetchPlaces } from '../api/places'
+import { langInfo, tr } from '../i18n'
 
 // 앱 전체가 함께 쓰는 상태: 행사 목록(API 결과), 저장한 행사, 알림
 export const useCultureStore = create(
@@ -22,16 +23,21 @@ export const useCultureStore = create(
       },
 
       // ①-2 주변 관광지(비짓제주) — 필요한 화면에서 처음 열 때 한 번만 불러옴
+      // 언어가 바뀌면 관광지 이름·소개도 그 언어로 다시 받아옵니다
       places: [],
+      placesLocale: '',
       placesStatus: 'idle',
       placesError: '',
       loadPlaces: async (force = false) => {
-        if (get().placesStatus === 'loading' || (get().placesStatus === 'ready' && !force)) return
-        set({ placesStatus: 'loading', placesError: '' })
+        const locale = langInfo().visitjeju
+        const s = get()
+        if (s.placesLocale === locale && (s.placesStatus === 'loading' || (s.placesStatus === 'ready' && !force))) return
+        set({ placesStatus: 'loading', placesError: '', placesLocale: locale })
         try {
-          set({ places: await fetchPlaces(), placesStatus: 'ready' })
+          const places = await fetchPlaces(locale)
+          if (get().placesLocale === locale) set({ places, placesStatus: 'ready' })
         } catch (e) {
-          set({ placesStatus: 'error', placesError: e.message })
+          if (get().placesLocale === locale) set({ placesStatus: 'error', placesError: e.message })
         }
       },
 
@@ -40,7 +46,7 @@ export const useCultureStore = create(
       toggleSaved: (seq) => {
         const has = get().saved.includes(seq)
         set({ saved: has ? get().saved.filter((s) => s !== seq) : [seq, ...get().saved] })
-        get().toast(has ? '저장을 해제했어요' : '내 일정에 저장했어요')
+        get().toast(tr(has ? 'toast.unsaved' : 'toast.saved'))
       },
 
       // ③ 알림

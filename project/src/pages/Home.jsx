@@ -5,8 +5,10 @@ import { WeatherPanel } from '../components/Weather'
 import { ErrorBox, Skeletons, catHue, useEvents } from '../components/common'
 import { categoryCounts, isFestival } from '../lib/festival'
 import { addDays, diffDays, overlaps, presetRange, todayKey } from '../lib/date'
+import { catLabel, useT } from '../i18n'
 
 export default function Home() {
+  const { t } = useT()
   const { events, status, error, retry } = useEvents()
   const navigate = useNavigate()
   const today = todayKey()
@@ -34,36 +36,37 @@ export default function Home() {
     e.preventDefault()
     navigate(`/events?when=custom&from=${from}&to=${to < from ? from : to}`)
   }
+  const n = (v) => (status === 'ready' ? t('common.count', { n: v }) : '')
 
   return (
     <>
       <section className="hero">
         <div className="hero-copy">
-          <p className="kicker">제주 문화행사 안내</p>
-          <h1>오늘 제주에서<br /><em>뭐 하지?</em></h1>
-          <p className="sub">전시·공연·축제·체험까지, 제주특별자치도가 공개한 행사 정보를 도민도 여행자도 한눈에 찾아보세요.</p>
+          <p className="kicker">{t('home.kicker')}</p>
+          <h1>{t('home.h1a')}<br /><em>{t('home.h1b')}</em></h1>
+          <p className="sub">{t('home.sub')}</p>
           <div className="hero-actions">
-            <Link to="/events?when=today" className="btn primary">오늘 행사 {status === 'ready' ? `${data.nToday}건` : ''}</Link>
-            <Link to="/events?when=weekend" className="btn">이번 주말 {status === 'ready' ? `${data.nWeekend}건` : ''}</Link>
-            <Link to="/events?pay=FREE" className="btn">무료 행사 {status === 'ready' ? `${data.nFree}건` : ''}</Link>
-            <Link to="/events?cat=%EC%B6%95%EC%A0%9C" className="btn">축제 {status === 'ready' ? `${data.nFest}건` : ''}</Link>
-            <Link to="/map" className="btn">지도로 보기</Link>
+            <Link to="/events?when=today" className="btn primary">{t('home.today')} {n(data.nToday)}</Link>
+            <Link to="/events?when=weekend" className="btn">{t('home.weekend')} {n(data.nWeekend)}</Link>
+            <Link to="/events?pay=FREE" className="btn">{t('home.free')} {n(data.nFree)}</Link>
+            <Link to="/events?cat=%EC%B6%95%EC%A0%9C" className="btn">{t('home.fest')} {n(data.nFest)}</Link>
+            <Link to="/map" className="btn">{t('home.map')}</Link>
           </div>
         </div>
 
         <aside className="trip">
-          <h2>여행 일정에 맞는 행사</h2>
-          <p className="muted">제주에 머무는 날짜를 넣으면 그 기간에 열리는 행사만 보여드려요.</p>
+          <h2>{t('trip.title')}</h2>
+          <p className="muted">{t('trip.desc')}</p>
           <form onSubmit={goTrip}>
-            <label>도착 <input type="date" value={from} min={today} onChange={(e) => { setFrom(e.target.value); if (to < e.target.value) setTo(e.target.value) }} required /></label>
-            <label>출발 <input type="date" value={to} min={from} onChange={(e) => setTo(e.target.value)} required /></label>
-            <button type="submit" className="btn primary">행사 찾기</button>
+            <label>{t('trip.arrive')} <input type="date" value={from} min={today} onChange={(e) => { setFrom(e.target.value); if (to < e.target.value) setTo(e.target.value) }} required /></label>
+            <label>{t('trip.depart')} <input type="date" value={to} min={from} onChange={(e) => setTo(e.target.value)} required /></label>
+            <button type="submit" className="btn primary">{t('trip.go')}</button>
           </form>
           <div className="trip-alt">
-            <span>도민이라면</span>
-            <Link to="/events?when=weekend&pay=FREE">주말 무료</Link>
-            <Link to="/events?region=제주시">제주시</Link>
-            <Link to="/events?region=서귀포시">서귀포시</Link>
+            <span>{t('trip.local')}</span>
+            <Link to="/events?when=weekend&pay=FREE">{t('trip.weekendFree')}</Link>
+            <Link to="/events?region=제주시">{t('region.제주시')}</Link>
+            <Link to="/events?region=서귀포시">{t('region.서귀포시')}</Link>
           </div>
         </aside>
       </section>
@@ -75,17 +78,17 @@ export default function Home() {
 
       {status === 'ready' && (
         <>
-          <section className="catrow" aria-label="분류별 보기">
-            {data.cats.map(([name, n]) => (
+          <section className="catrow" aria-label={t('home.byCat')}>
+            {data.cats.map(([name, count]) => (
               <Link key={name} to={`/events?cat=${encodeURIComponent(name)}`} className="cattile" style={{ '--h': catHue(name) }}>
-                <b>{name}</b><span>{n}</span>
+                <b>{catLabel(name)}</b><span>{count}</span>
               </Link>
             ))}
           </section>
 
-          <Rail title="곧 시작해요" sub="7일 안에 시작" list={data.soon} more="/events?when=week&sort=soon" />
-          <Rail title="마감이 다가와요" sub="진행 중 · 7일 안에 종료" list={data.ending} more="/events?sort=end" />
-          <Rail title="지금 무료로 즐겨요" sub="오늘 열리는 무료 행사" list={data.freeNow} more="/events?when=today&pay=FREE" />
+          <Rail title={t('rail.soon')} sub={t('rail.soonSub')} list={data.soon} more="/events?when=week&sort=soon" />
+          <Rail title={t('rail.ending')} sub={t('rail.endingSub')} list={data.ending} more="/events?sort=end" />
+          <Rail title={t('rail.free')} sub={t('rail.freeSub')} list={data.freeNow} more="/events?when=today&pay=FREE" />
         </>
       )}
     </>
@@ -93,12 +96,13 @@ export default function Home() {
 }
 
 function Rail({ title, sub, list, more }) {
+  const { t } = useT()
   if (list.length === 0) return null
   return (
     <section className="rail">
       <div className="rail-head">
         <div><h2>{title}</h2><p className="muted">{sub}</p></div>
-        <Link to={more} className="more">더 보기 →</Link>
+        <Link to={more} className="more">{t('common.more')}</Link>
       </div>
       <div className="grid">{list.map((e) => <EventCard key={e.seq} event={e} />)}</div>
     </section>

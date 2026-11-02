@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useCultureStore } from '../store/useCultureStore'
+import { useT } from '../i18n'
 
 // 카테고리마다 고정된 색상(hue) — 카드·칩·지도 핀이 같은 색을 씁니다
 const HUES = { 전시회: 265, 콘서트: 340, 연주회: 15, 연극: 190, 뮤지컬: 305, 무용: 155, 전통공연: 35, 축제: 50, '교육/체험': 210, 기타: 230 }
@@ -29,19 +30,22 @@ export function Empty({ title, children }) {
 }
 
 export function Skeletons({ n = 6 }) {
+  const { t } = useT()
   return (
-    <div className="grid" aria-busy="true" aria-label="불러오는 중">
+    <div className="grid" aria-busy="true" aria-label={t('common.loadingAria')}>
       {Array.from({ length: n }, (_, i) => <div key={i} className="skeleton" />)}
     </div>
   )
 }
 
+// message 는 문구 키('err.net' 등)이거나 서버가 준 문장 — t() 가 둘 다 알맞게 처리합니다
 export function ErrorBox({ message, onRetry }) {
+  const { t } = useT()
   return (
     <div className="errorbox" role="alert">
-      <b>행사 정보를 불러오지 못했어요</b>
-      <p>{message}</p>
-      {onRetry && <button type="button" className="btn" onClick={onRetry}>다시 시도</button>}
+      <b>{t('common.errorTitle')}</b>
+      <p>{t(message)}</p>
+      {onRetry && <button type="button" className="btn" onClick={onRetry}>{t('common.retry')}</button>}
     </div>
   )
 }

@@ -8,10 +8,10 @@ import NotFound from './pages/NotFound'
 
 // 페이지를 추가할 때: ① pages/ 에 파일 ② NAV_ITEMS 에 한 줄 ③ routes 에 한 줄
 export const NAV_ITEMS = [
-  { to: '/', label: '홈', glyph: '⌂' },
-  { to: '/events', label: '행사 찾기', glyph: '⌕' },
-  { to: '/map', label: '지도', glyph: '◎' },
-  { to: '/saved', label: '내 일정', glyph: '★' },
+  { to: '/', label: 'nav.home', glyph: '⌂' }, // label 은 문구 키 — 화면에서 t(label) 로 번역
+  { to: '/events', label: 'nav.events', glyph: '⌕' },
+  { to: '/map', label: 'nav.map', glyph: '◎' },
+  { to: '/saved', label: 'nav.saved', glyph: '★' },
 ]
 
 // 새로 배포되면 옛 화면이 찾던 조각 파일(MapPage-해시.js)이 사라져 불러오기가 실패합니다.

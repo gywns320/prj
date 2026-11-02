@@ -1,4 +1,5 @@
 import { addDays } from './date'
+import { payLabel, tr } from '../i18n'
 
 // 행사를 캘린더 앱(.ics)으로 내보내기 — 종일 일정으로 만들고, 시간 정보는 설명에 적습니다.
 const esc = (s = '') => String(s).replace(/\\/g, '\\\\').replace(/[,;]/g, (c) => `\\${c}`).replace(/\r?\n/g, '\\n')
@@ -8,7 +9,7 @@ export function buildIcs(events) {
   const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'
   const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Jeju Culture Calendar//KO', 'CALSCALE:GREGORIAN']
   for (const ev of events) {
-    const desc = [ev.time && `시간: ${ev.time}`, ev.tel && `문의: ${ev.tel}`, `요금: ${ev.pay}`].filter(Boolean).join('\n')
+    const desc = [ev.time && `${tr('ics.time')}: ${ev.time}`, ev.tel && `${tr('ics.contact')}: ${ev.tel}`, `${tr('ics.pay')}: ${payLabel(ev)}`].filter(Boolean).join('\n')
     lines.push(
       'BEGIN:VEVENT',
       `UID:jeju-event-${ev.seq}@jejunolda`,

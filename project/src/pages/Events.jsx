@@ -5,20 +5,23 @@ import EventCard from '../components/EventCard'
 import { Empty, ErrorBox, PageHead, Skeletons, useEvents } from '../components/common'
 import { categoryCounts, inCategory } from '../lib/festival'
 import { WHEN, monthOf, overlaps, presetRange, todayKey } from '../lib/date'
+import { catLabel, useT } from '../i18n'
 
 const MapView = lazy(() => import('../components/MapView'))
 const PAGE = 24
+// 화면에 보이는 글자는 문구 키(t 로 번역)로, 주소창(?pay=FREE 등)에 들어가는 값은 그대로 둡니다
 const REGIONS = ['제주시', '서귀포시']
-const PAYS = [['FREE', '무료'], ['PAY', '유료'], ['PART', '부분 유료']]
-const LOCS = [['IN', '실내'], ['OUT', '야외'], ['INOUT', '실내·외']]
-const VIEWS = [['list', '목록'], ['cal', '달력'], ['map', '지도']]
+const PAYS = ['FREE', 'PAY', 'PART']
+const LOCS = ['IN', 'OUT', 'INOUT']
+const VIEWS = ['list', 'cal', 'map']
 const SORTS = {
-  soon: { label: '가까운 순', key: (e, t) => (e.startKey < t ? t : e.startKey) },
-  end: { label: '마감 임박순', key: (e) => e.endKey },
-  name: { label: '이름순', key: (e) => e.name },
+  soon: { key: (e, t) => (e.startKey < t ? t : e.startKey) },
+  end: { key: (e) => e.endKey },
+  name: { key: (e) => e.name },
 }
 
 export default function Events() {
+  const { t } = useT()
   const { events, status, error, retry } = useEvents()
   const [sp, setSp] = useSearchParams()
   const [limit, setLimit] = useState(PAGE)
@@ -34,7 +37,7 @@ export default function Events() {
   const from = sp.get('from') ?? today
   const to = sp.get('to') ?? from
   const sort = SORTS[sp.get('sort')] ? sp.get('sort') : 'soon'
-  const view = VIEWS.some(([v]) => v === sp.get('view')) ? sp.get('view') : 'list'
+  const view = VIEWS.includes(sp.get('view')) ? sp.get('view') : 'list'
 
   const set = (patch) => {
     const next = new URLSearchParams(sp)
@@ -64,35 +67,35 @@ export default function Events() {
 
   return (
     <>
-      <PageHead kicker="행사 찾기" title="어떤 행사를 찾으세요?" sub="조건을 고르면 목록·달력·지도가 함께 바뀌어요." />
+      <PageHead kicker={t('ev.kicker')} title={t('ev.title')} sub={t('ev.sub')} />
 
       <div className="searchbar">
-        <input type="search" value={q} placeholder="행사명·장소·주소 검색" aria-label="검색" onChange={(e) => set({ q: e.target.value })} />
-        <select value={sort} onChange={(e) => set({ sort: e.target.value === 'soon' ? '' : e.target.value })} aria-label="정렬">
-          {Object.entries(SORTS).map(([k, s]) => <option key={k} value={k}>{s.label}</option>)}
+        <input type="search" value={q} placeholder={t('ev.searchPh')} aria-label={t('ev.searchAria')} onChange={(e) => set({ q: e.target.value })} />
+        <select value={sort} onChange={(e) => set({ sort: e.target.value === 'soon' ? '' : e.target.value })} aria-label={t('ev.sortAria')}>
+          {Object.keys(SORTS).map((k) => <option key={k} value={k}>{t(`sort.${k}`)}</option>)}
         </select>
       </div>
 
       <div className="filters">
-        <Chips label="언제" value={when} items={Object.entries(WHEN)} onPick={(v) => set({ when: v === 'all' ? '' : v, from: v === 'custom' ? from : '', to: v === 'custom' ? to : '' })} always />
+        <Chips label={t('f.when')} value={when} items={Object.keys(WHEN).map((k) => [k, t(`when.${k}`)])} onPick={(v) => set({ when: v === 'all' ? '' : v, from: v === 'custom' ? from : '', to: v === 'custom' ? to : '' })} always />
         {when === 'custom' && (
           <div className="daterange">
-            <input type="date" value={from} onChange={(e) => set({ from: e.target.value, to: to < e.target.value ? e.target.value : to })} aria-label="시작일" />
+            <input type="date" value={from} onChange={(e) => set({ from: e.target.value, to: to < e.target.value ? e.target.value : to })} aria-label={t('ev.from')} />
             <span>~</span>
-            <input type="date" value={to} min={from} onChange={(e) => set({ to: e.target.value })} aria-label="종료일" />
+            <input type="date" value={to} min={from} onChange={(e) => set({ to: e.target.value })} aria-label={t('ev.to')} />
           </div>
         )}
-        <Chips label="분류" value={cat} items={cats.map(([c, n]) => [c, `${c} ${n}`])} onPick={(v) => set({ cat: v })} />
-        <Chips label="요금" value={pay} items={PAYS} onPick={(v) => set({ pay: v })} />
-        <Chips label="장소" value={loc} items={LOCS} onPick={(v) => set({ loc: v })} />
-        <Chips label="지역" value={region} items={REGIONS.map((r) => [r, r])} onPick={(v) => set({ region: v })} />
+        <Chips label={t('f.cat')} value={cat} items={cats.map(([c, n]) => [c, `${catLabel(c)} ${n}`])} onPick={(v) => set({ cat: v })} />
+        <Chips label={t('f.pay')} value={pay} items={PAYS.map((p) => [p, t(`pay.${p}`)])} onPick={(v) => set({ pay: v })} />
+        <Chips label={t('f.loc')} value={loc} items={LOCS.map((l) => [l, t(`loc.${l}`)])} onPick={(v) => set({ loc: v })} />
+        <Chips label={t('f.region')} value={region} items={REGIONS.map((r) => [r, t(`region.${r}`)])} onPick={(v) => set({ region: v })} />
       </div>
 
       <div className="toolbar">
-        <p className="result-count"><b>{status === 'ready' ? list.length : '…'}</b>건{active > 0 && <button type="button" className="linkbtn" onClick={reset}>필터 초기화</button>}</p>
-        <div className="seg" role="tablist" aria-label="보기 방식">
-          {VIEWS.map(([v, label]) => (
-            <button key={v} type="button" role="tab" aria-selected={view === v} className={view === v ? 'on' : ''} onClick={() => set({ view: v === 'list' ? '' : v })}>{label}</button>
+        <p className="result-count"><b>{status === 'ready' ? t('common.count', { n: list.length }) : '…'}</b>{active > 0 && <button type="button" className="linkbtn" onClick={reset}>{t('ev.reset')}</button>}</p>
+        <div className="seg" role="tablist" aria-label={t('ev.viewAria')}>
+          {VIEWS.map((v) => (
+            <button key={v} type="button" role="tab" aria-selected={view === v} className={view === v ? 'on' : ''} onClick={() => set({ view: v === 'list' ? '' : v })}>{t(`view.${v}`)}</button>
           ))}
         </div>
       </div>
@@ -102,12 +105,12 @@ export default function Events() {
       {status === 'ready' && (
         view === 'cal' ? <CalendarView events={list} initialMonth={range ? monthOf(range[0]) : undefined} />
           : view === 'map' ? <Suspense fallback={<Skeletons n={3} />}><MapView events={list} /></Suspense>
-            : list.length === 0 ? <Empty title="조건에 맞는 행사가 없어요"><button type="button" className="btn" onClick={reset}>필터 초기화</button></Empty>
+            : list.length === 0 ? <Empty title={t('ev.none')}><button type="button" className="btn" onClick={reset}>{t('ev.reset')}</button></Empty>
               : (
                 <>
                   <div className="grid">{list.slice(0, limit).map((e) => <EventCard key={e.seq} event={e} />)}</div>
                   {list.length > limit && (
-                    <div className="center"><button type="button" className="btn" onClick={() => setLimit(limit + PAGE)}>더 보기 ({list.length - limit}건 남음)</button></div>
+                    <div className="center"><button type="button" className="btn" onClick={() => setLimit(limit + PAGE)}>{t('ev.more', { n: list.length - limit })}</button></div>
                   )}
                 </>
               )
@@ -118,11 +121,12 @@ export default function Events() {
 
 // 한 줄짜리 선택 칩 — 같은 칩을 다시 누르면 해제
 function Chips({ label, items, value, onPick, always = false }) {
+  const { t } = useT()
   if (items.length === 0) return null
   return (
     <div className="chiprow" role="group" aria-label={label}>
       <span className="chiprow-label">{label}</span>
-      {!always && <button type="button" className={`chip ${value === '' ? 'on' : ''}`} onClick={() => onPick('')}>전체</button>}
+      {!always && <button type="button" className={`chip ${value === '' ? 'on' : ''}`} onClick={() => onPick('')}>{t('common.all')}</button>}
       {items.map(([v, text]) => (
         <button key={v} type="button" className={`chip ${value === v ? 'on' : ''}`} aria-pressed={value === v} onClick={() => onPick(always || value !== v ? v : '')}>{text}</button>
       ))}
