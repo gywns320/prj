@@ -5,14 +5,23 @@ const UPSTREAM = 'https://api.visitjeju.net/vsjApi/contents/searchList'
 const LOCALES = new Set(['kr', 'en', 'jp', 'cn', 'zh', 'my'])
 const MAX_PAGES = 30 // 비정상 응답이 와도 무한히 부르지 않도록 상한
 
+// 환경변수에 붙여넣을 때 흔히 섞이는 앞뒤 공백·줄바꿈·따옴표, URL 인코딩(%2B 등)된 키를 정리합니다
+// (인코딩된 채로 쓰면 아래 URLSearchParams 가 한 번 더 인코딩해서 "키가 올바르지 않음"이 됩니다)
+function normalizeKey(raw) {
+  let k = String(raw ?? '').trim().replace(/^["']+|["']+$/g, '').trim()
+  if (/%[0-9a-f]{2}/i.test(k)) { try { k = decodeURIComponent(k) } catch { /* 그대로 사용 */ } }
+  return k
+}
+
 export default async function handler(req, res) {
-  const key = process.env.VISITJEJU_API_KEY
+  const rawKey = process.env.VISITJEJU_API_KEY
+  const key = normalizeKey(rawKey)
   if (!key) return res.status(503).json({ error: '서버에 VISITJEJU_API_KEY 환경변수가 설정되지 않았어요' })
 
   const locale = LOCALES.has(req.query?.locale) ? req.query.locale : 'kr'
 
   // 응답·에러 메시지에 키가 섞여 나가지 않도록 가립니다
-  const hide = (s) => String(s).split(key).join('***')
+  const hide = (s) => [key, rawKey].filter(Boolean).reduce((m, k) => m.split(k).join('***'), String(s))
 
   async function getPage(page) {
     const url = `${UPSTREAM}?${new URLSearchParams({ apiKey: key, locale, page })}`
@@ -23,7 +32,10 @@ export default async function handler(req, res) {
       // 방화벽 차단 페이지(HTML) 등
       throw new Error('관광정보 서버가 요청을 받아주지 않았어요 (키 또는 접속 지역 제한을 확인하세요)')
     }
-    if (!['00', '200', 200].includes(json.result)) throw new Error(json.resultMessage || '관광정보 API 오류')
+    if (!['00', '200', 200].includes(json.result)) {
+      const msg = json.resultMessage || json.message || '관광정보 API 오류'
+      throw new Error(/apis*key/i.test(msg) ? '관광정보 API 키가 올바르지 않아요 (Vercel 환경변수 VISITJEJU_API_KEY 를 확인하세요)' : msg)
+    }
     return json
   }
 
