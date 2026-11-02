@@ -63,6 +63,9 @@ function compact(i) {
   let lng = n(i.longitude)
   if (lat > 126 && lat < 127 && lng > 33 && lng < 34) [lat, lng] = [lng, lat] // 위·경도가 뒤바뀐 데이터
   if (!i.contentsid || !i.title || !(lat > 33 && lat < 34) || !(lng > 126 && lng < 127)) return null
+  // 좌표가 비어 있는 항목에 원본이 제주시 한복판(33.4996, 126.5312)을 기본값으로 채워 둔 경우 — 서귀포 중문의 신사터가
+  // 제주시에 찍히는 식으로 엉뚱한 곳에 보이므로 위치를 믿을 수 없는 항목은 뺍니다. (전체 약 2,500곳 중 4곳)
+  if (Math.abs(lat - 33.4996) < 0.0006 && Math.abs(lng - 126.5312) < 0.0006) return null
   const photo = i.repPhoto?.photoid ?? {}
   // 원본에 "<" 같은 글자가 그대로 들어 있어 실제 문자로 바꾸고, "*"·"-" 같은 '값 없음' 표시는 비웁니다
   const text = (v) => String(v ?? '').replace(/\\u([0-9a-f]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16))).trim()
