@@ -5,7 +5,7 @@ import { ErrorBox, PageHead, Skeletons, useEvents } from '../components/common'
 import { useCultureStore } from '../store/useCultureStore'
 import { categoryCounts, inCategory } from '../lib/festival'
 import { addDays, diffDays, fmtRange, overlaps, presetRange, todayKey } from '../lib/date'
-import { catLabel, langInfo, useT } from '../i18n'
+import { catLabel, useT } from '../i18n'
 
 // 기본은 오늘부터 7일(오늘 포함) 안에 열리는 행사 — 날짜를 바꾸면 다른 날의 행사도 볼 수 있어요
 const DEFAULT_SPAN = 6
@@ -23,25 +23,13 @@ export default function MapPage() {
   const free = sp.get('pay') === 'FREE'
   const span = diffDays(from, to) // 하루면 0
 
-  // 관광지(비짓제주) 레이어 — 켰을 때만 불러옵니다
+  // 주변 가볼 만한 곳(비짓제주) — 켰을 때만 불러옵니다. 서버가 '관광지' 분류만 내려주므로 따로 분류를 고를 필요가 없습니다
   const showPlaces = sp.get('places') === '1'
-  const [placeCatPick, setPlaceCat] = useState(langInfo().sights) // 처음엔 '관광지'만 (음식점·숙박까지 켜면 점이 수백 개)
   const [radiusKm, setRadiusKm] = useState(3) // 고른 행사 주변 몇 km 까지 보여줄지
   const places = useCultureStore((s) => s.places)
   const placesStatus = useCultureStore((s) => s.placesStatus)
-  const placesError = useCultureStore((s) => s.placesError)
   const loadPlaces = useCultureStore((s) => s.loadPlaces)
   useEffect(() => { if (showPlaces) loadPlaces() }, [showPlaces, loadPlaces])
-  const placeCats = useMemo(() => {
-    const m = {}
-    places.forEach((p) => { m[p.category] = (m[p.category] || 0) + 1 })
-    return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([c]) => c)
-  }, [places])
-  const placeCat = placeCatPick === langInfo().sights && !placeCats.includes(placeCatPick) ? '' : placeCatPick // 그 분류가 없으면 전체
-  const shownPlaces = useMemo(
-    () => (showPlaces ? places.filter((p) => !placeCat || p.category === placeCat) : []),
-    [showPlaces, places, placeCat],
-  )
 
   const set = (patch) => {
     const next = new URLSearchParams(sp)
@@ -104,31 +92,15 @@ export default function MapPage() {
         <div className="chiprow" role="group" aria-label={t('map.placesAria')}>
           <span className="chiprow-label">{t('map.places')}</span>
           <button type="button" className={`chip ${showPlaces ? 'on' : ''}`} aria-pressed={showPlaces} onClick={() => set({ places: showPlaces ? '' : '1' })}>{t('map.placesToggle')}</button>
-          {showPlaces && placesStatus === 'ready' && (
-            <>
-              {[1, 3, 5].map((km) => (
-                <button key={km} type="button" className={`chip ${radiusKm === km ? 'on' : ''}`} aria-pressed={radiusKm === km} onClick={() => setRadiusKm(km)}>{t('map.radius', { km })}</button>
-              ))}
-              {/* 서버가 "관광지"만 내려주므로 분류가 하나뿐이면 고를 필요가 없습니다 */}
-              {placeCats.length > 1 && (
-                <>
-                  <span className="chiprow-sep" aria-hidden="true">|</span>
-                  <button type="button" className={`chip ${placeCat === '' ? 'on' : ''}`} onClick={() => setPlaceCat('')}>{t('common.all')}</button>
-                  {placeCats.map((c) => (
-                    <button key={c} type="button" className={`chip ${placeCat === c ? 'on' : ''}`} aria-pressed={placeCat === c} onClick={() => setPlaceCat(placeCat === c ? '' : c)}>{c}</button>
-                  ))}
-                </>
-              )}
-            </>
-          )}
-          {showPlaces && (placesStatus === 'loading' || placesStatus === 'idle') && <span className="muted">{t('map.placesLoading')}</span>}
-          {showPlaces && placesStatus === 'error' && <span className="muted">{t('map.placesFail', { e: t(placesError) })} <button type="button" className="linkbtn" onClick={() => loadPlaces(true)}>{t('common.retry')}</button></span>}
+          {showPlaces && [1, 3, 5].map((km) => (
+            <button key={km} type="button" className={`chip ${radiusKm === km ? 'on' : ''}`} aria-pressed={radiusKm === km} onClick={() => setRadiusKm(km)}>{t('map.radius', { km })}</button>
+          ))}
         </div>
       </div>
 
       {status === 'error' && <ErrorBox message={error} onRetry={retry} />}
       {(status === 'loading' || status === 'idle') && <Skeletons n={3} />}
-      {status === 'ready' && <MapView events={list} places={shownPlaces} placesOn={showPlaces} radiusKm={radiusKm} />}
+      {status === 'ready' && <MapView events={list} places={places} placesOn={showPlaces} placesState={placesStatus} onRetryPlaces={() => loadPlaces(true)} radiusKm={radiusKm} />}
     </>
   )
 }

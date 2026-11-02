@@ -306,8 +306,6 @@ button { cursor: pointer; }
 .fcard .btn { margin-top: 8px; justify-self: start; }
 
 /* ── 지도: 행사 주변 관광지 ── */
-.map-nearby { margin: 0 0 10px; padding: 8px 12px; border-radius: 12px; background: #e6f6f4; color: #0d6b64; font-size: .85rem; }
-.chiprow-sep { color: var(--line); align-self: center; }
 
 /* ── AI 가이드 채팅 ── */
 .chat-fab {
@@ -344,3 +342,15 @@ button { cursor: pointer; }
   .chat-fab { bottom: 76px; right: 14px; }
   .chat { inset: 0; width: auto; max-width: none; height: auto; border-radius: 0; border: 0; padding-bottom: env(safe-area-inset-bottom); }
 }
+
+/* 지도: 고른 행사 주변 가볼 만한 곳 — 번호 핀과 목록 */
+.spin span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #14a39a; color: #fff; font-weight: 800; font-size: .8rem; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
+.sights { margin-top: 14px; padding: 12px; border-radius: 16px; background: #e6f6f4; display: grid; gap: 6px; }
+.sights h3 { font-size: 1rem; color: #0d6b64; }
+.sights h3 small { display: block; font-weight: 500; font-size: .78rem; }
+.sights p { margin: 0; font-size: .85rem; }
+.sight { display: flex; gap: 10px; align-items: center; text-align: left; width: 100%; padding: 8px 10px; border: 0; border-radius: 12px; background: #fff; cursor: pointer; }
+.sight:hover { box-shadow: 0 0 0 2px #14a39a inset; }
+.sight-no { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #14a39a; color: #fff; font-weight: 800; font-size: .8rem; }
+.sight-body { display: grid; min-width: 0; }
+.sight-body b { overflow-wrap: anywhere; font-size: .92rem; }
