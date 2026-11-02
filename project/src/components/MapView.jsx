@@ -3,7 +3,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import EventCard from './EventCard'
 import { Empty, catHue } from './common'
-import { placeMapUrl } from '../lib/geo'
+import { distanceKm, placeMapUrl } from '../lib/geo'
 import { tr, useT } from '../i18n'
 
 const JEJU_CENTER = [33.38, 126.55]
@@ -11,7 +11,8 @@ const JEJU_CENTER = [33.38, 126.55]
 // 실제 지도(Leaflet + OpenStreetMap)에 행사 좌표를 핀으로 찍습니다.
 // - 같은 장소(약 100m 이내)의 행사는 한 핀으로 묶고 개수를 보여줍니다
 // - 좌표가 없는 행사는 지도 대신 아래 목록으로 보여줍니다
-export default function MapView({ events, places = [] }) {
+// places 는 '관광지 함께 보기'를 켰을 때만 넘어오고, 고른 행사 핀 반경(radiusKm) 안의 것만 점으로 찍습니다
+export default function MapView({ events, places = [], placesOn = false, radiusKm = 3 }) {
   const { t } = useT()
   const elRef = useRef(null)
   const mapRef = useRef(null)
@@ -45,18 +46,38 @@ export default function MapView({ events, places = [] }) {
     return () => { map.remove(); mapRef.current = null; layerRef.current = null; placeLayerRef.current = null }
   }, [])
 
-  // 관광지(비짓제주) — 작은 점으로 표시, 누르면 이름·분류·지도 링크 말풍선
+  const active = pins.find((p) => p.key === selected)
+  const shown = active ? active.list : placed
+
+  // 고른 행사 장소 주변의 관광지만 (섬 전체를 한꺼번에 찍으면 수천 개라 어떤 게 행사 근처인지 알 수 없음)
+  const nearby = useMemo(() => {
+    if (!placesOn || !active) return []
+    const here = { lat: active.lat, lng: active.lng }
+    return places.filter((p) => distanceKm(here, p.pos) <= radiusKm)
+  }, [placesOn, active, places, radiusKm])
+
+  // 관광지(비짓제주) — 작은 점으로 표시, 누르면 이름·분류·지도 링크 말풍선. 행사 주변 반경은 원으로 표시
   useEffect(() => {
     const layer = placeLayerRef.current
     if (!layer) return
     layer.clearLayers()
-    for (const p of places) {
+    if (placesOn && active) {
+      L.circle([active.lat, active.lng], { radius: radiusKm * 1000, color: '#14a39a', weight: 1.5, dashArray: '6 6', fillColor: '#14a39a', fillOpacity: 0.07, interactive: false }).addTo(layer)
+    }
+    for (const p of nearby) {
       const dot = L.circleMarker([p.pos.lat, p.pos.lng], { radius: 5, color: '#fff', weight: 1.5, fillColor: '#14a39a', fillOpacity: 0.9 })
       dot.bindTooltip(textNode(p.title), { direction: 'top', offset: [0, -4] })
       dot.bindPopup(() => placePopup(p), { minWidth: 160 })
       dot.addTo(layer)
     }
-  }, [places])
+  }, [nearby, placesOn, active, radiusKm])
+
+  // 행사를 고르고 관광지를 켰으면 그 반경이 한눈에 들어오게 지도를 맞춤
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !placesOn || !active) return
+    map.fitBounds(L.latLng(active.lat, active.lng).toBounds(radiusKm * 2000), { padding: [24, 24], maxZoom: 15 })
+  }, [placesOn, active?.key, radiusKm]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ② 핀 그리기 — 목록이 바뀌거나 선택이 바뀌면 다시 그립니다
   useEffect(() => {
@@ -74,7 +95,7 @@ export default function MapView({ events, places = [] }) {
       const tip = document.createElement('span')
       tip.textContent = p.list.length > 1 ? t('mv.more', { name: p.list[0].name, n: p.list.length - 1 }) : p.list[0].name
       marker.bindTooltip(tip, { direction: 'top', offset: [0, -16] })
-      marker.on('click', () => setSelected(p.key))
+      marker.on('click', () => setSelected(p.key === selected ? null : p.key))
       marker.addTo(layer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- t 는 언어가 바뀌면 화면 전체가 다시 만들어지므로 의존성에 넣지 않음
@@ -88,9 +109,6 @@ export default function MapView({ events, places = [] }) {
     else map.fitBounds(L.latLngBounds(pins.map((p) => [p.lat, p.lng])), { padding: [48, 48], maxZoom: 12 })
   }, [pins])
 
-  const active = pins.find((p) => p.key === selected)
-  const shown = active ? active.list : placed
-
   return (
     <div className="mapview">
       <div ref={elRef} className="leafmap" role="region" aria-label={t('mv.region')} />
@@ -102,6 +120,11 @@ export default function MapView({ events, places = [] }) {
           </p>
           {active && <button type="button" className="linkbtn" onClick={() => setSelected(null)}>{t('mv.showAll')}</button>}
         </div>
+        {placesOn && (
+          <p className="map-nearby">
+            {active ? t('mv.nearby', { km: radiusKm, n: nearby.length }) : t('mv.pickHint')}
+          </p>
+        )}
 
         {shown.length === 0
           ? <Empty title={t('mv.none')}>{t('mv.noneHint')}</Empty>

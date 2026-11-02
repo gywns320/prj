@@ -3,10 +3,11 @@
 // 행사 이름·소개·장소는 행사 API 가 한국어로만 제공해서 번역되지 않습니다.
 
 export const LANGS = [
-  { code: 'ko', label: '한국어', locale: 'ko-KR', visitjeju: 'kr' },
-  { code: 'en', label: 'English', locale: 'en-US', visitjeju: 'en' },
-  { code: 'zh', label: '中文', locale: 'zh-CN', visitjeju: 'cn' },
-  { code: 'ja', label: '日本語', locale: 'ja-JP', visitjeju: 'jp' },
+  // sights: 비짓제주가 그 언어로 돌려주는 '관광지' 분류 이름 — 지도에서 처음에 이것만 보여줍니다 (음식점이 너무 많아서)
+  { code: 'ko', label: '한국어', locale: 'ko-KR', visitjeju: 'kr', sights: '관광지' },
+  { code: 'en', label: 'English', locale: 'en-US', visitjeju: 'en', sights: 'Tourist Destination' },
+  { code: 'zh', label: '中文', locale: 'zh-CN', visitjeju: 'cn', sights: '观光景点' },
+  { code: 'ja', label: '日本語', locale: 'ja-JP', visitjeju: 'jp', sights: '観光地' },
 ]
 
 // 날짜 표기는 언어마다 순서가 달라 함수로 둡니다
@@ -160,6 +161,8 @@ export const MESSAGES = {
     'map.p.tomorrow': '내일', 'map.p.next7': '다음 7일',
     'map.prev': '이전 기간', 'map.next': '다음 기간', 'map.catAria': '분류', 'map.freeOnly': '무료만',
     'map.placesAria': '관광지 레이어', 'map.places': '관광지', 'map.placesToggle': '관광지 함께 보기',
+    'map.radius': '반경 {km}km',
+    'mv.nearby': '고른 행사 장소 주변 {km}km 관광지 {n}곳 (초록 점)', 'mv.pickHint': '지도에서 행사 핀을 누르면 그 주변 관광지가 초록 점으로 나타나요.',
     'map.dots': '초록 점 {n}곳 · 비짓제주', 'map.placesLoading': '관광지 불러오는 중…', 'map.placesFail': '관광지를 불러오지 못했어요 ({e})',
     'mv.region': '행사 위치 지도', 'mv.more': '{name} 외 {n}건', 'mv.here': '이 장소의 행사 {n}건',
     'mv.summary': '지도에 표시된 행사 {n}건 · 핀 {pins}곳', 'mv.showAll': '전체 보기',
@@ -277,6 +280,8 @@ export const MESSAGES = {
     'map.p.tomorrow': 'Tomorrow', 'map.p.next7': 'Following 7 days',
     'map.prev': 'Previous period', 'map.next': 'Next period', 'map.catAria': 'Category', 'map.freeOnly': 'Free only',
     'map.placesAria': 'Sights layer', 'map.places': 'Sights', 'map.placesToggle': 'Show sights too',
+    'map.radius': 'Within {km} km',
+    'mv.nearby': '{n} sights within {km} km of the selected event (green dots)', 'mv.pickHint': 'Tap an event pin on the map to see the sights around it as green dots.',
     'map.dots': '{n} green dots · Visit Jeju', 'map.placesLoading': 'Loading sights…', 'map.placesFail': 'Could not load sights ({e})',
     'mv.region': 'Map of event locations', 'mv.more': '{name} and {n} more', 'mv.here': '{n} events at this venue',
     'mv.summary': '{n} events on the map · {pins} pins', 'mv.showAll': 'Show all',
@@ -394,6 +399,8 @@ export const MESSAGES = {
     'map.p.tomorrow': '明天', 'map.p.next7': '之后7天',
     'map.prev': '上一时段', 'map.next': '下一时段', 'map.catAria': '分类', 'map.freeOnly': '仅免费',
     'map.placesAria': '景点图层', 'map.places': '景点', 'map.placesToggle': '同时显示景点',
+    'map.radius': '半径 {km}km',
+    'mv.nearby': '所选活动地点周边 {km}km 内有 {n}处景点(绿点)', 'mv.pickHint': '点击地图上的活动标记,周边景点会以绿点显示。',
     'map.dots': '绿点 {n}处 · Visit Jeju', 'map.placesLoading': '正在加载景点…', 'map.placesFail': '无法加载景点({e})',
     'mv.region': '活动位置地图', 'mv.more': '{name} 等{n}场', 'mv.here': '此地点的活动 {n}场',
     'mv.summary': '地图上显示 {n}场活动 · {pins}处标记', 'mv.showAll': '查看全部',
@@ -511,6 +518,8 @@ export const MESSAGES = {
     'map.p.tomorrow': '明日', 'map.p.next7': '次の7日間',
     'map.prev': '前の期間', 'map.next': '次の期間', 'map.catAria': 'カテゴリ', 'map.freeOnly': '無料のみ',
     'map.placesAria': '観光スポットのレイヤー', 'map.places': '観光スポット', 'map.placesToggle': '観光スポットも表示',
+    'map.radius': '半径{km}km',
+    'mv.nearby': '選んだイベント会場の周辺{km}km以内に観光スポット{n}件(緑の点)', 'mv.pickHint': '地図上のイベントのピンを押すと、周辺の観光スポットが緑の点で表示されます。',
     'map.dots': '緑の点 {n}件 · Visit Jeju', 'map.placesLoading': '観光スポットを読み込み中…', 'map.placesFail': '観光スポットを読み込めませんでした({e})',
     'mv.region': 'イベント会場の地図', 'mv.more': '{name} ほか{n}件', 'mv.here': 'この会場のイベント {n}件',
     'mv.summary': '地図上のイベント {n}件 · ピン{pins}か所', 'mv.showAll': 'すべて表示',
