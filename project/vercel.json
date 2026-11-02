@@ -1,7 +1,11 @@
 {
-  "regions": ["icn1"],
+  "regions": [
+    "icn1"
+  ],
   "rewrites": [
-    { "source": "/api/event", "destination": "https://www.jejunolda.com/api/event/" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ]
 }

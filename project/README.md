@@ -40,7 +40,7 @@ API 키는 필요 없습니다.
 - `src/api/weather.js` (호출·날씨코드 해석·30분 캐시), `src/components/Weather.jsx` (홈 패널 · 행사 상세 예보)
 
 ### 명세서와 실제 응답이 다른 점
-- **CORS 헤더가 없어** 브라우저가 직접 부를 수 없습니다 → `vite.config.js` 의 프록시(개발·미리보기), `vercel.json` 의 rewrites(배포)가 대신 호출합니다.
+- **CORS 헤더가 없어** 브라우저가 직접 부를 수 없습니다 → 서버 함수 `api/event.js` 가 대신 호출합니다(허용한 파라미터만 전달, 10분 캐시). 로컬에서는 `vite.config.js` 의 플러그인이 같은 파일을 그대로 실행하므로 로컬과 배포가 같은 코드로 동작합니다.
 - 상세 응답의 키가 명세서에는 `event`, 실제로는 **`evnet`(오타)** 입니다. 둘 다 처리합니다.
 - 좌표 `x`,`y` 가 0 이거나 위도·경도가 뒤바뀐 데이터가 있어 제주 범위 안일 때만 지도에 씁니다.
 - `intro` 는 HTML 이거나 평문이라 글자만 뽑아 보여줍니다. 카테고리 이름에 `(사용안함)` 이 붙은 값은 정리합니다.
@@ -48,7 +48,7 @@ API 키는 필요 없습니다.
 
 ## 구조
 ```
-api/visitjeju.js              (루트) 서버 함수 — 비짓제주 호출, API 키 보관
+api/event.js · api/visitjeju.js   (루트) 서버 함수 — 행사 API 중계 / 비짓제주 호출(API 키 보관)
 src/
   main.jsx · router.jsx       시작 / 메뉴·주소
   api/events.js · api/weather.js · api/places.js   외부 API 호출 + 응답 정리

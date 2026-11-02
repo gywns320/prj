@@ -1,7 +1,7 @@
 // 제주in놀다 「제주특별자치도 전시문화행사정보」 OpenAPI (Jeju-OpenAPI-I01)
-//   목록: GET /api/event/?page=&pageSize=&category=&pay=&loc=
-//   상세: GET /api/event/?event={seq}
-// 브라우저는 CORS 때문에 직접 부를 수 없어 같은 주소(/api/event)로 호출하고, 프록시(vite.config.js · vercel.json)가 전달합니다.
+//   목록: GET https://www.jejunolda.com/api/event/?page=&pageSize=&category=&pay=&loc=
+//   상세: GET https://www.jejunolda.com/api/event/?event={seq}
+// 브라우저는 CORS 때문에 직접 부를 수 없어 같은 서버의 /api/event 를 호출하고, 서버 함수(api/event.js)가 대신 전달합니다.
 import { dayKey } from '../lib/date'
 
 const IMG_BASE = 'https://jejunolda.com/files/event/'
@@ -9,7 +9,7 @@ const IMG_BASE = 'https://jejunolda.com/files/event/'
 async function call(params) {
   const qs = new URLSearchParams(params)
   let res
-  try { res = await fetch(`/api/event/?${qs}`) }
+  try { res = await fetch(`/api/event?${qs}`) }
   catch { throw new Error('네트워크에 연결할 수 없어요') }
   if (!res.ok) throw new Error(`행사 서버가 응답하지 않아요 (${res.status})`)
   let data
