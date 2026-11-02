@@ -1,4 +1,5 @@
 import { NavLink, Outlet, ScrollRestoration } from 'react-router-dom'
+import ChatWidget from '../components/ChatWidget'
 import { NAV_ITEMS } from '../router'
 import { LANGS, useDocumentLang, useLangStore, useT } from '../i18n'
 import { useCultureStore } from '../store/useCultureStore'
@@ -50,6 +51,7 @@ export default function RootLayout() {
       <div className="toasts" aria-live="polite">
         {toasts.map((x) => <div key={x.id} className="toast">{x.message}</div>)}
       </div>
+      <ChatWidget />
       <ScrollRestoration />
     </div>
   )

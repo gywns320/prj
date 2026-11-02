@@ -70,3 +70,12 @@ src/
 - 주변 장소: 행사 상세에서 반경 10km 관광지·맛집 추천, 지도에 관광지 레이어
 - 상세: 이미지 갤러리, 소개, 문의 전화, 홈페이지, 네이버·구글 지도, 캘린더에 추가(.ics), 링크 복사
 - 내 일정: 저장한 행사 모아보기, 전체 .ics 내보내기
+
+## AI 가이드 (Claude)
+
+오른쪽 아래 **AI 가이드** 버튼을 누르면 Claude 와 대화할 수 있습니다. 행사 검색·날씨·주변 관광지·지역축제 시기를 도구로 직접 찾아서 답합니다.
+
+- 서버 함수 `api/chat.js` 가 Claude API 를 부르고, 도구는 `api/_tools.js` 에 있습니다. (search_events, get_event, get_weather, nearby_sights, list_festivals)
+- **환경변수** (Vercel → Settings → Environment Variables, 로컬은 `.env.local`): `ANTHROPIC_API_KEY` (필수), `ANTHROPIC_MODEL` (선택, 기본 `claude-opus-5-5`). 키는 서버에만 있고 브라우저로 나가지 않습니다. 환경변수를 바꾼 뒤에는 다시 배포해야 반영됩니다.
+- 비용 보호: 접속자별 요청 제한(10분에 20회), 질문 600자·대화 12개·답변 5,000토큰·도구 왕복 6회 상한. 더 확실한 한도는 Anthropic 콘솔의 월 사용 한도로 설정하세요.
+- 답변의 링크는 이 사이트 안 주소와 http(s) 만 만들고, 모든 글은 HTML 이 아닌 React 요소로 그립니다.
