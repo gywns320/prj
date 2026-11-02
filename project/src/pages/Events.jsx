@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import CalendarView from '../components/CalendarView'
 import EventCard from '../components/EventCard'
 import { Empty, ErrorBox, PageHead, Skeletons, useEvents } from '../components/common'
-import { isFestival } from '../lib/festival'
+import { categoryCounts, inCategory } from '../lib/festival'
 import { WHEN, monthOf, overlaps, presetRange, todayKey } from '../lib/date'
 
 const MapView = lazy(() => import('../components/MapView'))
@@ -30,7 +30,6 @@ export default function Events() {
   const pay = sp.get('pay') ?? ''
   const loc = sp.get('loc') ?? ''
   const region = sp.get('region') ?? ''
-  const fest = sp.get('fest') === '1'
   const when = WHEN[sp.get('when')] ? sp.get('when') : 'all'
   const from = sp.get('from') ?? today
   const to = sp.get('to') ?? from
@@ -46,9 +45,7 @@ export default function Events() {
   const reset = () => { setSp({}, { replace: true }); setLimit(PAGE) }
 
   const cats = useMemo(() => {
-    const m = {}
-    events.forEach((e) => { m[e.category] = (m[e.category] || 0) + 1 })
-    return Object.entries(m).sort((a, b) => b[1] - a[1])
+    return categoryCounts(events)
   }, [events])
 
   const range = when === 'custom' ? [from, to < from ? from : to] : presetRange(when, today)
@@ -56,14 +53,14 @@ export default function Events() {
   const list = useMemo(() => {
     const kw = q.trim().toLowerCase()
     const f = events.filter((e) =>
-      (!cat || e.category === cat) && (!pay || e.payTag === pay) && (!loc || e.locTag === loc) &&
-      (!region || e.region === region) && (!fest || isFestival(e)) && (!range || overlaps(e, range[0], range[1])) &&
+      (!cat || inCategory(e, cat)) && (!pay || e.payTag === pay) && (!loc || e.locTag === loc) &&
+      (!region || e.region === region) && (!range || overlaps(e, range[0], range[1])) &&
       (!kw || [e.name, e.place, e.addr, e.category].some((s) => s.toLowerCase().includes(kw))))
     const key = SORTS[sort].key
     return f.sort((a, b) => String(key(a, today)).localeCompare(String(key(b, today))) || a.name.localeCompare(b.name))
-  }, [events, q, cat, pay, loc, region, fest, range, sort, today])
+  }, [events, q, cat, pay, loc, region, range, sort, today])
 
-  const active = [q, cat, pay, loc, region, fest, when !== 'all'].filter(Boolean).length
+  const active = [q, cat, pay, loc, region, when !== 'all'].filter(Boolean).length
 
   return (
     <>
@@ -89,7 +86,6 @@ export default function Events() {
         <Chips label="요금" value={pay} items={PAYS} onPick={(v) => set({ pay: v })} />
         <Chips label="장소" value={loc} items={LOCS} onPick={(v) => set({ loc: v })} />
         <Chips label="지역" value={region} items={REGIONS.map((r) => [r, r])} onPick={(v) => set({ region: v })} />
-        <Chips label="특집" value={fest ? '1' : ''} items={[['1', '축제·페스티벌']]} onPick={(v) => set({ fest: v })} />
       </div>
 
       <div className="toolbar">

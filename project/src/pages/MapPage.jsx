@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import MapView from '../components/MapView'
 import { ErrorBox, PageHead, Skeletons, useEvents } from '../components/common'
 import { useCultureStore } from '../store/useCultureStore'
-import { isFestival } from '../lib/festival'
+import { categoryCounts, inCategory } from '../lib/festival'
 import { addDays, diffDays, fmtRange, overlaps, presetRange, todayKey } from '../lib/date'
 
 // 기본은 오늘부터 7일(오늘 포함) 안에 열리는 행사 — 날짜를 바꾸면 다른 날의 행사도 볼 수 있어요
@@ -19,7 +19,6 @@ export default function MapPage() {
   const to = toRaw < from ? from : toRaw
   const cat = sp.get('cat') ?? ''
   const free = sp.get('pay') === 'FREE'
-  const fest = sp.get('fest') === '1'
   const span = diffDays(from, to) // 하루면 0
 
   // 관광지(비짓제주) 레이어 — 켰을 때만 불러옵니다
@@ -61,14 +60,12 @@ export default function MapPage() {
   ]
 
   const cats = useMemo(() => {
-    const m = {}
-    events.forEach((e) => { m[e.category] = (m[e.category] || 0) + 1 })
-    return Object.keys(m).sort((a, b) => m[b] - m[a])
+    return categoryCounts(events).map(([c]) => c)
   }, [events])
 
   const list = useMemo(
-    () => events.filter((e) => overlaps(e, from, to) && (!cat || e.category === cat) && (!free || e.payTag === 'FREE') && (!fest || isFestival(e))),
-    [events, from, to, cat, free, fest],
+    () => events.filter((e) => overlaps(e, from, to) && (!cat || inCategory(e, cat)) && (!free || e.payTag === 'FREE')),
+    [events, from, to, cat, free],
   )
 
   return (
@@ -97,9 +94,7 @@ export default function MapPage() {
           {cats.map((c) => (
             <button key={c} type="button" className={`chip ${cat === c ? 'on' : ''}`} aria-pressed={cat === c} onClick={() => set({ cat: cat === c ? '' : c })}>{c}</button>
           ))}
-          <button type="button" className={`chip ${free ? 'on' : ''}`} aria-pressed={free} onClick={() => set({ pay: free ? '' : 'FREE' })}>무료만</button>
-          <button type="button" className={`chip ${fest ? 'on' : ''}`} aria-pressed={fest} onClick={() => set({ fest: fest ? '' : '1' })}>축제만</button>
-        </div>
+          <button type="button" className={`chip ${free ? 'on' : ''}`} aria-pressed={free} onClick={() => set({ pay: free ? '' : 'FREE' })}>무료만</button>        </div>
 
         <div className="chiprow" role="group" aria-label="관광지 레이어">
           <span className="chiprow-label">관광지</span>

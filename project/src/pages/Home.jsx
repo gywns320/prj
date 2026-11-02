@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import EventCard from '../components/EventCard'
 import { WeatherPanel } from '../components/Weather'
 import { ErrorBox, Skeletons, catHue, useEvents } from '../components/common'
-import { isFestival } from '../lib/festival'
+import { categoryCounts, isFestival } from '../lib/festival'
 import { addDays, diffDays, overlaps, presetRange, todayKey } from '../lib/date'
 
 export default function Home() {
@@ -16,8 +16,6 @@ export default function Home() {
   const data = useMemo(() => {
     const [wsS, wsE] = presetRange('weekend', today)
     const live = events.filter((e) => overlaps(e, today, today))
-    const byCat = {}
-    events.forEach((e) => { byCat[e.category] = (byCat[e.category] || 0) + 1 })
     return {
       nToday: live.length,
       nWeekend: events.filter((e) => overlaps(e, wsS, wsE)).length,
@@ -28,7 +26,7 @@ export default function Home() {
       ending: live.filter((e) => e.startKey < today && diffDays(today, e.endKey) <= 7)
         .sort((a, b) => a.endKey.localeCompare(b.endKey)).slice(0, 6),
       freeNow: live.filter((e) => e.payTag === 'FREE').slice(0, 6),
-      cats: Object.entries(byCat).sort((a, b) => b[1] - a[1]),
+      cats: categoryCounts(events),
     }
   }, [events, today])
 
@@ -48,7 +46,7 @@ export default function Home() {
             <Link to="/events?when=today" className="btn primary">오늘 행사 {status === 'ready' ? `${data.nToday}건` : ''}</Link>
             <Link to="/events?when=weekend" className="btn">이번 주말 {status === 'ready' ? `${data.nWeekend}건` : ''}</Link>
             <Link to="/events?pay=FREE" className="btn">무료 행사 {status === 'ready' ? `${data.nFree}건` : ''}</Link>
-            <Link to="/events?fest=1" className="btn">축제 {status === 'ready' ? `${data.nFest}건` : ''}</Link>
+            <Link to="/events?cat=%EC%B6%95%EC%A0%9C" className="btn">축제 {status === 'ready' ? `${data.nFest}건` : ''}</Link>
             <Link to="/map" className="btn">지도로 보기</Link>
           </div>
         </div>
