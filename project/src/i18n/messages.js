@@ -78,6 +78,8 @@ export const MESSAGES = {
 
     'when.all': '전체', 'when.today': '오늘', 'when.weekend': '이번 주말', 'when.week': '7일 이내', 'when.month': '이번 달', 'when.custom': '날짜 지정',
 
+    'hero.credit': '사진: {place} · 비짓제주',
+    'hero.navaron': '나바론절벽', 'hero.witse': '윗세족은오름', 'hero.pyeongdae': '평대해변', 'hero.saekdal': '중문색달해변',
     'home.kicker': '제주 문화행사 안내',
     'home.h1a': '오늘 제주에서', 'home.h1b': '뭐 하지?',
     'home.sub': '전시·공연·축제·체험까지, 제주특별자치도가 공개한 행사 정보를 도민도 여행자도 한눈에 찾아보세요.',
@@ -189,6 +191,8 @@ export const MESSAGES = {
 
     'when.all': 'Any time', 'when.today': 'Today', 'when.weekend': 'This weekend', 'when.week': 'Within 7 days', 'when.month': 'This month', 'when.custom': 'Pick dates',
 
+    'hero.credit': 'Photo: {place} · Visit Jeju',
+    'hero.navaron': 'Nabaron Cliff', 'hero.witse': 'Witse Jageun Oreum', 'hero.pyeongdae': 'Pyeongdae Beach', 'hero.saekdal': 'Jungmun Saekdal Beach',
     'home.kicker': 'Jeju cultural events',
     'home.h1a': 'What’s on in Jeju', 'home.h1b': 'today?',
     'home.sub': 'Exhibitions, performances, festivals and workshops — find the events published by Jeju Province at a glance, whether you live here or are just visiting.',
@@ -300,6 +304,8 @@ export const MESSAGES = {
 
     'when.all': '全部', 'when.today': '今天', 'when.weekend': '本周末', 'when.week': '7天内', 'when.month': '本月', 'when.custom': '选择日期',
 
+    'hero.credit': '照片:{place} · Visit Jeju',
+    'hero.navaron': '纳瓦隆悬崖(나바론절벽)', 'hero.witse': 'Witse Jageun Oreum(윗세족은오름)', 'hero.pyeongdae': '平岱海滩(평대해변)', 'hero.saekdal': '中文色达海滩(중문색달해변)',
     'home.kicker': '济州文化活动指南',
     'home.h1a': '今天在济州', 'home.h1b': '做什么?',
     'home.sub': '展览、演出、庆典、体验……无论是岛民还是游客,都能一目了然地找到济州特别自治道公开的活动信息。',
@@ -411,6 +417,8 @@ export const MESSAGES = {
 
     'when.all': 'すべて', 'when.today': '今日', 'when.weekend': '今週末', 'when.week': '7日以内', 'when.month': '今月', 'when.custom': '日付を指定',
 
+    'hero.credit': '写真:{place} · Visit Jeju',
+    'hero.navaron': 'ナバロン断崖(나바론절벽)', 'hero.witse': 'Witse Jageun Oreum(윗세족은오름)', 'hero.pyeongdae': 'ピョンデ海岸(평대해변)', 'hero.saekdal': '中文セクダル海岸(중문색달해변)',
     'home.kicker': '済州の文化イベント案内',
     'home.h1a': '今日、済州で', 'home.h1b': '何しよう?',
     'home.sub': '展示・公演・祭り・体験まで、済州特別自治道が公開するイベント情報を、島民も旅行者もひと目で探せます。',

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import EventCard from '../components/EventCard'
+import HeroPhotos from '../components/HeroPhotos'
 import { WeatherPanel } from '../components/Weather'
 import { ErrorBox, Skeletons, catHue, useEvents } from '../components/common'
 import { categoryCounts, isFestival } from '../lib/festival'
@@ -41,6 +42,7 @@ export default function Home() {
   return (
     <>
       <section className="hero">
+        <HeroPhotos />
         <div className="hero-copy">
           <p className="kicker">{t('home.kicker')}</p>
           <h1>{t('home.h1a')}<br /><em>{t('home.h1b')}</em></h1>
