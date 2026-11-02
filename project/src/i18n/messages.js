@@ -606,5 +606,5 @@ export const MESSAGES = {
   },
 }
 
-// 기획 의도·데이터·3D 문구는 messages.extra.js 에 있고 여기서 합칩니다
+// 기획 의도·데이터 소개 문구는 messages.extra.js 에 있고 여기서 합칩니다
 for (const code of Object.keys(MESSAGES)) Object.assign(MESSAGES[code], EXTRA[code])

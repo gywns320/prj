@@ -54,7 +54,6 @@ export default function Home() {
             <Link to="/events?pay=FREE" className="btn">{t('home.free')} {n(data.nFree)}</Link>
             <Link to="/events?cat=%EC%B6%95%EC%A0%9C" className="btn">{t('home.fest')} {n(data.nFest)}</Link>
             <Link to="/map" className="btn">{t('home.map')}</Link>
-            <Link to="/3d" className="btn">{t('home.d3')}</Link>
           </div>
           <Link to="/about" className="hero-about">{t('home.about')}</Link>
         </div>

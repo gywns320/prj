@@ -92,7 +92,6 @@ export default function About() {
           <p>{t('about.agentText')}</p>
           <div className="actions">
             <button type="button" className="btn primary small" onClick={() => setChatOpen(true)}>{t('about.openChat')}</button>
-            <Link to="/3d" className="btn small">{t('about.open3d')}</Link>
           </div>
         </article>
       </div>

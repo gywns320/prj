@@ -17,7 +17,7 @@ export const NAV_ITEMS = [
   { to: '/saved', label: 'nav.saved', glyph: '★' },
 ]
 
-// 용량이 큰 페이지(지도·3D)는 열 때만 불러옵니다.
+// 용량이 큰 지도 페이지는 열 때만 불러옵니다.
 // 새로 배포되면 옛 화면이 찾던 조각 파일(MapPage-해시.js)이 사라져 불러오기가 실패하는데,
 // 그때 "페이지 없음" 대신 한 번만 새로고침해서 최신 화면을 받아옵니다.
 const lazyPage = (key, load) => async () => {
@@ -43,7 +43,6 @@ export const router =createBrowserRouter([
       { path: 'events', element: <Events /> },
       { path: 'events/:seq', element: <EventDetail /> },
       { path: 'map', lazy: lazyPage('map-reloaded', () => import('./pages/MapPage')) },
-      { path: '3d', lazy: lazyPage('3d-reloaded', () => import('./pages/Jeju3DPage')) },
       { path: 'about', element: <About /> },
       { path: 'festivals', element: <Festivals /> },
       { path: 'saved', element: <Saved /> },

@@ -395,15 +395,3 @@ button { cursor: pointer; }
 .apicard small { color: var(--muted); }
 .about .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-/* 3D 지도 */
-.d3wrap { position: relative; height: min(72vh, 660px); min-height: 380px; border-radius: 22px; overflow: hidden; background: #bfe3f7; border: 1px solid var(--line); }
-.d3wrap canvas { display: block; touch-action: none; }
-.d3-chips { position: absolute; top: 12px; left: 12px; right: 140px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
-.d3-chips .chip { font-size: .76rem; padding: 3px 10px; background: rgba(255, 255, 255, .92); border: 0; color: var(--ink); }
-.d3-rotate { position: absolute; top: 12px; right: 12px; }
-.d3-card { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 10px 14px; border-radius: 16px; background: rgba(255, 255, 255, .94); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; box-shadow: var(--shadow); }
-.d3-card b { overflow-wrap: anywhere; }
-.d3-card .btn { margin-left: auto; }
-.d3-label { background: rgba(26, 32, 64, .85); color: #fff; padding: 2px 8px; border-radius: 8px; font-size: .72rem; white-space: nowrap; pointer-events: none; }
-.d3-label.muted { background: rgba(255, 255, 255, .75); color: #3a4a2a; }
-@media (max-width: 800px) { .d3-chips { right: 12px; top: 52px; } }
