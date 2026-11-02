@@ -1,0 +1,20 @@
+/* 테마 위에 덧입히는 우리 앱 스타일 — 색은 Bootstrap 변수(--bs-*)를 써서 테마를 바꿔도 어울리게 */
+body { font-family: 'Pretendard', system-ui, sans-serif; background: var(--bs-tertiary-bg); }
+
+.hero {
+  background: linear-gradient(135deg, var(--bs-primary), var(--bs-info));
+  color: #fff;
+}
+.hero h1, .hero .lead { color: #fff; }
+
+.item-card { transition: transform .15s, box-shadow .15s; }
+.item-card:hover { transform: translateY(-3px); box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); }
+.item-card-img { height: 160px; object-fit: cover; }
+.placeholder-img {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bs-secondary-bg); color: var(--bs-secondary-color); font-size: 2rem;
+}
+
+.chat-box .msg { max-width: 80%; padding: .6rem .9rem; border-radius: 1rem; margin-bottom: .5rem; }
+.chat-box .msg.assistant { background: var(--bs-secondary-bg); }
+.chat-box .msg.user { background: var(--bs-primary); color: #fff; margin-left: auto; }
