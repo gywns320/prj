@@ -14,7 +14,22 @@ export const NAV_ITEMS = [
   { to: '/saved', label: '내 일정', glyph: '★' },
 ]
 
-export const router = createBrowserRouter([
+// 새로 배포되면 옛 화면이 찾던 조각 파일(MapPage-해시.js)이 사라져 불러오기가 실패합니다.
+// 그때 "페이지 없음" 대신 한 번만 새로고침해서 최신 화면을 받아옵니다.
+async function loadMapPage() {
+  try {
+    const Component = (await import('./pages/MapPage')).default
+    try { sessionStorage.removeItem('map-reloaded') } catch { /* 저장소를 못 써도 괜찮음 */ }
+    return { Component }
+  } catch (err) {
+    let reloaded = true
+    try { reloaded = sessionStorage.getItem('map-reloaded') === '1'; sessionStorage.setItem('map-reloaded', '1') } catch { /* 무한 새로고침 방지 */ }
+    if (!reloaded) { window.location.reload(); return new Promise(() => {}) }
+    throw err
+  }
+}
+
+export const router =createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
@@ -24,7 +39,7 @@ export const router = createBrowserRouter([
       { path: 'events', element: <Events /> },
       { path: 'events/:seq', element: <EventDetail /> },
       // 지도(Leaflet)는 용량이 커서 이 페이지를 열 때만 불러옵니다
-      { path: 'map', lazy: async () => ({ Component: (await import('./pages/MapPage')).default }) },
+      { path: 'map', lazy: loadMapPage },
       { path: 'saved', element: <Saved /> },
       { path: '*', element: <NotFound inline /> },
     ],
