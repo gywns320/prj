@@ -109,11 +109,16 @@ export default function MapPage() {
               {[1, 3, 5].map((km) => (
                 <button key={km} type="button" className={`chip ${radiusKm === km ? 'on' : ''}`} aria-pressed={radiusKm === km} onClick={() => setRadiusKm(km)}>{t('map.radius', { km })}</button>
               ))}
-              <span className="chiprow-sep" aria-hidden="true">|</span>
-              <button type="button" className={`chip ${placeCat === '' ? 'on' : ''}`} onClick={() => setPlaceCat('')}>{t('common.all')}</button>
-              {placeCats.map((c) => (
-                <button key={c} type="button" className={`chip ${placeCat === c ? 'on' : ''}`} aria-pressed={placeCat === c} onClick={() => setPlaceCat(placeCat === c ? '' : c)}>{c}</button>
-              ))}
+              {/* 서버가 "관광지"만 내려주므로 분류가 하나뿐이면 고를 필요가 없습니다 */}
+              {placeCats.length > 1 && (
+                <>
+                  <span className="chiprow-sep" aria-hidden="true">|</span>
+                  <button type="button" className={`chip ${placeCat === '' ? 'on' : ''}`} onClick={() => setPlaceCat('')}>{t('common.all')}</button>
+                  {placeCats.map((c) => (
+                    <button key={c} type="button" className={`chip ${placeCat === c ? 'on' : ''}`} aria-pressed={placeCat === c} onClick={() => setPlaceCat(placeCat === c ? '' : c)}>{c}</button>
+                  ))}
+                </>
+              )}
             </>
           )}
           {showPlaces && (placesStatus === 'loading' || placesStatus === 'idle') && <span className="muted">{t('map.placesLoading')}</span>}

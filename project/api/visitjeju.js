@@ -1,7 +1,7 @@
 // 비짓제주 관광정보 OPEN API (제주관광공사, VisitJeju-OpenAPI-01) 를 감싸는 Vercel 서버 함수
 //   GET /api/visitjeju?locale=kr  →  { updated, items: [...] }   (모든 페이지를 모아 필요한 항목만 추려서 응답)
 // API 키는 서버 환경변수 VISITJEJU_API_KEY 에만 있고, 브라우저로는 절대 나가지 않습니다.
-import { isUnrelated } from './_unrelated.js'
+import { isHidden } from './_unrelated.js'
 
 const UPSTREAM ='https://api.visitjeju.net/vsjApi/contents/searchList'
 const LOCALES = new Set(['kr', 'en', 'jp', 'cn', 'zh', 'my'])
@@ -45,7 +45,11 @@ export default async function handler(req, res) {
     const first = await getPage(1)
     const pageCount = Math.min(Number(first.pageCount) || 1, MAX_PAGES)
     const rest = await Promise.all(Array.from({ length: pageCount - 1 }, (_, i) => getPage(i + 2)))
-    const items = [first, ...rest].flatMap((p) => p.items ?? []).filter((i) => !isUnrelated(i, locale)).map(compact).filter(Boolean)
+    const all = [first, ...rest].flatMap((p) => p.items ?? [])
+    // 가게·일정·생활 서비스는 빼고 '가볼 만한 곳'만 (자세한 기준은 _unrelated.js). 분류 이름이 바뀌어 전부 걸러지면 분류 거르기만 건너뜁니다
+    let kept = all.filter((i) => !isHidden(i, locale))
+    if (all.length > 0 && kept.length === 0) kept = all.filter((i) => !isHidden(i, locale, { sightsOnly: false }))
+    const items = kept.map(compact).filter(Boolean)
 
     // 목록은 자주 바뀌지 않으니 하루 동안 CDN 에 캐시 (실패 응답은 캐시하지 않음)
     res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800')

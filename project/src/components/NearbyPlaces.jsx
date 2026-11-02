@@ -49,12 +49,14 @@ export default function NearbyPlaces({ event: ev }) {
         ? <p className="muted">{t('np.empty', { km: RADIUS_KM })}</p>
         : (
           <>
+            {cats.length > 1 && (
             <div className="chiprow" role="group" aria-label={t('np.catAria')}>
               <button type="button" className={`chip ${cat === '' ? 'on' : ''}`} onClick={() => { setCat(''); setLimit(PAGE) }}>{t('np.all', { n: nearby.length })}</button>
               {cats.map(([c, n]) => (
                 <button key={c} type="button" className={`chip ${cat === c ? 'on' : ''}`} aria-pressed={cat === c} onClick={() => { setCat(cat === c ? '' : c); setLimit(PAGE) }}>{c} {n}</button>
               ))}
             </div>
+            )}
             <div className="places">{list.slice(0, limit).map((p) => <PlaceCard key={p.id} place={p} />)}</div>
             {list.length > limit && <div className="center"><button type="button" className="btn small" onClick={() => setLimit(limit + PAGE)}>{t('np.more', { n: list.length - limit })}</button></div>}
           </>
