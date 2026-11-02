@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { DATE, LANGS, MESSAGES } from './messages'
+import { DATE, LANGS, MESSAGES, PERIOD } from './messages'
 
 export { LANGS }
 
@@ -25,6 +25,7 @@ export const useLangStore = create(
 export const getLang = () => useLangStore.getState().lang
 export const langInfo = (lang = getLang()) => LANGS.find((l) => l.code === lang) ?? LANGS[0]
 export const dateParts = (lang = getLang()) => DATE[lang] ?? DATE.ko
+export const periodParts = (lang = getLang()) => PERIOD[lang] ?? PERIOD.ko
 
 const fill = (text, params) => text.replace(/\{(\w+)\}/g, (m, k) => (params?.[k] ?? m))
 

@@ -208,7 +208,7 @@ button { cursor: pointer; }
   .cal-day .cnt { right: 3px; bottom: 3px; padding: 0 6px; font-size: .7rem; }
   .footer { padding-bottom: 84px; }
   .tabbar {
-    display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; inset: auto 0 0 0; z-index: 30;
+    display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; inset: auto 0 0 0; z-index: 30;
     background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom);
   }
   .tab { display: grid; justify-items: center; padding: 8px 0; font-size: .72rem; font-weight: 700; color: var(--muted); }
@@ -291,3 +291,16 @@ button { cursor: pointer; }
 }
 .langsel select:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 @media (max-width: 800px) { .langsel { margin-left: auto; } }
+
+/* ── 지역축제 ── */
+.fest-note { background: #fff6ec; border: 1px solid #ffd9b8; color: #7a3d0a; border-radius: 14px; padding: 12px 16px; font-size: .9rem; margin: 0 0 18px; }
+.fcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+.fcard-media { position: relative; aspect-ratio: 4 / 3; background: #efeae0; overflow: hidden; }
+.fcard-media .cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fcard-media .badge { position: absolute; top: 10px; left: 10px; }
+.fcard-body { padding: 14px 16px 16px; display: grid; gap: 4px; align-content: start; flex: 1; }
+.fcard-when { margin: 0; font-size: .82rem; color: var(--muted); }
+.fcard-when b { color: var(--orange); font-size: .98rem; margin-left: 4px; }
+.fcard h3 { font-size: 1.08rem; }
+.fcard-ko { margin: 0; font-size: .8rem; color: var(--muted); }
+.fcard .btn { margin-top: 8px; justify-self: start; }

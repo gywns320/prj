@@ -3,6 +3,7 @@ import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import EventDetail from './pages/EventDetail'
+import Festivals from './pages/Festivals'
 import Saved from './pages/Saved'
 import NotFound from './pages/NotFound'
 
@@ -11,6 +12,7 @@ export const NAV_ITEMS = [
   { to: '/', label: 'nav.home', glyph: '⌂' }, // label 은 문구 키 — 화면에서 t(label) 로 번역
   { to: '/events', label: 'nav.events', glyph: '⌕' },
   { to: '/map', label: 'nav.map', glyph: '◎' },
+  { to: '/festivals', label: 'nav.festivals', glyph: '✦' },
   { to: '/saved', label: 'nav.saved', glyph: '★' },
 ]
 
@@ -40,6 +42,7 @@ export const router =createBrowserRouter([
       { path: 'events/:seq', element: <EventDetail /> },
       // 지도(Leaflet)는 용량이 커서 이 페이지를 열 때만 불러옵니다
       { path: 'map', lazy: loadMapPage },
+      { path: 'festivals', element: <Festivals /> },
       { path: 'saved', element: <Saved /> },
       { path: '*', element: <NotFound inline /> },
     ],

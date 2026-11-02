@@ -42,13 +42,32 @@ export const DATE = {
   },
 }
 
+// '3월 중순' 같은 대략적인 시기 표기 (지역축제 페이지)
+const PART = {
+  ko: { early: '초순', mid: '중순', late: '하순' },
+  en: { early: 'Early', mid: 'Mid', late: 'Late' },
+  zh: { early: '上旬', mid: '中旬', late: '下旬' },
+  ja: { early: '上旬', mid: '中旬', late: '下旬' },
+}
+const MON_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+export const PERIOD = {
+  ko: { mon: (m) => `${m}월`, one: (m, p) => (p ? `${m}월 ${PART.ko[p]}` : `${m}월`), same: (m, a, b) => `${m}월 ${PART.ko[a]}~${PART.ko[b]}` },
+  en: { mon: (m) => MON_EN[m - 1], one: (m, p) => (p ? `${PART.en[p]} ${MON_FULL_EN[m - 1]}` : MON_FULL_EN[m - 1]), same: (m, a, b) => `${PART.en[a]}–${PART.en[b].toLowerCase()} ${MON_FULL_EN[m - 1]}` },
+  zh: { mon: (m) => `${m}月`, one: (m, p) => `${m}月${p ? PART.zh[p] : ''}`, same: (m, a, b) => `${m}月${PART.zh[a]}~${PART.zh[b]}` },
+  ja: { mon: (m) => `${m}月`, one: (m, p) => `${m}月${p ? PART.ja[p] : ''}`, same: (m, a, b) => `${m}月${PART.ja[a]}~${PART.ja[b]}` },
+}
+
 export const MESSAGES = {
   ko: {
     'meta.title': '제주 문화달력 · 제주 문화행사 안내',
     brand: '제주 문화달력',
     'lang.label': '언어',
     'nav.home': '홈', 'nav.events': '행사 찾기', 'nav.map': '지도', 'nav.saved': '내 일정',
-    'nav.main': '주 메뉴', 'nav.bottom': '하단 메뉴',
+    'nav.main': '주 메뉴', 'nav.bottom': '하단 메뉴', 'nav.festivals': '지역축제',
+    'fest.kicker': '지역축제', 'fest.title': '제주 지역축제는 언제 열릴까요?', 'fest.sub': '해마다 열리는 제주의 대표 축제를 시기별로 모았어요.',
+    'fest.note': '열리는 시기는 지난 개최 기록을 바탕으로 한 대략적인 시기예요. 해마다 날짜와 장소가 달라지거나 열리지 않을 수 있으니, 방문 전에 꼭 공식 안내를 확인하세요.',
+    'fest.monthAria': '월별로 보기', 'fest.when': '예년 시기', 'fest.thisMonth': '이번 달', 'fest.official': '공식 안내 찾기 ↗',
+    'fest.none': '이 달에 열리는 축제 정보가 없어요',  'fest.src': '사진: 비짓제주',
     footer: '행사 정보 출처: 제주특별자치도 전시문화행사정보 OpenAPI(제주in놀다 · 제주문화예술재단). 일정은 변경될 수 있으니 방문 전 문의처로 확인하세요.',
 
     'common.all': '전체', 'common.more': '더 보기 →', 'common.retry': '다시 시도',
@@ -161,7 +180,11 @@ export const MESSAGES = {
     brand: 'Jeju Culture Calendar',
     'lang.label': 'Language',
     'nav.home': 'Home', 'nav.events': 'Events', 'nav.map': 'Map', 'nav.saved': 'My plan',
-    'nav.main': 'Main menu', 'nav.bottom': 'Bottom menu',
+    'nav.main': 'Main menu', 'nav.bottom': 'Bottom menu', 'nav.festivals': 'Festivals',
+    'fest.kicker': 'Regional festivals', 'fest.title': 'When are Jeju’s festivals held?', 'fest.sub': 'Jeju’s signature annual festivals, arranged by season.',
+    'fest.note': 'Timing is approximate, based on past editions. Dates and venues change from year to year and some festivals may not run, so please check the official announcement before you go.',
+    'fest.monthAria': 'Browse by month', 'fest.when': 'Usually held', 'fest.thisMonth': 'This month', 'fest.official': 'Find official info ↗',
+    'fest.none': 'No festivals listed for this month',  'fest.src': 'Photos: Visit Jeju',
     footer: 'Event data: Jeju Special Self-Governing Province exhibition & cultural events OpenAPI (Jeju in Nolda · Jeju Foundation for Arts and Culture). Event names and descriptions are shown in the original Korean. Schedules may change, so please check with the organizer before you go.',
 
     'common.all': 'All', 'common.more': 'See more →', 'common.retry': 'Try again',
@@ -274,7 +297,11 @@ export const MESSAGES = {
     brand: '济州文化日历',
     'lang.label': '语言',
     'nav.home': '首页', 'nav.events': '查找活动', 'nav.map': '地图', 'nav.saved': '我的行程',
-    'nav.main': '主菜单', 'nav.bottom': '底部菜单',
+    'nav.main': '主菜单', 'nav.bottom': '底部菜单', 'nav.festivals': '地区庆典',
+    'fest.kicker': '地区庆典', 'fest.title': '济州的地区庆典什么时候举办?', 'fest.sub': '按时期整理了济州每年举办的代表性庆典。',
+    'fest.note': '举办时期是根据往年举办记录得出的大致时间。每年的日期和地点可能不同,也可能不举办,出发前请务必确认官方公告。',
+    'fest.monthAria': '按月份查看', 'fest.when': '往年时间', 'fest.thisMonth': '本月', 'fest.official': '查找官方信息 ↗',
+    'fest.none': '本月没有庆典信息',  'fest.src': '照片:Visit Jeju',
     footer: '活动信息来源:济州特别自治道展览文化活动信息 OpenAPI(济州in玩 · 济州文化艺术财团)。活动名称与介绍以原文(韩语)显示。日程可能变更,出行前请向咨询处确认。',
 
     'common.all': '全部', 'common.more': '查看更多 →', 'common.retry': '重试',
@@ -387,7 +414,11 @@ export const MESSAGES = {
     brand: '済州文化カレンダー',
     'lang.label': '言語',
     'nav.home': 'ホーム', 'nav.events': 'イベント検索', 'nav.map': '地図', 'nav.saved': 'マイ予定',
-    'nav.main': 'メインメニュー', 'nav.bottom': '下部メニュー',
+    'nav.main': 'メインメニュー', 'nav.bottom': '下部メニュー', 'nav.festivals': '地域のお祭り',
+    'fest.kicker': '地域のお祭り', 'fest.title': '済州の地域のお祭りはいつ?', 'fest.sub': '毎年開かれる済州の代表的なお祭りを時期別にまとめました。',
+    'fest.note': '開催時期は過去の開催実績に基づくおおよその時期です。年によって日程や会場が変わったり、開催されない場合もあるため、訪問前に必ず公式案内をご確認ください。',
+    'fest.monthAria': '月別に見る', 'fest.when': '例年の時期', 'fest.thisMonth': '今月', 'fest.official': '公式案内を探す ↗',
+    'fest.none': 'この月に開かれるお祭りの情報はありません',  'fest.src': '写真:Visit Jeju',
     footer: 'イベント情報の出典:済州特別自治道 展示文化イベント情報 OpenAPI(済州in遊ぶ · 済州文化芸術財団)。イベント名・紹介は原文(韓国語)のまま表示されます。日程は変更される場合があるため、訪問前に問い合わせ先でご確認ください。',
 
     'common.all': 'すべて', 'common.more': 'もっと見る →', 'common.retry': '再試行',
