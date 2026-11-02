@@ -1,3 +1,5 @@
+import { EXTRA } from './messages.extra.js'
+
 // 화면 문구 사전 — 한국어(ko)가 기준이고, 없는 키는 한국어로 대신 보여줍니다.
 // {n} 같은 자리표시자는 t('key', { n: 3 }) 로 채워집니다.
 // 행사 이름·소개·장소는 행사 API 가 한국어로만 제공해서 번역되지 않습니다.
@@ -76,6 +78,9 @@ export const MESSAGES = {
     'chat.note': 'AI 답변은 틀릴 수 있어요. 일정·장소는 공식 안내로 꼭 확인하세요.',
     'chat.thinking': '생각하는 중…', 'chat.tool.search_events': '행사를 찾는 중…', 'chat.tool.get_event': '행사 정보를 보는 중…', 'chat.tool.get_weather': '날씨를 확인하는 중…',
     'chat.tool.nearby_sights': '주변 관광지를 찾는 중…', 'chat.tool.list_festivals': '지역축제 시기를 찾는 중…',
+    'chat.toolsTitle': '에이전트가 호출한 도구', 'chat.result': '결과 {n}건', 'chat.days': '{n}일 예보', 'chat.toolFail': '실패',
+    'chat.toolName.search_events': '행사 검색', 'chat.toolName.get_event': '행사 상세', 'chat.toolName.get_weather': '날씨 예보', 'chat.toolName.nearby_sights': '주변 관광지', 'chat.toolName.list_festivals': '지역축제 시기',
+    'chat.toolSrc.search_events': '제주in놀다 API', 'chat.toolSrc.get_event': '제주in놀다 API', 'chat.toolSrc.get_weather': 'Open-Meteo API', 'chat.toolSrc.nearby_sights': '비짓제주 API', 'chat.toolSrc.list_festivals': '지역축제 목록',
     'chat.err.not_configured': 'AI 가이드가 아직 준비되지 않았어요. (관리자가 Claude API 키를 설정해야 해요)', 'chat.err.rate_limited': '질문이 너무 많아요. 잠시 뒤에 다시 물어봐 주세요.',
     'chat.err.busy': 'AI 서버가 바빠요. 잠시 뒤에 다시 시도해 주세요.', 'chat.err.auth': 'AI 가이드 설정에 문제가 있어요. 관리자에게 알려 주세요.', 'chat.err.bad_model': 'AI 가이드 설정에 문제가 있어요. 관리자에게 알려 주세요.',
     'chat.err.refusal': '이 질문에는 답할 수 없어요.', 'chat.err.failed': '답변을 만들지 못했어요. 다시 시도해 주세요.', 'chat.err.network': '네트워크에 연결할 수 없어요.',
@@ -183,6 +188,10 @@ export const MESSAGES = {
     'saved.export': '전체를 캘린더로 내보내기', 'saved.none': '아직 저장한 행사가 없어요', 'saved.hint': '카드의 ☆ 를 누르면 여기에 모여요.',
     'saved.browse': '행사 둘러보기', 'saved.gone': '종료되어 목록에서 사라진 행사 {n}건은 표시하지 않았어요.',
     'toast.saved': '내 일정에 저장했어요', 'toast.unsaved': '저장을 해제했어요',
+    'cloud.nick': '닉네임', 'cloud.nickSet': '바꾸기', 'cloud.nickHint': '같은 닉네임이면 다른 기기·브라우저에서도 내 저장 행사·방문 기록·AI 대화가 보여요. (로그인은 없어요)',
+    'cloud.status.off': '저장 위치: 이 브라우저 (Supabase 설정이 없어서 다른 기기에서는 안 보여요)', 'cloud.status.syncing': 'Supabase 와 동기화 중…', 'cloud.status.ready': '☁ Supabase 에 저장돼요',
+    'cloud.status.error': 'Supabase 오류: {e}', 'cloud.saveFail': '저장하지 못했어요',
+    'visits.title': '최근 본 행사', 'visits.empty': '아직 본 행사가 없어요. 행사 상세를 열면 여기에 남아요.', 'visits.off': 'Supabase 를 연결하면 방문 기록이 저장돼요.',
 
     'nf.title': '찾는 페이지가 없어요', 'nf.go': '행사 목록으로',
     'ics.time': '시간', 'ics.contact': '문의', 'ics.pay': '요금',
@@ -205,6 +214,9 @@ export const MESSAGES = {
     'chat.note': 'AI answers can be wrong. Please check dates and venues with the official announcement.',
     'chat.thinking': 'Thinking…', 'chat.tool.search_events': 'Searching events…', 'chat.tool.get_event': 'Reading event details…', 'chat.tool.get_weather': 'Checking the weather…',
     'chat.tool.nearby_sights': 'Looking for sights nearby…', 'chat.tool.list_festivals': 'Checking festival seasons…',
+    'chat.toolsTitle': 'Tools the agent called', 'chat.result': '{n} results', 'chat.days': '{n}-day forecast', 'chat.toolFail': 'failed',
+    'chat.toolName.search_events': 'Event search', 'chat.toolName.get_event': 'Event details', 'chat.toolName.get_weather': 'Weather forecast', 'chat.toolName.nearby_sights': 'Nearby sights', 'chat.toolName.list_festivals': 'Festival seasons',
+    'chat.toolSrc.search_events': 'Jeju in Nolda API', 'chat.toolSrc.get_event': 'Jeju in Nolda API', 'chat.toolSrc.get_weather': 'Open-Meteo API', 'chat.toolSrc.nearby_sights': 'Visit Jeju API', 'chat.toolSrc.list_festivals': 'festival list',
     'chat.err.not_configured': 'The AI guide is not set up yet. (The site owner needs to add a Claude API key.)', 'chat.err.rate_limited': 'Too many questions. Please try again in a few minutes.',
     'chat.err.busy': 'The AI service is busy. Please try again shortly.', 'chat.err.auth': 'There is a problem with the AI guide setup. Please tell the site owner.', 'chat.err.bad_model': 'There is a problem with the AI guide setup. Please tell the site owner.',
     'chat.err.refusal': 'I can’t answer that request.', 'chat.err.failed': 'Could not generate an answer. Please try again.', 'chat.err.network': 'Cannot connect to the network.',
@@ -312,6 +324,10 @@ export const MESSAGES = {
     'saved.export': 'Export all to calendar', 'saved.none': 'No saved events yet', 'saved.hint': 'Tap ☆ on a card and it will appear here.',
     'saved.browse': 'Browse events', 'saved.gone': '{n} saved events have ended and were removed from the list.',
     'toast.saved': 'Saved to my plan', 'toast.unsaved': 'Removed from saved',
+    'cloud.nick': 'Nickname', 'cloud.nickSet': 'Change', 'cloud.nickHint': 'With the same nickname, your saved events, visit history and AI chats show up on other devices and browsers. (There is no login.)',
+    'cloud.status.off': 'Saved in this browser only (Supabase is not set up, so other devices won’t see it)', 'cloud.status.syncing': 'Syncing with Supabase…', 'cloud.status.ready': '☁ Saved to Supabase',
+    'cloud.status.error': 'Supabase error: {e}', 'cloud.saveFail': 'Could not save',
+    'visits.title': 'Recently viewed', 'visits.empty': 'Nothing yet. Events you open will appear here.', 'visits.off': 'Connect Supabase to keep your visit history.',
 
     'nf.title': 'Page not found', 'nf.go': 'Go to events',
     'ics.time': 'Time', 'ics.contact': 'Contact', 'ics.pay': 'Price',
@@ -334,6 +350,9 @@ export const MESSAGES = {
     'chat.note': 'AI的回答可能有误。日程和地点请务必以官方公告为准。',
     'chat.thinking': '思考中…', 'chat.tool.search_events': '正在查找活动…', 'chat.tool.get_event': '正在查看活动详情…', 'chat.tool.get_weather': '正在查看天气…',
     'chat.tool.nearby_sights': '正在查找周边景点…', 'chat.tool.list_festivals': '正在查看庆典时期…',
+    'chat.toolsTitle': 'AI调用的工具', 'chat.result': '结果 {n}条', 'chat.days': '{n}天预报', 'chat.toolFail': '失败',
+    'chat.toolName.search_events': '活动搜索', 'chat.toolName.get_event': '活动详情', 'chat.toolName.get_weather': '天气预报', 'chat.toolName.nearby_sights': '周边景点', 'chat.toolName.list_festivals': '庆典时期',
+    'chat.toolSrc.search_events': '济州in玩 API', 'chat.toolSrc.get_event': '济州in玩 API', 'chat.toolSrc.get_weather': 'Open-Meteo API', 'chat.toolSrc.nearby_sights': 'Visit Jeju API', 'chat.toolSrc.list_festivals': '庆典名单',
     'chat.err.not_configured': 'AI向导尚未准备好。(需要管理员设置 Claude API 密钥)', 'chat.err.rate_limited': '提问太频繁了,请稍后再试。',
     'chat.err.busy': 'AI服务繁忙,请稍后再试。', 'chat.err.auth': 'AI向导的设置有问题,请告知管理员。', 'chat.err.bad_model': 'AI向导的设置有问题,请告知管理员。',
     'chat.err.refusal': '这个问题我无法回答。', 'chat.err.failed': '未能生成回答,请重试。', 'chat.err.network': '无法连接网络。',
@@ -441,6 +460,10 @@ export const MESSAGES = {
     'saved.export': '全部导出到日历', 'saved.none': '还没有收藏的活动', 'saved.hint': '点击卡片上的 ☆,就会收集到这里。',
     'saved.browse': '浏览活动', 'saved.gone': '已结束并从列表中消失的 {n}场活动未显示。',
     'toast.saved': '已加入我的行程', 'toast.unsaved': '已取消收藏',
+    'cloud.nick': '昵称', 'cloud.nickSet': '修改', 'cloud.nickHint': '使用相同昵称,在其他设备和浏览器上也能看到我收藏的活动、浏览记录和AI对话。(没有登录)',
+    'cloud.status.off': '仅保存在此浏览器(未设置 Supabase,其他设备看不到)', 'cloud.status.syncing': '正在与 Supabase 同步…', 'cloud.status.ready': '☁ 已保存到 Supabase',
+    'cloud.status.error': 'Supabase 错误:{e}', 'cloud.saveFail': '保存失败',
+    'visits.title': '最近浏览的活动', 'visits.empty': '还没有浏览过的活动。打开活动详情后会显示在这里。', 'visits.off': '连接 Supabase 后才会保存浏览记录。',
 
     'nf.title': '找不到该页面', 'nf.go': '前往活动列表',
     'ics.time': '时间', 'ics.contact': '咨询', 'ics.pay': '费用',
@@ -463,6 +486,9 @@ export const MESSAGES = {
     'chat.note': 'AIの回答は間違っている場合があります。日程・会場は必ず公式案内でご確認ください。',
     'chat.thinking': '考え中…', 'chat.tool.search_events': 'イベントを探しています…', 'chat.tool.get_event': 'イベントの詳細を確認しています…', 'chat.tool.get_weather': '天気を確認しています…',
     'chat.tool.nearby_sights': '周辺のスポットを探しています…', 'chat.tool.list_festivals': 'お祭りの時期を調べています…',
+    'chat.toolsTitle': 'AIが呼び出したツール', 'chat.result': '結果{n}件', 'chat.days': '{n}日間の予報', 'chat.toolFail': '失敗',
+    'chat.toolName.search_events': 'イベント検索', 'chat.toolName.get_event': 'イベント詳細', 'chat.toolName.get_weather': '天気予報', 'chat.toolName.nearby_sights': '周辺スポット', 'chat.toolName.list_festivals': 'お祭りの時期',
+    'chat.toolSrc.search_events': '済州in遊ぶ API', 'chat.toolSrc.get_event': '済州in遊ぶ API', 'chat.toolSrc.get_weather': 'Open-Meteo API', 'chat.toolSrc.nearby_sights': 'Visit Jeju API', 'chat.toolSrc.list_festivals': 'お祭り一覧',
     'chat.err.not_configured': 'AIガイドはまだ準備できていません。(管理者がClaude APIキーを設定する必要があります)', 'chat.err.rate_limited': '質問が多すぎます。しばらくしてからもう一度お試しください。',
     'chat.err.busy': 'AIサーバーが混み合っています。しばらくしてからもう一度お試しください。', 'chat.err.auth': 'AIガイドの設定に問題があります。管理者にお知らせください。', 'chat.err.bad_model': 'AIガイドの設定に問題があります。管理者にお知らせください。',
     'chat.err.refusal': 'この質問にはお答えできません。', 'chat.err.failed': '回答を作成できませんでした。もう一度お試しください。', 'chat.err.network': 'ネットワークに接続できません。',
@@ -570,8 +596,15 @@ export const MESSAGES = {
     'saved.export': 'すべてをカレンダーに書き出す', 'saved.none': '保存したイベントはまだありません', 'saved.hint': 'カードの ☆ を押すとここに集まります。',
     'saved.browse': 'イベントを見る', 'saved.gone': '終了して一覧から消えたイベント {n}件は表示していません。',
     'toast.saved': 'マイ予定に保存しました', 'toast.unsaved': '保存を解除しました',
+    'cloud.nick': 'ニックネーム', 'cloud.nickSet': '変更', 'cloud.nickHint': '同じニックネームなら、別の端末・ブラウザでも保存したイベント・閲覧履歴・AIとの会話が表示されます。(ログインはありません)',
+    'cloud.status.off': 'このブラウザにのみ保存(Supabaseが未設定のため他の端末では見えません)', 'cloud.status.syncing': 'Supabaseと同期中…', 'cloud.status.ready': '☁ Supabaseに保存されます',
+    'cloud.status.error': 'Supabaseエラー:{e}', 'cloud.saveFail': '保存できませんでした',
+    'visits.title': '最近見たイベント', 'visits.empty': 'まだありません。イベントの詳細を開くとここに残ります。', 'visits.off': 'Supabaseを接続すると閲覧履歴が保存されます。',
 
     'nf.title': 'ページが見つかりません', 'nf.go': 'イベント一覧へ',
     'ics.time': '時間', 'ics.contact': 'お問い合わせ', 'ics.pay': '料金',
   },
 }
+
+// 기획 의도·데이터·3D 문구는 messages.extra.js 에 있고 여기서 합칩니다
+for (const code of Object.keys(MESSAGES)) Object.assign(MESSAGES[code], EXTRA[code])

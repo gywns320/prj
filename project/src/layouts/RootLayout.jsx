@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { NavLink, Outlet, ScrollRestoration } from 'react-router-dom'
 import ChatWidget from '../components/ChatWidget'
 import { NAV_ITEMS } from '../router'
@@ -10,6 +11,8 @@ export default function RootLayout() {
   const toasts = useCultureStore((s) => s.toasts)
   const savedCount = useCultureStore((s) => s.saved.length)
   useDocumentLang()
+  const syncSaved = useCultureStore((s) => s.syncSaved)
+  useEffect(() => { syncSaved() }, [syncSaved]) // 저장한 행사를 Supabase 에서 불러옴 (연결돼 있을 때)
 
   return (
     <div className="shell">
@@ -38,7 +41,10 @@ export default function RootLayout() {
       {/* key: 언어를 바꾸면 화면을 새로 그려서 모든 글자가 한 번에 바뀝니다 */}
       <main className="page" key={lang}><Outlet /></main>
 
-      <footer className="footer">{t('footer')}</footer>
+      <footer className="footer">
+        {t('footer')}
+        <p><NavLink to="/about">{t('footer.about')}</NavLink></p>
+      </footer>
 
       <nav className="tabbar" aria-label={t('nav.bottom')}>
         {NAV_ITEMS.map((n) => (

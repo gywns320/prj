@@ -5,7 +5,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { TOOLS, runTool, todayKst } from './_tools.js'
 
-const MODEL = () => process.env.ANTHROPIC_MODEL?.trim() || 'claude-opus-5-5'
+const MODEL = () => process.env.ANTHROPIC_MODEL?.trim() || 'claude-sonnet-5-5' // 수업용 키는 Sonnet 5.5 기준 — 더 강한 모델은 ANTHROPIC_MODEL 로
 const MAX_TURNS = 6 // 도구를 부르고 답하는 왕복 상한 — 무한 반복으로 비용이 새지 않도록
 const MAX_OUTPUT = 5000 // 생각과 답변을 합친 한 번의 상한
 const MAX_MESSAGES = 12 // 최근 대화만 보냄
@@ -59,7 +59,8 @@ function systemPrompt(lang) {
 Today is ${today} (${weekday}), Korea time. The site's interface language is ${LANG_NAME[lang] ?? 'Korean'}.
 
 How to work:
-- Look things up with the tools. Never invent events, dates, venues, prices, opening hours or links. If the tools return nothing, say so plainly and suggest a different date range or filter.
+- Always check with the tools before stating any fact about events, weather, sights or festivals - never answer those from memory. Never invent events, dates, venues, prices, opening hours or links. If the tools return nothing (for example something that does not exist in Jeju), say so plainly instead of guessing, and suggest a different date range or filter.
+- When one question needs several sources (for example an event, the weather on that day, and sights near it), call the tools one after another and combine the results.
 - For "what is on" questions use search_events (dates are Korea time; resolve words like "this weekend" or "tomorrow" from today's date). Use get_event when the user wants details of one event.
 - Regional festivals: list_festivals only knows the time of year they were held in past years. Never present that as this year's confirmed date, and tell the user to check the official announcement for exact dates and venues.
 - Use get_weather when weather matters, and if rain is likely suggest indoor events. Use nearby_sights to suggest places to visit around an event or a spot.
@@ -132,9 +133,11 @@ export default async function handler(req, res) {
 
       // 도구 호출 결과는 한 번에 모아서 돌려보냄 (여러 개를 동시에 부른 경우)
       history.push({ role: 'assistant', content: message.content })
-      for (const u of uses) send({ type: 'tool', name: u.name })
+      // 화면의 '에이전트가 호출한 도구' 목록에 쓰도록, 부르는 순간(이름·입력)과 끝난 순간(성공 여부·결과 개수)을 알려 줍니다
+      for (const u of uses) send({ type: 'tool', id: u.id, name: u.name, input: u.input })
       const results = await Promise.all(uses.map(async (u) => {
         const r = await runTool(u.name, u.input)
+        send({ type: 'tool_done', id: u.id, ok: !r.isError, ...(r.summary ?? {}) })
         return { type: 'tool_result', tool_use_id: u.id, content: r.content, ...(r.isError ? { is_error: true } : {}) }
       }))
       history.push({ role: 'user', content: results })

@@ -45,6 +45,7 @@ export default function Home() {
         <HeroPhotos />
         <div className="hero-copy">
           <p className="kicker">{t('home.kicker')}</p>
+          <p className="hero-intent"><b>{t('home.intentLabel')}</b> {t('home.intent')}</p>
           <h1>{t('home.h1a')}<br /><em>{t('home.h1b')}</em></h1>
           <p className="sub">{t('home.sub')}</p>
           <div className="hero-actions">
@@ -53,7 +54,9 @@ export default function Home() {
             <Link to="/events?pay=FREE" className="btn">{t('home.free')} {n(data.nFree)}</Link>
             <Link to="/events?cat=%EC%B6%95%EC%A0%9C" className="btn">{t('home.fest')} {n(data.nFest)}</Link>
             <Link to="/map" className="btn">{t('home.map')}</Link>
+            <Link to="/3d" className="btn">{t('home.d3')}</Link>
           </div>
+          <Link to="/about" className="hero-about">{t('home.about')}</Link>
         </div>
 
         <aside className="trip">

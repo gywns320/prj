@@ -265,12 +265,23 @@ export const TOOLS = [
 
 const IMPL = { search_events: searchEvents, get_event: getEvent, get_weather: getWeather, nearby_sights: nearbySights, list_festivals: listFestivals }
 
-// 도구 한 번 실행 — { content, isError } 로 돌려줍니다. 입력은 모델이 만든 값이라 믿지 않고 각 도구에서 확인합니다.
+// 화면의 '에이전트가 호출한 도구' 목록에 보여줄 결과 요약 — 개수(n)와 덧붙일 말(note). 문장은 화면에서 언어에 맞게 만듭니다.
+function summarize(name, out) {
+  if (name === 'search_events') return { n: out.total_matches, note: `${out.period.from} ~ ${out.period.to}` }
+  if (name === 'get_event') return { n: 1, note: out.name }
+  if (name === 'get_weather') return { n: out.daily.length, note: out.place }
+  if (name === 'nearby_sights') return { n: out.total_matches, note: `${out.radius_km}km` }
+  if (name === 'list_festivals') return { n: out.festivals.length }
+  return { n: 0 }
+}
+
+// 도구 한 번 실행 — { content, isError, summary } 로 돌려줍니다. 입력은 모델이 만든 값이라 믿지 않고 각 도구에서 확인합니다.
 export async function runTool(name, input) {
   const fn = IMPL[name]
   if (!fn) return { content: `unknown tool: ${name}`, isError: true }
   try {
-    return { content: JSON.stringify(await fn(input && typeof input === 'object' ? input : {})), isError: false }
+    const out = await fn(input && typeof input === 'object' ? input : {})
+    return { content: JSON.stringify(out), isError: false, summary: summarize(name, out) }
   } catch (e) {
     return { content: `error: ${String(e.message).slice(0, 200)}`, isError: true }
   }

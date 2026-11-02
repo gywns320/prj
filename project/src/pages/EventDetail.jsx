@@ -19,6 +19,7 @@ export default function EventDetail() {
   const saved = useCultureStore((s) => s.saved.includes(seq))
   const toggleSaved = useCultureStore((s) => s.toggleSaved)
   const toast = useCultureStore((s) => s.toast)
+  const recordVisit = useCultureStore((s) => s.recordVisit)
 
   // 목록에서 이미 받은 정보로 먼저 그리고, 상세 API 로 이미지·전체 소개를 채웁니다
   const [detail, setDetail] = useState(null)
@@ -35,6 +36,10 @@ export default function EventDetail() {
       .catch((e) => alive && setError(e.message))
     return () => { alive = false }
   }, [seq, tries])
+
+  // 행사 이름을 알게 되면 방문 기록을 남김 (Supabase visits 테이블, 같은 행사는 30분에 한 번만)
+  const knownName = (detail?.seq === seq ? detail : fromList)?.name
+  useEffect(() => { if (Number.isInteger(seq) && knownName) recordVisit(seq, knownName) }, [seq, knownName, recordVisit])
 
   if (!Number.isInteger(seq)) return <NotFound inline />
   const ev = detail?.seq === seq ? detail : fromList

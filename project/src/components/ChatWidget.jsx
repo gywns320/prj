@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useT } from '../i18n'
 import { useChatStore } from '../store/useChatStore'
+import { useCultureStore } from '../store/useCultureStore'
 
 const SUGGESTIONS = ['chat.s1', 'chat.s2', 'chat.s3', 'chat.s4']
 const MAX_CHARS = 600
@@ -15,6 +16,8 @@ export default function ChatWidget() {
   const messages = useChatStore((s) => s.messages)
   const send = useChatStore((s) => s.send)
   const reset = useChatStore((s) => s.reset)
+  const loadHistory = useChatStore((s) => s.loadHistory)
+  const nickname = useCultureStore((s) => s.nickname)
   const [draft, setDraft] = useState('')
   const listRef = useRef(null)
   const inputRef = useRef(null)
@@ -22,6 +25,8 @@ export default function ChatWidget() {
   // 새 글자가 오면 맨 아래로, 열리면 입력창에 커서
   useEffect(() => { listRef.current?.scrollTo({ top: listRef.current.scrollHeight }) }, [messages, open])
   useEffect(() => { if (open) inputRef.current?.focus() }, [open])
+  // 열 때(닉네임이 바뀌면 다시) Supabase 에 저장된 이전 대화를 불러옵니다
+  useEffect(() => { if (open) loadHistory() }, [open, nickname, loadHistory])
   useEffect(() => {
     if (!open) return
     const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
@@ -69,10 +74,11 @@ export default function ChatWidget() {
         {messages.map((m) => (
           <div key={m.id} className={`chat-msg ${m.role === 'user' ? 'me' : 'ai'}`}>
             <div className={`bubble ${m.error ? 'err' : ''}`}>
+              {m.role === 'assistant' && m.tools?.length > 0 && <ToolList tools={m.tools} />}
               {m.role === 'user' ? m.text : <ChatText text={m.text} onLink={onLink} />}
               {m.error && <p className="chat-err">{t(`chat.err.${m.error}`)}</p>}
               {busy && m.role === 'assistant' && !m.error && m === messages.at(-1) && (
-                <p className="chat-working">{m.tool ? t(`chat.tool.${m.tool}`) : m.text ? '' : t('chat.thinking')}</p>
+                <p className="chat-working">{m.tools?.find((x) => x.status === 'running') ? t(`chat.tool.${m.tools.find((x) => x.status === 'running').name}`) : m.text ? '' : t('chat.thinking')}</p>
               )}
             </div>
           </div>
@@ -116,4 +122,31 @@ function Inline({ text, onLink }) {
     }
     return part
   })
+}
+
+// '에이전트가 호출한 도구' 목록 — AI 가 스스로 고른 도구, 넘긴 입력, 결과 개수를 그대로 보여줍니다 (어떤 데이터로 답했는지 확인용)
+function ToolList({ tools }) {
+  const { t } = useT()
+  const input = (obj) => Object.entries(obj ?? {}).map(([k, v]) => `${k}=${v}`).join(', ').slice(0, 90)
+  const result = (c) => {
+    if (c.status === 'running') return '…'
+    if (c.status === 'error') return t('chat.toolFail')
+    if (c.name === 'get_weather') return `${c.note ?? ''} ${t('chat.days', { n: c.n })}`.trim()
+    if (c.name === 'get_event') return c.note ?? ''
+    return [t('chat.result', { n: c.n ?? 0 }), c.note].filter(Boolean).join(' · ')
+  }
+  return (
+    <div className="toollist" aria-label={t('chat.toolsTitle')}>
+      <p className="toollist-title">🔧 {t('chat.toolsTitle')}</p>
+      <ol>
+        {tools.map((c, i) => (
+          <li key={c.id ?? i} className={`tool-${c.status}`}>
+            <b>{t(`chat.toolName.${c.name}`)}</b> <small className="muted">· {t(`chat.toolSrc.${c.name}`)}</small>
+            {Object.keys(c.input ?? {}).length > 0 && <code>{input(c.input)}</code>}
+            <span className="tool-out">→ {result(c)}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
 }
