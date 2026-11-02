@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import EventCard from '../components/EventCard'
 import { WeatherPanel } from '../components/Weather'
 import { ErrorBox, Skeletons, catHue, useEvents } from '../components/common'
+import { isFestival } from '../lib/festival'
 import { addDays, diffDays, overlaps, presetRange, todayKey } from '../lib/date'
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       nToday: live.length,
       nWeekend: events.filter((e) => overlaps(e, wsS, wsE)).length,
       nFree: events.filter((e) => e.payTag === 'FREE').length,
+      nFest: events.filter(isFestival).length,
       soon: events.filter((e) => e.startKey > today && diffDays(today, e.startKey) <= 7)
         .sort((a, b) => a.startKey.localeCompare(b.startKey)).slice(0, 6),
       ending: live.filter((e) => e.startKey < today && diffDays(today, e.endKey) <= 7)
@@ -46,6 +48,7 @@ export default function Home() {
             <Link to="/events?when=today" className="btn primary">오늘 행사 {status === 'ready' ? `${data.nToday}건` : ''}</Link>
             <Link to="/events?when=weekend" className="btn">이번 주말 {status === 'ready' ? `${data.nWeekend}건` : ''}</Link>
             <Link to="/events?pay=FREE" className="btn">무료 행사 {status === 'ready' ? `${data.nFree}건` : ''}</Link>
+            <Link to="/events?fest=1" className="btn">축제 {status === 'ready' ? `${data.nFest}건` : ''}</Link>
             <Link to="/map" className="btn">지도로 보기</Link>
           </div>
         </div>
