@@ -244,6 +244,34 @@ button { cursor: pointer; }
 .wday.wet { background: #dfe9fb; }
 .wd-label { font-size: .8rem; font-weight: 700; color: var(--muted); }
 .wd-icon { font-size: 1.7rem; line-height: 1.3; }
+.wd-icon .wi { margin: 0 auto; }
+
+/* 날씨 아이콘 움직임 (WeatherIcon.jsx) */
+.wi { display: block; overflow: visible; }
+.wi-sun { fill: #ffb300; }
+.wi-rays line { stroke: #ffb300; stroke-width: 2.6; stroke-linecap: round; }
+.wi-rays { transform-origin: 0 0; animation: wi-spin 24s linear infinite; }
+.wi-cloud { fill: #e6ecf5; stroke: #8fa0ba; stroke-width: 1.8; }
+.wi-cloud.rainy { fill: #cfd8e6; }
+.wi-cloud.dark { fill: #8f9ab0; stroke: #6f7b92; }
+.wi-cloud.back { fill: #f1f4f9; }
+.wi-drift { animation: wi-drift 5s ease-in-out infinite alternate; }
+.wi-drift.rev { animation-direction: alternate-reverse; }
+.wi-bob { animation: wi-bob 3s ease-in-out infinite alternate; }
+.wi-drop { stroke: #3d8bfd; stroke-width: 2.3; stroke-linecap: round; opacity: 0; animation: wi-fall 1.1s linear infinite; }
+.wi-flake { fill: #7fb4ff; opacity: 0; animation: wi-snow 2.6s linear infinite; }
+.wi-bolt { fill: #ffd43b; animation: wi-flash 2.6s linear infinite; }
+.wi-mist { stroke: #aab8cc; stroke-width: 3; stroke-linecap: round; animation: wi-drift 4s ease-in-out infinite alternate; }
+@keyframes wi-spin { to { transform: rotate(360deg); } }
+@keyframes wi-drift { from { transform: translateX(-3px); } to { transform: translateX(4px); } }
+@keyframes wi-bob { from { transform: translateY(0); } to { transform: translateY(1.5px); } }
+@keyframes wi-fall { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(11px); opacity: 0; } }
+@keyframes wi-snow { 0% { transform: translate(0, 0); opacity: 0; } 20% { opacity: 1; } 50% { transform: translate(2px, 6px); } 100% { transform: translate(-1px, 12px); opacity: 0; } }
+@keyframes wi-flash { 0%, 58%, 100% { opacity: .2; } 62%, 70% { opacity: 1; } 66% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) {
+  .wi *, .wi { animation: none !important; }
+  .wi-drop, .wi-flake { opacity: 1; }
+}
 .wd-temp b { font-size: 1rem; }
 .wd-temp i { font-style: normal; color: var(--muted); font-size: .88rem; }
 .wd-rain { font-size: .78rem; color: #2f5db3; font-weight: 700; }

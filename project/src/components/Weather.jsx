@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { PLACES, describe, fetchForecast, isWet, nearestPlace } from '../api/weather'
 import { addDays, fmtDayShort, fmtMonthDay, todayKey } from '../lib/date'
 import { tr, useT } from '../i18n'
+import WeatherIcon from './WeatherIcon'
 
 const dayLabel = (key, today) => (key === today ? tr('common.today') : key === addDays(today, 1) ? tr('common.tomorrow') : fmtDayShort(key))
 
@@ -32,7 +33,7 @@ function Day({ day, today, label }) {
   return (
     <li className={`wday ${isWet(day) ? 'wet' : ''}`} title={t('wx.dayTitle', { label: w.label, w: day.wind })}>
       <span className="wd-label">{label ?? dayLabel(day.key, today)}</span>
-      <span className="wd-icon" aria-hidden="true">{w.icon}</span>
+      <span className="wd-icon" aria-hidden="true"><WeatherIcon kind={w.kind} code={day.code} /></span>
       <span className="wd-temp"><b>{day.max}°</b> <i>{day.min}°</i></span>
       <span className="wd-rain">☂ {day.prob ?? 0}%</span>
     </li>
@@ -77,7 +78,7 @@ function WeatherBody({ data, today }) {
     <>
       <div className="now">
         <div className="now-main">
-          <span className="now-icon" aria-hidden="true">{w.icon}</span>
+          <span className="now-icon" aria-hidden="true"><WeatherIcon kind={w.kind} code={c.code} /></span>
           <div><b className="now-temp">{c.temp}°</b><span className="now-label">{w.label}</span></div>
         </div>
         <dl className="now-facts">
