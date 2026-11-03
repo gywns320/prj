@@ -13,6 +13,26 @@ export async function fetchPlaces(locale = 'kr') {
   return data.items.map(normalize)
 }
 
+// 비짓제주 '음식점' 분류(식당·카페) — 같은 서버 함수에 kind=food 로 부릅니다. 평점은 원본에 없습니다
+export async function fetchFoods(locale = 'kr') {
+  let res
+  try { res = await fetch(`/api/visitjeju?locale=${encodeURIComponent(locale)}&kind=food`) }
+  catch { throw new Error('err.net') }
+  const data = await res.json().catch(() => null)
+  if (!res.ok || !Array.isArray(data?.items)) throw new Error(data?.error || `err.placesHttp:${res.status}`)
+  return data.items.map((p) => ({
+    id: p.id,
+    title: p.title,
+    kind: p.kind === 'cafe' ? 'cafe' : 'restaurant',
+    region: [p.region, p.area].filter(Boolean).join(' '),
+    addr: p.addr,
+    tags: p.tag.split(',').map((t) => t.trim()).filter(Boolean),
+    tel: p.tel,
+    pos: { lat: p.lat, lng: p.lng },
+    thumb: https(p.thumb),
+  }))
+}
+
 // 이미지는 https 로 (http 이미지는 https 사이트에서 차단됨)
 const https = (u) => (u ? u.replace(/^http:\/\//i, 'https://') : null)
 

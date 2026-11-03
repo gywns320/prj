@@ -14,21 +14,25 @@ export const SIGHT_TAG = /자연경관|문화관광|역사유적|문화유적지
 export const RULES = {
   kr: {
     sights: '관광지',
+    food: '음식점',
     tag: /의료관광|건강검진|반려동물동반_기타체험|반려동물동반_식당카페|애견카페|헬스|피트니스|필라테스|태권도장|볼링|보컬|요가|렌트카|자동차운송|퍼스널컬러|아이스링크|롤러장|골프/,
     title: /병원|의원|약국|애견|펫|필라테스|태권도장|볼링|렌터카|검진|미용실|요가|스냅$/,
   },
   en: {
     sights: 'Tourist Destination',
+    food: 'Restaurant',
     tag: /pet hospital|dog grooming|dog daycare|dog hotel|grooming salon|pet-friendly_other|pet-friendly_restaurant|medical tourism|health check|health screening|\bgym\b|fitness|pilates|bowling|vocal|yoga|rent-a-car|auto transport|personal color|ice rink|roller|\bgolf\b/i,
     title: /hospital|clinic|pharmacy|animal medical|grooming|\bpet\b|rent-a-car|yoga|pilates|taekwondo (school|gym)|bowling|\bgym\b|snap$/i,
   },
   cn: {
     sights: '观光景点',
+    food: '餐馆',
     tag: /宠物医院|动物医院|宠物诊疗|宠物美容|狗狗美容|宠物寄养|狗狗日托|狗狗幼儿园|宠物犬咖啡馆|其他宠物友好型体验|其他允许携带宠物的体验|宠物用品|医疗旅游|健康检查|体检|健身|瑜伽|普拉提|保龄球|声乐|租车|汽车运输|个人色彩|溜冰场|滑冰|旱冰|高尔夫/,
     title: /医院|诊所|医疗中心|药房|租车|瑜伽|普拉提|跆拳道馆|保龄球|健身|宠物|Snap$/i,
   },
   jp: {
     sights: '観光地',
+    food: '飲食店',
     tag: /ペット同伴病院|動物病院|ペット犬美容|ペット犬幼稚園|ペットグルーミング|ペット美容室|ペットホテル|犬のデイケア|ペットケア|ペット用品|ペット同伴_その他体験|ペット同伴_飲食店|ドッグカフェ|医療観光|健康診断|ジム|フィットネス|ヨガ|ピラティス|ボウリング|ボーカル|レンタカー|自動車輸送|パーソナルカラー|スケート|ゴルフ/,
     title: /病院|クリニック|医療センター|薬局|レンタカー|ピラティス|テコンドー道場|ボウリング|ジム|ペット|スナップ$/,
   },
@@ -43,3 +47,13 @@ export function isHidden(i, locale, { sightsOnly = true } = {}) {
   if (r.tag.test(i.tag ?? '') || r.title.test(i.title ?? '')) return true
   return locale === 'kr' && !SIGHT_TAG.test(i.tag ?? '') && !KEEP_IDS.has(i.contentsid)
 }
+
+// 지도에 따로 보여주는 '음식점' 분류 항목을 카페와 식당으로 가릅니다 (태그·이름에 카페 성격 단어가 있으면 카페)
+export const CAFE = {
+  kr: /카페|커피|디저트|베이커리|제과|빵집|찻집|다방/,
+  en: /caf[eé]|coffee|bakery|dessert|tea ?house/i,
+  cn: /咖啡|甜点|甜品|面包|烘焙|茶馆/,
+  jp: /カフェ|喫茶|コーヒー|ベーカリー|デザート|パン屋/,
+}
+export const isFood = (i, locale) => !!RULES[locale] && i.contentscd?.label === RULES[locale].food
+export const foodKind = (i, locale) => (CAFE[locale].test(`${i.tag ?? ''} ${i.title ?? ''}`) ? 'cafe' : 'restaurant')

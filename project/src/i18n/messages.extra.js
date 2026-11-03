@@ -1,6 +1,11 @@
 // 기획 의도 · 데이터 소개 문구 — messages.js 가 가져다 합칩니다 (키 규칙은 messages.js 와 같음)
 export const EXTRA = {
   ko: {
+    'map.foodAria': '카페·식당 레이어', 'map.food': '카페·식당', 'map.foodToggle': '카페·식당 함께 보기',
+    'map.fk.all': '전체', 'map.fk.cafe': '카페', 'map.fk.restaurant': '식당',
+    'mv.foodTitle': '주변 카페·식당', 'mv.foodSub': '고른 행사 장소 반경 {km}km · 가까운 순 · 비짓제주 등록 정보', 'mv.foodLoading': '카페·식당을 불러오는 중…',
+    'mv.foodFail': '카페·식당을 불러오지 못했어요.', 'mv.foodNone': '반경 {km}km 안에 등록된 곳이 없어요. 반경을 넓혀 보세요.', 'mv.foodMore': '이 밖에 {n}곳이 더 있어요. 반경을 줄이면 가까운 곳만 보여요.',
+    'mv.key': '핀 색: ', 'mv.keySight': '관광지',
     'v.ok': '✓ 검증됨', 'v.okTitle': '{date}에 공식 홈페이지·지도 등 다른 출처와 대조해 확인한 정보예요',
     'v.fixed': '정보 보정', 'v.fixedTitle': '원본 데이터의 일부({f})가 실제와 달라, 확인된 값으로 고쳐 보여드려요',
     'home.intent': '제주의 전시·공연·지역축제를 날씨·위치와 함께 모아, 도민과 여행자가 “오늘 어디 갈까”를 바로 정하게 돕습니다.',
@@ -27,6 +32,11 @@ export const EXTRA = {
 
   },
   en: {
+    'map.foodAria': 'Cafes and restaurants layer', 'map.food': 'Cafes & food', 'map.foodToggle': 'Show cafes & restaurants',
+    'map.fk.all': 'All', 'map.fk.cafe': 'Cafes', 'map.fk.restaurant': 'Restaurants',
+    'mv.foodTitle': 'Cafes & restaurants nearby', 'mv.foodSub': 'Within {km} km of the selected event · nearest first · as listed by VisitJeju', 'mv.foodLoading': 'Loading cafes & restaurants…',
+    'mv.foodFail': 'Could not load cafes & restaurants.', 'mv.foodNone': 'None listed within {km} km. Try a wider radius.', 'mv.foodMore': '{n} more nearby. Use a smaller radius to see only the closest.',
+    'mv.key': 'Pin colors: ', 'mv.keySight': 'Sight',
     'v.ok': '✓ Verified', 'v.okTitle': 'Checked against independent sources (official sites, maps) on {date}',
     'v.fixed': 'Corrected', 'v.fixedTitle': 'Part of the source data ({f}) was wrong and is shown with the verified value',
     'home.intent': 'Jeju’s exhibitions, performances and regional festivals together with weather and location, so residents and visitors can decide “where to go today” at once.',
@@ -53,6 +63,11 @@ export const EXTRA = {
 
   },
   zh: {
+    'map.foodAria': '咖啡馆和餐厅图层', 'map.food': '咖啡馆·餐厅', 'map.foodToggle': '同时显示咖啡馆·餐厅',
+    'map.fk.all': '全部', 'map.fk.cafe': '咖啡馆', 'map.fk.restaurant': '餐厅',
+    'mv.foodTitle': '周边咖啡馆·餐厅', 'mv.foodSub': '所选活动地点 {km}km 内 · 由近到远 · VisitJeju 登记信息', 'mv.foodLoading': '正在加载咖啡馆·餐厅…',
+    'mv.foodFail': '无法加载咖啡馆·餐厅。', 'mv.foodNone': '{km}km 内没有登记的店铺,请扩大半径试试。', 'mv.foodMore': '周边还有 {n}家。缩小半径可只看最近的。',
+    'mv.key': '图钉颜色:', 'mv.keySight': '景点',
     'v.ok': '✓ 已核实', 'v.okTitle': '已于{date}与官网、地图等其他来源核对',
     'v.fixed': '已更正', 'v.fixedTitle': '原始数据的部分内容（{f}）有误，已按核实的信息显示',
     'home.intent': '把济州的展览、演出和地区庆典与天气、位置放在一起,帮岛民和游客立刻决定“今天去哪里”。',
@@ -79,6 +94,11 @@ export const EXTRA = {
 
   },
   ja: {
+    'map.foodAria': 'カフェ・飲食店のレイヤー', 'map.food': 'カフェ・飲食店', 'map.foodToggle': 'カフェ・飲食店も表示',
+    'map.fk.all': 'すべて', 'map.fk.cafe': 'カフェ', 'map.fk.restaurant': '飲食店',
+    'mv.foodTitle': '周辺のカフェ・飲食店', 'mv.foodSub': '選んだイベント会場の半径{km}km以内 · 近い順 · VisitJeju登録情報', 'mv.foodLoading': 'カフェ・飲食店を読み込み中…',
+    'mv.foodFail': 'カフェ・飲食店を読み込めませんでした。', 'mv.foodNone': '半径{km}km以内に登録された店がありません。半径を広げてみてください。', 'mv.foodMore': 'ほかに{n}件あります。半径を狭めると近い店だけ表示されます。',
+    'mv.key': 'ピンの色: ', 'mv.keySight': '観光地',
     'v.ok': '✓ 確認済み', 'v.okTitle': '{date}に公式サイト・地図など別の情報源と照合しました',
     'v.fixed': '補正済み', 'v.fixedTitle': '元データの一部（{f}）が実際と異なるため、確認した値で表示しています',
     'home.intent': '済州の展示・公演・地域のお祭りを天気・場所と一緒にまとめ、島民も旅行者も「今日どこへ行く?」をすぐ決められるようにします。',

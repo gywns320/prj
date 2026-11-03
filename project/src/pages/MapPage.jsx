@@ -31,6 +31,14 @@ export default function MapPage() {
   const loadPlaces = useCultureStore((s) => s.loadPlaces)
   useEffect(() => { if (showPlaces) loadPlaces() }, [showPlaces, loadPlaces])
 
+  // 카페·식당(비짓제주 '음식점' 분류) — 관광지와 같은 반경을 쓰고, 핀 색이 달라 구분됩니다
+  const showFood = sp.get('food') === '1'
+  const foodKind = ['cafe', 'restaurant'].includes(sp.get('fk')) ? sp.get('fk') : ''
+  const foods = useCultureStore((s) => s.foods)
+  const foodsStatus = useCultureStore((s) => s.foodsStatus)
+  const loadFoods = useCultureStore((s) => s.loadFoods)
+  useEffect(() => { if (showFood) loadFoods() }, [showFood, loadFoods])
+
   const set = (patch) => {
     const next = new URLSearchParams(sp)
     for (const [k, v] of Object.entries(patch)) (v ? next.set(k, v) : next.delete(k))
@@ -92,15 +100,24 @@ export default function MapPage() {
         <div className="chiprow" role="group" aria-label={t('map.placesAria')}>
           <span className="chiprow-label">{t('map.places')}</span>
           <button type="button" className={`chip ${showPlaces ? 'on' : ''}`} aria-pressed={showPlaces} onClick={() => set({ places: showPlaces ? '' : '1' })}>{t('map.placesToggle')}</button>
-          {showPlaces && [1, 3, 5].map((km) => (
+          {(showPlaces || showFood) && [1, 3, 5].map((km) => (
             <button key={km} type="button" className={`chip ${radiusKm === km ? 'on' : ''}`} aria-pressed={radiusKm === km} onClick={() => setRadiusKm(km)}>{t('map.radius', { km })}</button>
+          ))}
+        </div>
+
+        <div className="chiprow" role="group" aria-label={t('map.foodAria')}>
+          <span className="chiprow-label">{t('map.food')}</span>
+          <button type="button" className={`chip ${showFood ? 'on' : ''}`} aria-pressed={showFood} onClick={() => set({ food: showFood ? '' : '1' })}>{t('map.foodToggle')}</button>
+          {showFood && ['', 'cafe', 'restaurant'].map((k) => (
+            <button key={k} type="button" className={`chip ${foodKind === k ? 'on' : ''}`} aria-pressed={foodKind === k} onClick={() => set({ fk: k })}>{t(`map.fk.${k || 'all'}`)}</button>
           ))}
         </div>
       </div>
 
       {status === 'error' && <ErrorBox message={error} onRetry={retry} />}
       {(status === 'loading' || status === 'idle') && <Skeletons n={3} />}
-      {status === 'ready' && <MapView events={list} places={places} placesOn={showPlaces} placesState={placesStatus} onRetryPlaces={() => loadPlaces(true)} radiusKm={radiusKm} />}
+      {status === 'ready' && <MapView events={list} places={places} placesOn={showPlaces} placesState={placesStatus} onRetryPlaces={() => loadPlaces(true)} radiusKm={radiusKm}
+        foods={foods} foodsOn={showFood} foodsState={foodsStatus} onRetryFoods={() => loadFoods(true)} foodKind={foodKind} />}
     </>
   )
 }

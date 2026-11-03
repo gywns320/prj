@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { fetchEvents } from '../api/events'
-import { fetchPlaces } from '../api/places'
+import { fetchFoods, fetchPlaces } from '../api/places'
 import { langInfo, tr } from '../i18n'
 import * as cloud from '../lib/cloud'
 import { isSupabaseReady } from '../lib/supabase'
@@ -44,6 +44,23 @@ export const useCultureStore = create(
           if (get().placesLocale === locale) set({ places, placesStatus: 'ready' })
         } catch (e) {
           if (get().placesLocale === locale) set({ placesStatus: 'error', placesError: e.message })
+        }
+      },
+
+      // ①-3 카페·식당(비짓제주 '음식점' 분류) — 지도에서 켰을 때 한 번만 불러옴 (언어별로 따로)
+      foods: [],
+      foodsLocale: '',
+      foodsStatus: 'idle',
+      loadFoods: async (force = false) => {
+        const locale = langInfo().visitjeju
+        const s = get()
+        if (s.foodsLocale === locale && (s.foodsStatus === 'loading' || (s.foodsStatus === 'ready' && !force))) return
+        set({ foodsStatus: 'loading', foodsLocale: locale })
+        try {
+          const foods = await fetchFoods(locale)
+          if (get().foodsLocale === locale) set({ foods, foodsStatus: 'ready' })
+        } catch {
+          if (get().foodsLocale === locale) set({ foodsStatus: 'error' })
         }
       },
 

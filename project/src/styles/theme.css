@@ -347,6 +347,15 @@ button { cursor: pointer; }
 }
 
 /* 지도: 고른 행사 주변 가볼 만한 곳 — 번호 핀과 목록 */
+.fpin span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: #e8710a; font-size: .85rem; line-height: 1; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
+.fpin.cafe span { background: #a8553a; }
+.fno { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: #e8710a; flex: none; }
+.fno.cafe { background: #a8553a; }
+.mapkey { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-size: .85rem; margin: 0 0 .5rem; }
+.mapkey i { display: inline-block; vertical-align: -3px; margin-right: .3rem; width: 14px; height: 14px; }
+.mapkey .k-sight { border-radius: 50%; background: #14a39a; }
+.mapkey .k-restaurant { border-radius: 4px; background: #e8710a; }
+.mapkey .k-cafe { border-radius: 4px; background: #a8553a; }
 .spin span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #14a39a; color: #fff; font-weight: 800; font-size: .8rem; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
 .sights { margin-top: 14px; padding: 12px; border-radius: 16px; background: #e6f6f4; display: grid; gap: 6px; }
 .sights h3 { font-size: 1rem; color: #0d6b64; }

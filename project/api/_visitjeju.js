@@ -1,7 +1,7 @@
 // 비짓제주 관광정보 OPEN API (제주관광공사, VisitJeju-OpenAPI-01) 에서 '가볼 만한 곳'을 모아 오는 공용 코드
 // /api/visitjeju (화면용) 와 /api/chat (AI 가이드) 가 함께 씁니다.
 // API 키는 서버 환경변수 VISITJEJU_API_KEY 에만 있고, 브라우저로는 절대 나가지 않습니다.
-import { isHidden } from './_unrelated.js'
+import { foodKind, isFood, isHidden } from './_unrelated.js'
 import { applyCorrections, newStats } from './_apply.js'
 
 const UPSTREAM = 'https://api.visitjeju.net/vsjApi/contents/searchList'
@@ -21,6 +21,23 @@ export class KeyMissingError extends Error {}
 // 관광지 목록을 가져와 화면에 쓰는 항목만 남겨 돌려줍니다. 실패하면 키가 섞이지 않은 메시지의 Error 를 던집니다.
 // 검증된 수정 목록(_corrections.js)을 적용하고, 적용 결과는 stats 에 셉니다.
 export async function fetchSights(locale = 'kr', stats = newStats()) {
+  const all = await fetchAll(locale)
+  // 가게·일정·생활 서비스는 빼고 '가볼 만한 곳'만 (자세한 기준은 _unrelated.js). 분류 이름이 바뀌어 전부 걸러지면 분류 거르기만 건너뜁니다
+  let kept = all.filter((i) => !isHidden(i, locale))
+  if (all.length > 0 && kept.length === 0) kept = all.filter((i) => !isHidden(i, locale, { sightsOnly: false }))
+  return kept.map(compact).filter(Boolean)
+    .map((p) => applyCorrections('place', p.id, p, stats, { valuesToo: locale === 'kr' }))
+    .filter(Boolean)
+}
+
+// '음식점' 분류(식당·카페)만 돌려줍니다. 평점 정보는 원본에 없어서 비짓제주에 등록된 그대로 보여줍니다.
+export async function fetchFoods(locale = 'kr') {
+  const all = await fetchAll(locale)
+  return all.filter((i) => isFood(i, locale)).map((i) => compactFood(i, locale)).filter(Boolean)
+}
+
+// 모든 페이지를 모아 원본 항목 배열로 돌려줍니다. 실패하면 키가 섞이지 않은 메시지의 Error 를 던집니다.
+async function fetchAll(locale) {
   const rawKey = process.env.VISITJEJU_API_KEY
   const key = normalizeKey(rawKey)
   if (!key) throw new KeyMissingError('서버에 VISITJEJU_API_KEY 환경변수가 설정되지 않았어요')
@@ -48,13 +65,7 @@ export async function fetchSights(locale = 'kr', stats = newStats()) {
     const first = await getPage(1)
     const pageCount = Math.min(Number(first.pageCount) || 1, MAX_PAGES)
     const rest = await Promise.all(Array.from({ length: pageCount - 1 }, (_, i) => getPage(i + 2)))
-    const all = [first, ...rest].flatMap((p) => p.items ?? [])
-    // 가게·일정·생활 서비스는 빼고 '가볼 만한 곳'만 (자세한 기준은 _unrelated.js). 분류 이름이 바뀌어 전부 걸러지면 분류 거르기만 건너뜁니다
-    let kept = all.filter((i) => !isHidden(i, locale))
-    if (all.length > 0 && kept.length === 0) kept = all.filter((i) => !isHidden(i, locale, { sightsOnly: false }))
-    return kept.map(compact).filter(Boolean)
-      .map((p) => applyCorrections('place', p.id, p, stats, { valuesToo: locale === 'kr' }))
-      .filter(Boolean)
+    return [first, ...rest].flatMap((p) => p.items ?? [])
   } catch (e) {
     throw new Error(hide(e.message))
   }
@@ -87,5 +98,15 @@ function compact(i) {
     lat, lng,
     img: photo.imgpath ?? '',
     thumb: photo.thumbnailpath ?? '',
+  }
+}
+
+// 음식점 한 건 — 지도에 핀과 목록만 쓰므로 소개글·큰 사진은 뺍니다 (원본이 1,300건이라 용량을 줄임)
+function compactFood(i, locale) {
+  const base = compact(i)
+  if (!base) return null
+  return {
+    id: base.id, title: base.title, kind: foodKind(i, locale), region: base.region, area: base.area,
+    addr: base.addr, tag: base.tag.split(',').slice(0, 5).join(','), tel: base.tel, lat: base.lat, lng: base.lng, thumb: base.thumb,
   }
 }
