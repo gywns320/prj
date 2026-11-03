@@ -1,19 +1,29 @@
-// 제주 문화달력 AI 가이드 — Claude 가 도구(행사 검색·날씨·주변 관광지·지역축제 시기)로 사이트 데이터를 찾아 답합니다.
+// 제주 문화달력 AI 가이드 — Gemini 가 도구(행사 검색·날씨·주변 관광지·지역축제 시기)로 사이트 데이터를 찾아 답합니다.
 //   POST /api/chat   { messages: [{ role: 'user' | 'assistant', content }], lang?: 'ko' | 'en' | 'zh' | 'ja' }
 //   응답: 줄마다 JSON 한 개 (NDJSON)  →  { type: 'text', text } · { type: 'tool', name } · { type: 'done' } · { type: 'error', code, message }
-// API 키는 서버 환경변수 ANTHROPIC_API_KEY 에만 있고 브라우저로는 나가지 않습니다. (모델은 ANTHROPIC_MODEL 로 바꿀 수 있음)
-import Anthropic from '@anthropic-ai/sdk'
+// API 키는 서버 환경변수 GEMINI_API_KEY 에만 있고 브라우저로는 나가지 않습니다. (모델은 GEMINI_MODEL 로 바꿀 수 있음)
+import { ApiError, GoogleGenAI } from '@google/genai'
 import { TOOLS, runTool, todayKst } from './_tools.js'
 
-const MODEL = () => process.env.ANTHROPIC_MODEL?.trim() || 'claude-sonnet-5-5' // 수업용 키는 Sonnet 5.5 기준 — 더 강한 모델은 ANTHROPIC_MODEL 로
+const MODEL = () => process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash' // 도구 호출을 지원하는 빠른 모델 — 바꾸려면 GEMINI_MODEL
 const MAX_TURNS = 6 // 도구를 부르고 답하는 왕복 상한 — 무한 반복으로 비용이 새지 않도록
-const MAX_OUTPUT = 5000 // 생각과 답변을 합친 한 번의 상한
+const MAX_OUTPUT = 5000 // 한 번에 만드는 답변의 상한
+
+// 도구 정의를 Gemini 형식으로 (스키마는 JSON Schema 그대로 씀)
+const DECLARATIONS = TOOLS.map((t) => ({ name: t.name, description: t.description, parametersJsonSchema: t.input_schema }))
+
+// 모델에 따라 생각 길이를 짧게 — 채팅은 빠른 응답이 중요해서. 2.5 는 토큰 수, 3 은 단계로 지정
+function thinkingConfig(model) {
+  if (/gemini-2\.5-flash/.test(model)) return { thinkingBudget: 1024 }
+  if (/gemini-3/.test(model)) return { thinkingLevel: 'LOW' }
+  return undefined
+}
 const MAX_MESSAGES = 12 // 최근 대화만 보냄
 const MAX_USER_CHARS = 600
 const MAX_ASSISTANT_CHARS = 4000
 
 // 환경변수에 붙여넣을 때 섞이는 따옴표·공백·줄바꿈 정리
-const apiKey = () => String(process.env.ANTHROPIC_API_KEY ?? '').trim().replace(/^["']+|["']+$/g, '').trim()
+const apiKey = () => String(process.env.GEMINI_API_KEY ?? '').trim().replace(/^["']+|["']+$/g, '').trim()
 
 // ── 남용 방지: 같은 접속자가 짧은 시간에 너무 많이 부르지 못하게 (서버 한 대 안에서만 세는 간이 제한) ──
 const WINDOW_MS = 10 * 60 * 1000
@@ -97,60 +107,69 @@ export default async function handler(req, res) {
   res.on('close', () => { closed = true; current?.abort() }) // 사용자가 창을 닫으면 모델 호출도 멈춰 비용을 아낌
 
   try {
-    const client = new Anthropic({ apiKey: key })
-    const history = [...messages]
-    const system = systemPrompt(lang)
+    const ai = new GoogleGenAI({ apiKey: key })
+    const model = MODEL()
+    const contents = messages.map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] }))
+    const config = {
+      systemInstruction: systemPrompt(lang),
+      tools: [{ functionDeclarations: DECLARATIONS }],
+      maxOutputTokens: MAX_OUTPUT,
+      thinkingConfig: thinkingConfig(model),
+    }
     let wroteText = false
 
     for (let turn = 0; turn < MAX_TURNS && !closed; turn++) {
-      const stream = client.messages.stream({
-        model: MODEL(),
-        max_tokens: MAX_OUTPUT,
-        system,
-        tools: TOOLS,
-        messages: history,
-        output_config: { effort: 'low' }, // 채팅은 빠른 응답이 중요해서 생각을 짧게
-        cache_control: { type: 'ephemeral' }, // 도구 왕복 동안 앞부분(도구·시스템 프롬프트)을 재사용
-      })
-      current = stream
+      current = new AbortController()
+      const stream = await ai.models.generateContentStream({ model, contents, config: { ...config, abortSignal: current.signal } })
+      const parts = [] // 이번 응답의 모든 조각 — 다음 왕복에 그대로 돌려줘야 모델이 자기 생각(서명)을 이어 갑니다
       let first = true
-      stream.on('text', (delta) => {
-        // 도구를 쓰기 전에 한 말과 도구를 쓴 뒤의 말이 한 덩어리로 붙지 않게 문단을 나눔
-        if (first && wroteText) send({ type: 'text', text: '\n\n' })
-        first = false
-        wroteText = true
-        send({ type: 'text', text: delta })
-      })
-      const message = await stream.finalMessage()
+      let finish = ''
+      let blocked = ''
+      for await (const chunk of stream) {
+        blocked ||= chunk.promptFeedback?.blockReason ?? ''
+        const cand = chunk.candidates?.[0]
+        finish ||= cand?.finishReason ?? ''
+        for (const part of cand?.content?.parts ?? []) {
+          parts.push(part)
+          if (typeof part.text === 'string' && part.text && !part.thought) {
+            // 도구를 쓰기 전에 한 말과 도구를 쓴 뒤의 말이 한 덩어리로 붙지 않게 문단을 나눔
+            if (first && wroteText) send({ type: 'text', text: '\n\n' })
+            first = false
+            wroteText = true
+            send({ type: 'text', text: part.text })
+          }
+        }
+      }
       current = null
 
-      if (message.stop_reason === 'refusal') { send({ type: 'error', code: 'refusal', message: 'The model declined to answer this request.' }); return res.end() }
-      const uses = message.content.filter((b) => b.type === 'tool_use')
-      if (message.stop_reason !== 'tool_use' || uses.length === 0) {
-        if (message.stop_reason === 'max_tokens') send({ type: 'text', text: '…' })
+      if (blocked || finish === 'SAFETY' || finish === 'PROHIBITED_CONTENT') { send({ type: 'error', code: 'refusal', message: 'The model declined to answer this request.' }); return res.end() }
+      const uses = parts.filter((p) => p.functionCall).map((p, i) => ({ id: p.functionCall.id || `call_${turn}_${i}`, name: p.functionCall.name, input: p.functionCall.args ?? {} }))
+      if (uses.length === 0) {
+        if (finish === 'MAX_TOKENS') send({ type: 'text', text: '…' })
         break
       }
 
       // 도구 호출 결과는 한 번에 모아서 돌려보냄 (여러 개를 동시에 부른 경우)
-      history.push({ role: 'assistant', content: message.content })
+      contents.push({ role: 'model', parts })
       // 화면의 '에이전트가 호출한 도구' 목록에 쓰도록, 부르는 순간(이름·입력)과 끝난 순간(성공 여부·결과 개수)을 알려 줍니다
       for (const u of uses) send({ type: 'tool', id: u.id, name: u.name, input: u.input })
       const results = await Promise.all(uses.map(async (u) => {
         const r = await runTool(u.name, u.input)
         send({ type: 'tool_done', id: u.id, ok: !r.isError, ...(r.summary ?? {}) })
-        return { type: 'tool_result', tool_use_id: u.id, content: r.content, ...(r.isError ? { is_error: true } : {}) }
+        return { functionResponse: { id: u.id, name: u.name, response: r.isError ? { error: r.content } : { output: r.content } } }
       }))
-      history.push({ role: 'user', content: results })
+      contents.push({ role: 'user', parts: results })
     }
     send({ type: 'done' })
   } catch (e) {
     if (!closed) {
       // 키가 담길 수 있는 e.message 는 그대로 내보내지 않고 종류만 알려줌
-      const code = e instanceof Anthropic.AuthenticationError || e instanceof Anthropic.PermissionDeniedError ? 'auth'
-        : e instanceof Anthropic.RateLimitError ? 'busy'
-          : e instanceof Anthropic.BadRequestError ? 'bad_model'
+      const status = e instanceof ApiError ? e.status : 0
+      const code = status === 401 || status === 403 || (status === 400 && /api key/i.test(e.message)) ? 'auth'
+        : status === 429 || status === 503 ? 'busy'
+          : status === 400 || status === 404 ? 'bad_model'
             : 'failed'
-      console.error('[chat]', code, e?.status, e?.message?.slice?.(0, 200))
+      console.error('[chat]', code, status, e?.message?.slice?.(0, 200))
       send({ type: 'error', code })
     }
   }

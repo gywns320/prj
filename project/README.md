@@ -5,7 +5,7 @@
 - **주제**: 제주의 문화행사와 지역축제 (해녀축제·탐라문화제·방어축제·들불축제처럼 제주만의 이야기가 있는 행사)
 - **대상**: 주말에 갈 곳을 찾는 제주 도민, 짧은 일정에 제주 문화를 만나고 싶은 여행자 (한국어·English·中文·日本語)
 - **배포**: https://project-alpha-ivory-34.vercel.app · **저장소**: https://github.com/gywns320/prj (`project/` 폴더)
-- **기술**: Vite 8 · React 19 · react-router-dom 7 · Zustand 5 · Leaflet · Supabase · Claude API · Vercel 서버 함수
+- **기술**: Vite 8 · React 19 · react-router-dom 7 · Zustand 5 · Leaflet · Supabase · Gemini API · Vercel 서버 함수
 
 ## 이런 걸 할 수 있어요
 
@@ -29,14 +29,14 @@
 | **비짓제주 관광정보** | 제주관광공사 `https://api.visitjeju.net/vsjApi/contents/searchList` | `VISITJEJU_API_KEY` | 지도(주변 가볼 만한 곳) · 행사 상세 · AI 가이드 |
 | **Open-Meteo 날씨 예보** | `https://api.open-meteo.com/v1/forecast` | 불필요 | 홈 날씨 · 행사 기간 날씨 · AI 가이드 |
 
-그 밖에 지도 타일(OpenStreetMap), 홈 풍경 사진(비짓제주 CDN), AI(Anthropic Claude API), 저장(Supabase)을 씁니다.
+그 밖에 지도 타일(OpenStreetMap), 홈 풍경 사진(비짓제주 CDN), AI(Google Gemini API), 저장(Supabase)을 씁니다.
 
 - 키가 필요한 API 와 AI 는 모두 **서버 함수(`api/`)가 대신 호출**하므로 키가 브라우저에 나가지 않습니다. 행사 API 는 CORS 헤더가 없어 브라우저가 직접 부를 수 없어서 역시 서버 함수가 중계합니다.
 - 비짓제주 응답에는 시작일·종료일이 없어 달력·기간 검색에는 쓰지 않고 위치 정보로만 씁니다.
 
 ## AI 가이드
 
-Claude 가 질문을 보고 필요한 **도구를 스스로 골라** 사이트 데이터를 찾고, 그 결과로만 답합니다. 한 질문에 여러 출처가 필요하면 도구를 이어서 부릅니다(왕복 최대 6회). 결과가 없으면 지어내지 않고 없다고 답하도록 시스템 프롬프트가 지시합니다.
+Gemini 가 질문을 보고 필요한 **도구를 스스로 골라** 사이트 데이터를 찾고, 그 결과로만 답합니다. 한 질문에 여러 출처가 필요하면 도구를 이어서 부릅니다(왕복 최대 6회). 결과가 없으면 지어내지 않고 없다고 답하도록 시스템 프롬프트가 지시합니다.
 
 | 도구 | 하는 일 | 데이터 |
 |---|---|---|
@@ -49,7 +49,7 @@ Claude 가 질문을 보고 필요한 **도구를 스스로 골라** 사이트 �
 예시 질문: “이번 주말에 뭐 해요?” · “비 오는 날 갈 만한 실내 행사 알려줘”(날씨 → 행사) · “산지천갤러리 전시 주변에 가볼 만한 곳은?”(행사 → 주변 관광지) · “방어축제는 언제 열려요?”
 
 - 서버 `api/chat.js`, 도구 `api/_tools.js`, 화면 `src/components/ChatWidget.jsx`, 상태 `src/store/useChatStore.js`
-- 모델 기본값은 `claude-sonnet-5-5` (환경변수 `ANTHROPIC_MODEL` 로 변경)
+- 모델 기본값은 `gemini-2.5-flash` (환경변수 `GEMINI_MODEL` 로 변경)
 - 비용 보호: 접속자별 요청 제한(10분에 20회), 질문 600자 · 대화 12개 · 답변 5,000토큰 · 도구 왕복 6회 상한, 창을 닫으면 호출 중단. Anthropic 콘솔의 월 사용 한도도 설정하세요.
 
 ## 저장 (Supabase)
@@ -84,11 +84,11 @@ npm run build                # 배포용 빌드
 | 환경변수 | 용도 | 없으면 |
 |---|---|---|
 | `VISITJEJU_API_KEY` | 비짓제주 관광정보 (서버만) | 관광지 부분에만 안내 문구 |
-| `ANTHROPIC_API_KEY` | AI 가이드 (서버만) | “AI 가이드가 아직 준비되지 않았어요” |
-| `ANTHROPIC_MODEL` | (선택) 모델, 기본 `claude-sonnet-5-5` | 기본값 |
+| `GEMINI_API_KEY` | AI 가이드 (서버만) | “AI 가이드가 아직 준비되지 않았어요” |
+| `GEMINI_MODEL` | (선택) 모델, 기본 `gemini-2.5-flash` | 기본값 |
 | `VITE_SUPABASE_URL` · `VITE_SUPABASE_ANON_KEY` | Supabase (브라우저, 공개 값) | 이 브라우저에만 저장 |
 
-비밀 키(`VISITJEJU_API_KEY`, `ANTHROPIC_API_KEY`)에는 **`VITE_` 를 붙이지 마세요** — 붙이면 브라우저에 노출됩니다. `.env.local` 은 git 에 올라가지 않습니다.
+비밀 키(`VISITJEJU_API_KEY`, `GEMINI_API_KEY`)에는 **`VITE_` 를 붙이지 마세요** — 붙이면 브라우저에 노출됩니다. `.env.local` 은 git 에 올라가지 않습니다.
 
 ## 배포 (Vercel)
 

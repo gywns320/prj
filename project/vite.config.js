@@ -5,13 +5,13 @@ import { defineConfig, loadEnv } from 'vite'
 
 // api/ 폴더의 서버 함수(Vercel 이 배포 때 실행하는 파일)를 로컬 개발·미리보기 서버에서도 똑같이 실행해 줍니다.
 // 그래서 로컬과 배포가 같은 코드로 동작합니다. (/api/event, /api/visitjeju, /api/chat)
-// 비짓제주 키(VISITJEJU_API_KEY)와 Claude 키(ANTHROPIC_API_KEY)는 .env.local 에서 읽으며 브라우저 번들에는 들어가지 않습니다.
+// 비짓제주 키(VISITJEJU_API_KEY)와 Gemini 키(GEMINI_API_KEY)는 .env.local 에서 읽으며 브라우저 번들에는 들어가지 않습니다.
 function localApi(env) {
   const mount = (server) => {
     for (const name of ['event', 'visitjeju', 'chat']) {
       server.middlewares.use(`/api/${name}`, async (req, res) => {
         // 값이 있을 때만 대입 (undefined 를 대입하면 문자열 "undefined" 가 들어가 버립니다)
-        for (const k of ['VISITJEJU_API_KEY', 'ANTHROPIC_API_KEY', 'ANTHROPIC_MODEL']) {
+        for (const k of ['VISITJEJU_API_KEY', 'GEMINI_API_KEY', 'GEMINI_MODEL']) {
           if (!process.env[k] && env[k]) process.env[k] = env[k]
         }
         const url = new URL(req.url, 'http://localhost')
