@@ -369,13 +369,6 @@ button { cursor: pointer; }
 .sight-body b { overflow-wrap: anywhere; font-size: .92rem; }
 
 /* AI 가이드: 에이전트가 호출한 도구 목록 */
-.toollist { margin: 0 0 8px; padding: 8px 10px; border-radius: 10px; background: #eef1fb; font-size: .8rem; }
-.toollist-title { margin: 0 0 4px !important; font-weight: 800; color: var(--navy); }
-.toollist ol { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
-.toollist code { display: block; font-size: .74rem; color: #3a4ba0; overflow-wrap: anywhere; }
-.tool-out { display: block; color: #0d6b64; font-weight: 700; }
-.tool-error .tool-out { color: #b3261e; }
-.tool-running .tool-out { color: var(--muted); }
 
 /* 내 일정: 닉네임·저장 위치·최근 본 행사 */
 .cloudbox { margin-bottom: 18px; display: grid; gap: 6px; }
