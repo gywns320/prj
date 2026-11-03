@@ -27,7 +27,7 @@ export default function RootLayout() {
       <header className="topbar">
         <NavLink to="/" className="brand">
           <span className="brand-mark" aria-hidden="true">
-            <img src="/favicon.svg" width="30" height="30" alt="" /> {/* 탭 아이콘·앱 아이콘과 같은 로고 */}
+            <img src="/favicon.svg" width="39" height="39" alt="" /> {/* 탭 아이콘·앱 아이콘과 같은 로고 */}
           </span>
           {t('brand')}
         </NavLink>
