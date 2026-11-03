@@ -5,7 +5,7 @@
 import { ApiError, GoogleGenAI } from '@google/genai'
 import { TOOLS, runTool, todayKst } from './_tools.js'
 
-const MODEL = () => process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash' // 도구 호출을 지원하는 빠른 모델 — 바꾸려면 GEMINI_MODEL
+const MODEL = () => process.env.GEMINI_MODEL?.trim() || 'gemini-3.8-flash' // 안정 버전 중 최신 Flash (2.5 는 AI Studio 에서 이미 내려감) — 바꾸려면 GEMINI_MODEL
 const MAX_TURNS = 6 // 도구를 부르고 답하는 왕복 상한 — 무한 반복으로 비용이 새지 않도록
 const MAX_OUTPUT = 5000 // 한 번에 만드는 답변의 상한
 

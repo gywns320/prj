@@ -49,7 +49,7 @@ Gemini 가 질문을 보고 필요한 **도구를 스스로 골라** 사이트 �
 예시 질문: “이번 주말에 뭐 해요?” · “비 오는 날 갈 만한 실내 행사 알려줘”(날씨 → 행사) · “산지천갤러리 전시 주변에 가볼 만한 곳은?”(행사 → 주변 관광지) · “방어축제는 언제 열려요?”
 
 - 서버 `api/chat.js`, 도구 `api/_tools.js`, 화면 `src/components/ChatWidget.jsx`, 상태 `src/store/useChatStore.js`
-- 모델 기본값은 `gemini-2.5-flash` (환경변수 `GEMINI_MODEL` 로 변경)
+- 모델 기본값은 `gemini-3.8-flash` (환경변수 `GEMINI_MODEL` 로 변경)
 - 비용 보호: 접속자별 요청 제한(10분에 20회), 질문 600자 · 대화 12개 · 답변 5,000토큰 · 도구 왕복 6회 상한, 창을 닫으면 호출 중단. Anthropic 콘솔의 월 사용 한도도 설정하세요.
 
 ## 저장 (Supabase)
@@ -85,7 +85,7 @@ npm run build                # 배포용 빌드
 |---|---|---|
 | `VISITJEJU_API_KEY` | 비짓제주 관광정보 (서버만) | 관광지 부분에만 안내 문구 |
 | `GEMINI_API_KEY` | AI 가이드 (서버만) | “AI 가이드가 아직 준비되지 않았어요” |
-| `GEMINI_MODEL` | (선택) 모델, 기본 `gemini-2.5-flash` | 기본값 |
+| `GEMINI_MODEL` | (선택) 모델, 기본 `gemini-3.8-flash` | 기본값 |
 | `VITE_SUPABASE_URL` · `VITE_SUPABASE_ANON_KEY` | Supabase (브라우저, 공개 값) | 이 브라우저에만 저장 |
 
 비밀 키(`VISITJEJU_API_KEY`, `GEMINI_API_KEY`)에는 **`VITE_` 를 붙이지 마세요** — 붙이면 브라우저에 노출됩니다. `.env.local` 은 git 에 올라가지 않습니다.
