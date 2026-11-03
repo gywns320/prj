@@ -1,7 +1,7 @@
 {
   "name": "제주 문화달력",
   "short_name": "제주 문화달력",
-  "description": "제주내 문화, 행사, 전시, 축제 안내사이트",
+  "description": "제주내 문화행사 안내사이트",
   "lang": "ko",
   "start_url": "/",
   "scope": "/",
