@@ -5,7 +5,10 @@
 import { ApiError, GoogleGenAI } from '@google/genai'
 import { TOOLS, runTool, todayKst } from './_tools.js'
 
-const MODEL = () => process.env.GEMINI_MODEL?.trim() || 'gemini-3.8-flash' // 안정 버전 중 최신 Flash (2.5 는 AI Studio 에서 이미 내려감) — 바꾸려면 GEMINI_MODEL
+// 쓸 모델 순서 — 앞 모델이 바쁘거나(429·503) 응답이 늦으면 다음 모델로 넘어갑니다 (GEMINI_MODEL 은 맨 앞에 끼워 넣음)
+const MODELS = () => [...new Set([process.env.GEMINI_MODEL?.trim(), 'gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-3.5-flash-lite'].filter(Boolean))]
+const ATTEMPT_MS = 20_000 // 한 모델에 응답을 기다리는 시간 — 서버 함수 제한(60초) 안에서 다음 모델을 시도할 시간을 남김
+const RETRY_UNTIL_MS = 35_000 // 이 시간이 지나면 더 시도하지 않음
 const MAX_TURNS = 6 // 도구를 부르고 답하는 왕복 상한 — 무한 반복으로 비용이 새지 않도록
 const MAX_OUTPUT = 5000 // 한 번에 만드는 답변의 상한
 
@@ -108,19 +111,36 @@ export default async function handler(req, res) {
 
   try {
     const ai = new GoogleGenAI({ apiKey: key })
-    const model = MODEL()
-    const contents = messages.map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] }))
+    const models = MODELS()
+    let m = 0 // 지금 쓰는 모델 (한 번 넘어가면 이 대화 동안 그 모델을 계속 씀)
+    const t0 = Date.now()
+    const contents = messages.map((msg) => ({ role: msg.role === 'assistant' ? 'model' : 'user', parts: [{ text: msg.content }] }))
     const config = {
       systemInstruction: systemPrompt(lang),
       tools: [{ functionDeclarations: DECLARATIONS }],
       maxOutputTokens: MAX_OUTPUT,
-      thinkingConfig: thinkingConfig(model),
     }
     let wroteText = false
 
     for (let turn = 0; turn < MAX_TURNS && !closed; turn++) {
-      current = new AbortController()
-      const stream = await ai.models.generateContentStream({ model, contents, config: { ...config, abortSignal: current.signal } })
+      let stream
+      for (;;) {
+        current = new AbortController()
+        const model = models[m]
+        const timer = setTimeout(() => current?.abort(), ATTEMPT_MS) // 응답이 시작될 때까지만 기다림 (시작된 뒤에는 긴 답변도 끝까지)
+        try {
+          stream = await ai.models.generateContentStream({ model, contents, config: { ...config, thinkingConfig: thinkingConfig(model), abortSignal: current.signal } })
+          clearTimeout(timer)
+          break
+        } catch (err) {
+          clearTimeout(timer)
+          const st = err instanceof ApiError ? err.status : 0
+          const retry = [400, 404, 429, 500, 503].includes(st) && !(st === 400 && /api key/i.test(err.message)) || (err?.name === 'AbortError' && !closed)
+          if (closed || !retry || m + 1 >= models.length || Date.now() - t0 > RETRY_UNTIL_MS) throw err
+          console.warn('[chat] 다음 모델로', model, '→', models[m + 1], st || err.name)
+          m += 1
+        }
+      }
       const parts = [] // 이번 응답의 모든 조각 — 다음 왕복에 그대로 돌려줘야 모델이 자기 생각(서명)을 이어 갑니다
       let first = true
       let finish = ''
@@ -166,11 +186,11 @@ export default async function handler(req, res) {
       // 키가 담길 수 있는 e.message 는 그대로 내보내지 않고 종류만 알려줌
       const status = e instanceof ApiError ? e.status : 0
       const code = status === 401 || status === 403 || (status === 400 && /api key/i.test(e.message)) ? 'auth'
-        : status === 429 || status === 503 ? 'busy'
+        : status === 429 || status === 503 || e?.name === 'AbortError' ? 'busy'
           : status === 400 || status === 404 ? 'bad_model'
             : 'failed'
       console.error('[chat]', code, status, e?.message?.slice?.(0, 200))
-      send({ type: 'error', code })
+      send({ type: 'error', code, status }) // 상태 번호만 덧붙임 (원인 파악용, 키·내용은 담기지 않음)
     }
   }
   res.end()
