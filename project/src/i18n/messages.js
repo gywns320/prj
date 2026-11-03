@@ -84,7 +84,6 @@ export const MESSAGES = {
     'chat.err.not_configured': 'AI 가이드가 아직 준비되지 않았어요. (관리자가 Gemini API 키를 설정해야 해요)', 'chat.err.rate_limited': '질문이 너무 많아요. 잠시 뒤에 다시 물어봐 주세요.',
     'chat.err.busy': 'AI 서버가 바빠요. 잠시 뒤에 다시 시도해 주세요.', 'chat.err.auth': 'AI 가이드 설정에 문제가 있어요. 관리자에게 알려 주세요.', 'chat.err.bad_model': 'AI 가이드 설정에 문제가 있어요. 관리자에게 알려 주세요.',
     'chat.err.refusal': '이 질문에는 답할 수 없어요.', 'chat.err.failed': '답변을 만들지 못했어요. 다시 시도해 주세요.', 'chat.err.network': '네트워크에 연결할 수 없어요.',
-    footer: '행사 정보 출처: 제주특별자치도 전시문화행사정보 OpenAPI(제주in놀다 · 제주문화예술재단). 일정은 변경될 수 있으니 방문 전 문의처로 확인하세요.',
 
     'common.all': '전체', 'common.more': '더 보기 →', 'common.retry': '다시 시도',
     'common.loading': '불러오는 중…', 'common.loadingAria': '불러오는 중', 'common.count': '{n}건',
@@ -220,7 +219,6 @@ export const MESSAGES = {
     'chat.err.not_configured': 'The AI guide is not set up yet. (The site owner needs to add a Gemini API key.)', 'chat.err.rate_limited': 'Too many questions. Please try again in a few minutes.',
     'chat.err.busy': 'The AI service is busy. Please try again shortly.', 'chat.err.auth': 'There is a problem with the AI guide setup. Please tell the site owner.', 'chat.err.bad_model': 'There is a problem with the AI guide setup. Please tell the site owner.',
     'chat.err.refusal': 'I can’t answer that request.', 'chat.err.failed': 'Could not generate an answer. Please try again.', 'chat.err.network': 'Cannot connect to the network.',
-    footer: 'Event data: Jeju Special Self-Governing Province exhibition & cultural events OpenAPI (Jeju in Nolda · Jeju Foundation for Arts and Culture). Event names and descriptions are shown in the original Korean. Schedules may change, so please check with the organizer before you go.',
 
     'common.all': 'All', 'common.more': 'See more →', 'common.retry': 'Try again',
     'common.loading': 'Loading…', 'common.loadingAria': 'Loading', 'common.count': '{n}',
@@ -356,7 +354,6 @@ export const MESSAGES = {
     'chat.err.not_configured': 'AI向导尚未准备好。(需要管理员设置 Gemini API 密钥)', 'chat.err.rate_limited': '提问太频繁了,请稍后再试。',
     'chat.err.busy': 'AI服务繁忙,请稍后再试。', 'chat.err.auth': 'AI向导的设置有问题,请告知管理员。', 'chat.err.bad_model': 'AI向导的设置有问题,请告知管理员。',
     'chat.err.refusal': '这个问题我无法回答。', 'chat.err.failed': '未能生成回答,请重试。', 'chat.err.network': '无法连接网络。',
-    footer: '活动信息来源:济州特别自治道展览文化活动信息 OpenAPI(济州in玩 · 济州文化艺术财团)。活动名称与介绍以原文(韩语)显示。日程可能变更,出行前请向咨询处确认。',
 
     'common.all': '全部', 'common.more': '查看更多 →', 'common.retry': '重试',
     'common.loading': '加载中…', 'common.loadingAria': '加载中', 'common.count': '{n}场',
@@ -492,7 +489,6 @@ export const MESSAGES = {
     'chat.err.not_configured': 'AIガイドはまだ準備できていません。(管理者がGemini APIキーを設定する必要があります)', 'chat.err.rate_limited': '質問が多すぎます。しばらくしてからもう一度お試しください。',
     'chat.err.busy': 'AIサーバーが混み合っています。しばらくしてからもう一度お試しください。', 'chat.err.auth': 'AIガイドの設定に問題があります。管理者にお知らせください。', 'chat.err.bad_model': 'AIガイドの設定に問題があります。管理者にお知らせください。',
     'chat.err.refusal': 'この質問にはお答えできません。', 'chat.err.failed': '回答を作成できませんでした。もう一度お試しください。', 'chat.err.network': 'ネットワークに接続できません。',
-    footer: 'イベント情報の出典:済州特別自治道 展示文化イベント情報 OpenAPI(済州in遊ぶ · 済州文化芸術財団)。イベント名・紹介は原文(韓国語)のまま表示されます。日程は変更される場合があるため、訪問前に問い合わせ先でご確認ください。',
 
     'common.all': 'すべて', 'common.more': 'もっと見る →', 'common.retry': '再試行',
     'common.loading': '読み込み中…', 'common.loadingAria': '読み込み中', 'common.count': '{n}件',

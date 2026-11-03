@@ -4,7 +4,6 @@ import Home from './pages/Home'
 import Events from './pages/Events'
 import EventDetail from './pages/EventDetail'
 import Festivals from './pages/Festivals'
-import About from './pages/About'
 import Saved from './pages/Saved'
 import NotFound from './pages/NotFound'
 
@@ -43,7 +42,6 @@ export const router =createBrowserRouter([
       { path: 'events', element: <Events /> },
       { path: 'events/:seq', element: <EventDetail /> },
       { path: 'map', lazy: lazyPage('map-reloaded', () => import('./pages/MapPage')) },
-      { path: 'about', element: <About /> },
       { path: 'festivals', element: <Festivals /> },
       { path: 'saved', element: <Saved /> },
       { path: '*', element: <NotFound inline /> },

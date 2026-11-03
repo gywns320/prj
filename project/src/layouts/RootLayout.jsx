@@ -5,6 +5,14 @@ import { NAV_ITEMS } from '../router'
 import { LANGS, useDocumentLang, useLangStore, useT } from '../i18n'
 import { useCultureStore } from '../store/useCultureStore'
 
+// 화면 맨 아래에 보여주는 자료 출처 (번역 키, 주소)
+const SOURCES = [
+  ['events', 'https://www.jejunolda.com'],
+  ['visit', 'https://www.visitjeju.net'],
+  ['weather', 'https://open-meteo.com'],
+  ['map', 'https://www.openstreetmap.org/copyright'],
+]
+
 export default function RootLayout() {
   const { t, lang } = useT()
   const setLang = useLangStore((s) => s.setLang)
@@ -42,8 +50,13 @@ export default function RootLayout() {
       <main className="page" key={lang}><Outlet /></main>
 
       <footer className="footer">
-        {t('footer')}
-        <p><NavLink to="/about">{t('footer.about')}</NavLink></p>
+        <p className="footer-title">{t('footer.srcTitle')}</p>
+        <ul className="sources">
+          {SOURCES.map(([k, url]) => (
+            <li key={k}>{t(`footer.src.${k}`)} <a href={url} target="_blank" rel="noopener noreferrer">{new URL(url).hostname.replace(/^www\./, '')}</a></li>
+          ))}
+        </ul>
+        <p className="footer-note">{t('footer.note')}</p>
       </footer>
 
       <nav className="tabbar" aria-label={t('nav.bottom')}>
