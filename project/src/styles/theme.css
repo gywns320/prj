@@ -228,7 +228,7 @@ button { cursor: pointer; }
 .src { margin: 10px 0 0; font-size: .75rem; text-align: right; }
 .now { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .now-main { display: flex; align-items: center; gap: 14px; }
-.now-icon { font-size: 3.4rem; line-height: 1; }
+.now-icon { font-size: 4.1rem; line-height: 1; }
 .now-temp { font-size: 3rem; line-height: 1; letter-spacing: -.04em; }
 .now-label { display: block; color: var(--muted); font-weight: 600; }
 .now-facts { display: flex; gap: 22px; margin: 0; }
@@ -243,7 +243,7 @@ button { cursor: pointer; }
 .wday { display: grid; justify-items: center; gap: 2px; padding: 10px 4px; border-radius: 14px; background: rgba(255,255,255,.75); text-align: center; }
 .wday.wet { background: #dfe9fb; }
 .wd-label { font-size: .8rem; font-weight: 700; color: var(--muted); }
-.wd-icon { font-size: 1.7rem; line-height: 1.3; }
+.wd-icon { font-size: 2.05rem; line-height: 1.3; }
 .wd-icon .wi { margin: 0 auto; }
 
 /* 날씨 아이콘 움직임 (WeatherIcon.jsx) */
