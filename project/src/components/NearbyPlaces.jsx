@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Cover } from './EventCard'
+import VerifyBadge from './VerifyBadge'
 import { distanceKm, fmtKm, placeMapUrl } from '../lib/geo'
 import { useT } from '../i18n'
 import { useCultureStore } from '../store/useCultureStore'
@@ -71,7 +72,7 @@ function PlaceCard({ place: p }) {
     <article className="pcard">
       <Cover src={p.thumb} category={p.category} alt={p.title} />
       <div className="pcard-body">
-        <div className="ecard-tags"><span className="cat">{p.category}</span><span>{fmtKm(p.km)}</span></div>
+        <div className="ecard-tags"><span className="cat">{p.category}</span><span>{fmtKm(p.km)}</span><VerifyBadge item={p} /></div>
         <h3>{p.title}</h3>
         {p.intro && <p className="pcard-intro">{p.intro}</p>}
         {p.tags.length > 0 && <p className="pcard-tags">{p.tags.slice(0, 3).map((x) => `#${x}`).join(' ')}</p>}

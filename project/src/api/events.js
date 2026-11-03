@@ -93,5 +93,7 @@ function normalize(r) {
     thumb: r.coverThumb ? IMG_BASE + r.coverThumb : r.cover ? IMG_BASE + r.cover : null,
     hit: r.hit ?? 0,
     pos: coords(r.x, r.y),
+    verified: r._verified?.ok ? r._verified : null, // 서버가 검증 데이터와 실시간 대조한 결과
+    corrected: r._corrected ?? [],
   }
 }

@@ -1,0 +1,309 @@
+<title>검증된 제주 데이터</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* 레이아웃: 위에서 아래로 흐르는 한 줄기 — 선생님 PC → 파일 → 학생 사이트. 섹션마다 작은 반복 애니메이션 하나 */
+:root {
+  --paper: #f3f4ef;      /* 바닷바람에 바랜 종이 */
+  --ink: #1f2628;        /* 현무암 */
+  --muted: #5d6a6c;
+  --line: #d5dad3;
+  --card: #ffffff;
+  --sea: #0b6f73;        /* 제주 바다 */
+  --sea-soft: #d8ecea;
+  --tang: #d9661a;       /* 한라봉 */
+  --tang-soft: #fbe6d4;
+  --ok: #1f7a34; --ok-soft: #e1f2e4;
+  --warn: #8a5a00; --warn-soft: #fff0d2;
+  --bad: #b3261e; --bad-soft: #fbe3e1;
+  --display: "Black Han Sans", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #161b1c; --ink: #e9ece6; --muted: #9eaaa9; --line: #2f393b; --card: #1e2527;
+  --sea: #4fb7b6; --sea-soft: #173638; --tang: #f08a43; --tang-soft: #3a2614;
+  --ok: #6fcf86; --ok-soft: #173321; --warn: #f0c060; --warn-soft: #382a0e; --bad: #f08a82; --bad-soft: #3a1b19;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #161b1c; --ink: #e9ece6; --muted: #9eaaa9; --line: #2f393b; --card: #1e2527;
+  --sea: #4fb7b6; --sea-soft: #173638; --tang: #f08a43; --tang-soft: #3a2614;
+  --ok: #6fcf86; --ok-soft: #173321; --warn: #f0c060; --warn-soft: #382a0e; --bad: #f08a82; --bad-soft: #3a1b19;
+  color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 64px; }
+h1, h2 { font-family: var(--display); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.1rem, 6vw, 3.6rem); line-height: 1.15; }
+h2 { font-size: clamp(1.5rem, 3.6vw, 2.1rem); line-height: 1.25; }
+p { margin: 0; max-width: 62ch; }
+.kicker { font: 600 .78rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--sea); }
+.lede { font-size: 1.12rem; color: var(--muted); }
+section { display: grid; gap: 20px; }
+.head { display: grid; gap: 10px; }
+code, .mono { font-family: var(--mono); font-size: .9em; }
+code { background: var(--sea-soft); color: var(--sea); padding: 1px 6px; border-radius: 4px; }
+.stage { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; overflow-x: auto; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.cols > * { min-width: 0; }
+
+/* ── 히어로: 데이터가 흐르는 길 ── */
+.pipe { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 12px; min-width: 640px; }
+.node { border: 1.5px solid var(--ink); border-radius: 12px; padding: 14px 16px; background: var(--paper); display: grid; gap: 4px; }
+.node b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; }
+.node span { font-size: .85rem; color: var(--muted); }
+.node.file { border-color: var(--tang); background: var(--tang-soft); }
+.node.site { border-color: var(--sea); background: var(--sea-soft); }
+.track { position: relative; width: 70px; height: 2px; background: var(--line); }
+.track::after { content: ""; position: absolute; top: -5px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--tang); animation: travel 2.4s ease-in-out infinite; }
+.track.t2::after { background: var(--sea); animation-delay: 1.2s; }
+@keyframes travel { 0% { left: 0; opacity: .2 } 20% { opacity: 1 } 80% { opacity: 1 } 100% { left: calc(100% - 12px); opacity: .2 } }
+.api { margin-top: 14px; display: flex; justify-content: flex-end; min-width: 640px; }
+.api span { font: 600 .8rem/1 var(--mono); color: var(--sea); border: 1.5px dashed var(--sea); border-radius: 999px; padding: 6px 12px; animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: .55 } 50% { opacity: 1 } }
+
+/* ── 1. JSON 카드: 구조는 맞는데 내용이 틀림 ── */
+.json { font: 400 .88rem/1.9 var(--mono); }
+.json .row { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; border-radius: 6px; padding: 0 6px; }
+.json .k { color: var(--muted); }
+.json .v { color: var(--ink); }
+.json .row.bad { animation: flagBad 6s ease-in-out infinite; }
+.json .row.bad .fix { color: var(--bad); font-family: var(--body); font-size: .82rem; animation: showFix 6s ease-in-out infinite; }
+@keyframes flagBad { 0%,30% { background: transparent } 40%,90% { background: var(--bad-soft) } 100% { background: transparent } }
+@keyframes showFix { 0%,35% { opacity: .25 } 45%,90% { opacity: 1 } 100% { opacity: .25 } }
+.ok-chip { display: inline-flex; gap: 6px; align-items: center; font-size: .85rem; color: var(--ok); background: var(--ok-soft); padding: 2px 10px; border-radius: 999px; }
+.note { font-size: .9rem; color: var(--muted); }
+
+/* ── 2. 세 증인 투표 + 웹 검색 ── */
+.vote { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.witness { border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 6px; text-align: center; }
+.witness small { color: var(--muted); font-size: .78rem; }
+.witness strong { font-size: 1rem; }
+.witness .mark { font: 700 1.3rem/1 var(--body); }
+.witness.no { animation: odd 5s ease-in-out infinite; }
+.witness.no .mark { color: var(--bad); }
+.witness.yes .mark { color: var(--ok); }
+@keyframes odd { 0%,40% { border-color: var(--line); transform: none } 50%,90% { border-color: var(--bad); transform: translateY(-4px) } 100% { border-color: var(--line) } }
+.verdict { margin-top: 12px; font-size: .92rem; padding: 10px 12px; border-radius: 8px; background: var(--paper); }
+.sources { display: flex; flex-wrap: wrap; gap: 8px; }
+.src { font-size: .82rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); opacity: 0; animation: appear 6s ease-out infinite; }
+.src:nth-child(1) { animation-delay: 0s } .src:nth-child(2) { animation-delay: .5s } .src:nth-child(3) { animation-delay: 1s } .src:nth-child(4) { animation-delay: 1.5s }
+@keyframes appear { 0% { opacity: .15; transform: translateY(6px) } 12%,85% { opacity: 1; transform: none } 100% { opacity: .15 } }
+.src.blocked { text-decoration: line-through; color: var(--muted); animation: none; opacity: 1; }
+.search { font: 400 .88rem/1.4 var(--mono); border: 1.5px solid var(--sea); border-radius: 999px; padding: 8px 14px; color: var(--sea); overflow: hidden; white-space: nowrap; }
+.search::after { content: "▍"; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0 } }
+
+/* ── 3. 받는 파일 ── */
+.tree { font: 400 .88rem/1.85 var(--mono); }
+.tree .f { display: flex; justify-content: space-between; gap: 12px; padding: 0 8px; border-radius: 6px; }
+.tree .f em { font-style: normal; font-family: var(--body); font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.tree .every { background: var(--tang-soft); animation: glow 3s ease-in-out infinite; }
+.tree .every em { color: var(--tang); font-weight: 700; }
+@keyframes glow { 0%,100% { box-shadow: inset 3px 0 0 var(--tang) } 50% { box-shadow: inset 8px 0 0 var(--tang) } }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+
+/* ── 4. 실시간 대조 ── */
+.compare { display: grid; gap: 10px; }
+.case { display: grid; grid-template-columns: minmax(0, 1.2fr) 34px minmax(0, 1fr); gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.case .live { font: 400 .85rem/1.5 var(--mono); }
+.case .live small { display: block; font-family: var(--body); color: var(--muted); font-size: .75rem; }
+.case .arrow { text-align: center; color: var(--muted); animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 0%,100% { transform: translateX(-3px) } 50% { transform: translateX(3px) } }
+.case .out { display: grid; gap: 4px; justify-items: start; font-size: .88rem; }
+.badge { font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.badge.fix { background: var(--warn-soft); color: var(--warn); }
+.badge.raw { background: var(--sea-soft); color: var(--sea); }
+.badge.hide { background: var(--bad-soft); color: var(--bad); }
+.case:nth-child(1) { animation: focus 8s infinite 0s } .case:nth-child(2) { animation: focus 8s infinite 2s }
+.case:nth-child(3) { animation: focus 8s infinite 4s } .case:nth-child(4) { animation: focus 8s infinite 6s }
+@keyframes focus { 0%,22% { border-color: var(--sea); box-shadow: 0 0 0 3px var(--sea-soft) } 27%,100% { border-color: var(--line); box-shadow: none } }
+
+/* 화면 미리보기 */
+.mock { border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 8px; background: var(--paper); }
+.mock .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.mock .tags span { font-size: .75rem; font-weight: 700; padding: 1px 10px; border-radius: 999px; background: var(--line); color: var(--muted); }
+.mock .tags .badge { font-size: .75rem; }
+.mock h3 { margin: 0; font-size: 1.1rem; }
+.mock dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: .88rem; }
+.mock dt { color: var(--muted); }
+.mock dd { margin: 0; }
+.strike { text-decoration: line-through; color: var(--muted); margin-right: 6px; }
+
+/* ── 5. 할 일 ── */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: start; }
+.steps li::before { content: counter(s); font: 400 1.4rem/40px var(--display); text-align: center; width: 40px; height: 40px; border-radius: 50%; background: var(--sea); color: var(--paper); }
+.steps li div { display: grid; gap: 4px; padding-top: 6px; }
+pre { margin: 0; font: 400 .85rem/1.6 var(--mono); background: var(--ink); color: var(--paper); padding: 12px 14px; border-radius: 8px; overflow-x: auto; }
+.foot { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 560px) {
+  .vote { grid-template-columns: 1fr; }
+  .case { grid-template-columns: 1fr; }
+  .case .arrow { transform: rotate(90deg); animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .src { opacity: 1; }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <span class="kicker">제주 문화달력 · 데이터 검증</span>
+    <h1>선생님이 검증한 파일 하나,<br>네 사이트가 매번 실시간으로 대조해요</h1>
+    <p class="lede">공공 Open API의 JSON은 형식은 멀쩡해도 내용이 틀린 경우가 있어요. 선생님이 웹 출처로 확인한 결과를 파일로 주면, 네 Vercel 사이트가 요청마다 실시간 응답과 비교해서 맞으면 「검증됨」, 틀리면 고쳐서 보여줘요. 너는 API 키가 필요 없어요.</p>
+  </header>
+
+  <div class="stage" aria-label="데이터가 흐르는 길">
+    <div class="pipe">
+      <div class="node"><b>선생님 PC</b><span>npm run agent<br>규칙 검사 + AI 웹 검증</span></div>
+      <div class="track" aria-hidden="true"></div>
+      <div class="node file"><b>검증 파일</b><span>api/_corrections.js<br>틀린 값 → 맞는 값, 근거 URL</span></div>
+      <div class="track t2" aria-hidden="true"></div>
+      <div class="node site"><b>네 Vercel 사이트</b><span>요청마다 실시간 API와 대조<br>→ 화면</span></div>
+    </div>
+    <div class="api"><span>실시간 Open API (비짓제주 · 제주in놀다) ↗</span></div>
+  </div>
+
+  <section>
+    <div class="head">
+      <span class="kicker">1 · 왜 필요한가</span>
+      <h2>JSON 구조는 맞는데, 내용이 그 장소의 것이 아니에요</h2>
+      <p>아래는 비짓제주 API가 실제로 돌려준 항목이에요. 필드 이름도 형식도 정상이라 코드는 아무 오류 없이 화면에 그려요. 그런데 이름은 오름인데 실제로는 농업회사법인이고, 시 라벨은 주소와 다른 시를 가리켜요.</p>
+    </div>
+    <div class="cols">
+      <div class="stage json" aria-label="목화오름 원본 데이터">
+        <div class="row"><span class="k">"title":</span><span class="v">"목화오름"</span></div>
+        <div class="row bad"><span class="k">"region":</span><span class="v">"제주시"</span><span class="fix">실제는 서귀포시</span></div>
+        <div class="row bad"><span class="k">"area":</span><span class="v">"제주시내"</span><span class="fix">실제는 안덕면</span></div>
+        <div class="row"><span class="k">"addr":</span><span class="v">"제주 서귀포시 안덕면"</span></div>
+        <div class="row bad"><span class="k">"cat":</span><span class="v">"관광지"</span><span class="fix">오름이 아니라 목화·아마 농사를 짓는 패션 브랜드</span></div>
+        <div style="margin-top:10px"><span class="ok-chip">✓ JSON 형식 검사는 통과</span></div>
+      </div>
+      <div class="stage" style="display:grid;gap:12px;align-content:start">
+        <p><b>행사 쪽도 같아요.</b> 민속자연사박물관 특별전 본문에 「2026. 10. 13.(금)」이라고 적혀 있지만, 2026년 10월 13일은 화요일이에요.</p>
+        <p class="note">이런 오류는 형식 검사로는 절대 안 잡혀요. 다른 칸과 비교하거나, 바깥의 다른 출처와 비교해야 보여요. 그 일을 선생님 PC에서 미리 해 둔 거예요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <span class="kicker">2 · 선생님 PC에서 한 일</span>
+      <h2>세 증인의 투표, 그다음 웹에서 확인</h2>
+      <p>먼저 한 장소의 위치를 세 가지로 따져요. 셋 중 둘이 맞고 하나만 다르면 그 하나를 틀린 칸으로 지목해요. 그다음 Claude가 웹을 검색해서 공식 페이지·기사로 다시 확인하고, 근거 URL을 남겨요.</p>
+    </div>
+    <div class="cols">
+      <div class="stage">
+        <p class="note" style="margin-bottom:10px">예: <b>상추자항</b></p>
+        <div class="vote">
+          <div class="witness no"><small>지역 라벨</small><strong>제주시내</strong><span class="mark">✗</span></div>
+          <div class="witness yes"><small>주소의 읍면</small><strong>추자면</strong><span class="mark">✓</span></div>
+          <div class="witness yes"><small>좌표 주변 7곳</small><strong>추자면</strong><span class="mark">✓</span></div>
+        </div>
+        <p class="verdict">2 대 1 → <b>라벨이 틀렸다</b>. 라벨을 추자도 지역 값으로 고치는 수정 제안이 만들어져요.</p>
+      </div>
+      <div class="stage" style="display:grid;gap:12px;align-content:start">
+        <div class="search">상추자항 추자면 대서리 항구</div>
+        <div class="sources" aria-label="찾은 출처">
+          <span class="src">제주도청 마을 페이지</span>
+          <span class="src">위키백과 추자면</span>
+          <span class="src">제주 지역 기사</span>
+          <span class="src">관광 안내 페이지</span>
+        </div>
+        <div class="sources" aria-label="막아 둔 출처">
+          <span class="src blocked">visitjeju.net</span>
+          <span class="src blocked">jejunolda.com</span>
+        </div>
+        <p class="note">원본 사이트 두 곳은 검색에서 막아 뒀어요. 원본으로 원본을 확인하면 아무 의미가 없으니까요. 근거가 없거나 출처끼리 다르면 지어내지 않고 「확인 불가」로 둬요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <span class="kicker">3 · 네가 받는 것</span>
+      <h2>handoff 폴더 하나 — 같은 경로로 덮어쓰기</h2>
+      <p>처음에는 폴더 안 파일을 전부 덮어써요. 실시간 대조 코드와 화면 배지가 들어 있어요. 그다음부터 새 데이터가 오면 주황색 파일 하나만 바뀌어요.</p>
+    </div>
+    <div class="stage tree" aria-label="받는 파일 목록">
+      <div class="f every"><span>api/_corrections.js</span><em>매번 바뀜 · 검증 데이터</em></div>
+      <div class="f"><span>api/_apply.js</span><em>처음 한 번 · 실시간 대조</em></div>
+      <div class="f"><span>api/_visitjeju.js · api/visitjeju.js</span><em>처음 한 번 · 관광지 응답에 적용</em></div>
+      <div class="f"><span>api/event.js · api/_tools.js</span><em>처음 한 번 · 행사·AI 가이드에 적용</em></div>
+      <div class="f"><span>src/components/VerifyBadge.jsx</span><em>처음 한 번 · 배지</em></div>
+      <div class="f"><span>src/api/places.js · src/api/events.js</span><em>처음 한 번 · 배지 정보 전달</em></div>
+      <div class="f"><span>src/pages/EventDetail.jsx · src/components/NearbyPlaces.jsx</span><em>처음 한 번 · 배지 위치</em></div>
+      <div class="f"><span>src/i18n/messages.extra.js · src/styles/theme.css</span><em>처음 한 번 · 문구·색</em></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--tang)"></i>새 데이터마다 교체</span><span><i style="background:var(--line)"></i>처음 한 번만</span></div>
+  </section>
+
+  <section>
+    <div class="head">
+      <span class="kicker">4 · 네 사이트에서 일어나는 일</span>
+      <h2>요청마다 실시간 값과 「검증할 때 본 값」을 비교해요</h2>
+      <p>검증 파일에는 칸마다 <code>was</code>(검증할 때 API가 준 틀린 값)와 <code>value</code>(확인된 맞는 값)가 들어 있어요. 서버 함수가 Open API를 부를 때마다 지금 값을 이 둘과 비교해서 네 가지 중 하나로 처리해요.</p>
+    </div>
+    <div class="compare" aria-label="네 가지 경우">
+      <div class="case">
+        <div class="live"><small>실시간 API: 고살리숲길 주소</small>"남원읍 하례리 산54-2"</div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="out"><span class="badge ok">✓ 검증됨</span>웹 출처로 확인한 값 그대로예요</div>
+      </div>
+      <div class="case">
+        <div class="live"><small>실시간 API: 상추자항 area</small>"제주시내" = was</div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="out"><span class="badge fix">정보 보정</span>확인된 값으로 고쳐서 보여줘요</div>
+      </div>
+      <div class="case">
+        <div class="live"><small>실시간 API: 값이 was도 value도 아님</small>"우도"</div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="out"><span class="badge raw">원본 그대로</span>검증 뒤 원본이 바뀌었어요. 덮어쓰지 않고, 서버 로그에 「다시 검증 필요」</div>
+      </div>
+      <div class="case">
+        <div class="live"><small>판정: 다른 장소의 내용</small>이름이 검증 때와 같음</div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="out"><span class="badge hide">숨김</span>목록에서 빼요</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="mock" aria-label="화면 예시">
+        <div class="tags"><span>관광지</span><span>1.2km</span><span class="badge fix">정보 보정</span></div>
+        <h3>상추자항</h3>
+        <dl><dt>지역</dt><dd><span class="strike">제주시 제주시내</span>섬 속의 섬 · 추자도</dd><dt>주소</dt><dd>제주시 추자면 대서리</dd></dl>
+      </div>
+      <div class="stage" style="display:grid;gap:8px;align-content:start">
+        <p class="note">대조하는 코드는 <code>api/_apply.js</code>에 있어요. 핵심은 세 줄이에요.</p>
+        <pre>if (지금값 == was)   → value 로 바꿔서 출력
+else if (지금값 == value) → 원본이 이미 고쳐짐, 그대로
+else                  → 원본이 바뀜, 그대로 + 로그</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <span class="kicker">5 · 네가 할 일</span>
+      <h2>덮어쓰고, 배포하고, 헤더 하나만 확인</h2>
+    </div>
+    <ol class="steps">
+      <li><div><b>받은 폴더의 파일을 프로젝트에 같은 경로로 덮어쓰기</b><span class="note">처음엔 전부, 그다음부터는 <code>api/_corrections.js</code> 하나.</span></div></li>
+      <li><div><b>배포</b><span class="note">평소처럼 git push, 또는 vercel --prod. 환경변수를 새로 넣을 필요는 없어요.</span></div></li>
+      <li><div><b>개발자 도구 → Network → <code>/api/visitjeju</code> 또는 <code>/api/event</code> 응답 헤더 확인</b>
+        <pre>X-Data-Corrections: verified=15; applied=11; hidden=0; upstream-fixed=0; stale=0</pre>
+        <span class="note">verified = 검증됨, applied = 고쳐서 보여준 칸, upstream-fixed = 원본이 이미 고쳐진 칸 (숫자는 예시).</span></div></li>
+      <li><div><b><code>stale</code>이 0보다 크면 선생님께 알려 주기</b><span class="note">검증한 뒤 원본 API가 바뀐 항목이에요. Vercel 로그에 항목 번호가 찍혀 있어요. 다시 검증해서 새 파일을 줄게요.</span></div></li>
+    </ol>
+  </section>
+
+  <p class="foot">데이터 출처: 제주관광공사 비짓제주 관광정보 OPEN API · 제주특별자치도 제주in놀다 전시문화행사정보 OpenAPI. 검증: 규칙 검사(라벨·주소·좌표 2:1 투표) + Claude 웹 검색 대조, 수정은 선생님 승인 후 반영.</p>
+</div>

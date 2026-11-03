@@ -1,6 +1,8 @@
 // 기획 의도 · 데이터 소개 문구 — messages.js 가 가져다 합칩니다 (키 규칙은 messages.js 와 같음)
 export const EXTRA = {
   ko: {
+    'v.ok': '✓ 검증됨', 'v.okTitle': '{date}에 공식 홈페이지·지도 등 다른 출처와 대조해 확인한 정보예요',
+    'v.fixed': '정보 보정', 'v.fixedTitle': '원본 데이터의 일부({f})가 실제와 달라, 확인된 값으로 고쳐 보여드려요',
     'home.intent': '제주의 전시·공연·지역축제를 날씨·위치와 함께 모아, 도민과 여행자가 “오늘 어디 갈까”를 바로 정하게 돕습니다.',
     'home.intentLabel': '기획 의도',
     'home.about': '기획 의도·사용한 데이터 보기 →',
@@ -25,6 +27,8 @@ export const EXTRA = {
 
   },
   en: {
+    'v.ok': '✓ Verified', 'v.okTitle': 'Checked against independent sources (official sites, maps) on {date}',
+    'v.fixed': 'Corrected', 'v.fixedTitle': 'Part of the source data ({f}) was wrong and is shown with the verified value',
     'home.intent': 'Jeju’s exhibitions, performances and regional festivals together with weather and location, so residents and visitors can decide “where to go today” at once.',
     'home.intentLabel': 'Our idea',
     'home.about': 'Our idea and the data we use →',
@@ -49,6 +53,8 @@ export const EXTRA = {
 
   },
   zh: {
+    'v.ok': '✓ 已核实', 'v.okTitle': '已于{date}与官网、地图等其他来源核对',
+    'v.fixed': '已更正', 'v.fixedTitle': '原始数据的部分内容（{f}）有误，已按核实的信息显示',
     'home.intent': '把济州的展览、演出和地区庆典与天气、位置放在一起,帮岛民和游客立刻决定“今天去哪里”。',
     'home.intentLabel': '策划初衷',
     'home.about': '策划初衷和使用的数据 →',
@@ -73,6 +79,8 @@ export const EXTRA = {
 
   },
   ja: {
+    'v.ok': '✓ 確認済み', 'v.okTitle': '{date}に公式サイト・地図など別の情報源と照合しました',
+    'v.fixed': '補正済み', 'v.fixedTitle': '元データの一部（{f}）が実際と異なるため、確認した値で表示しています',
     'home.intent': '済州の展示・公演・地域のお祭りを天気・場所と一緒にまとめ、島民も旅行者も「今日どこへ行く?」をすぐ決められるようにします。',
     'home.intentLabel': '企画の意図',
     'home.about': '企画の意図と使用データ →',

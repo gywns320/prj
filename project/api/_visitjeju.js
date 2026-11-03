@@ -2,6 +2,7 @@
 // /api/visitjeju (화면용) 와 /api/chat (AI 가이드) 가 함께 씁니다.
 // API 키는 서버 환경변수 VISITJEJU_API_KEY 에만 있고, 브라우저로는 절대 나가지 않습니다.
 import { isHidden } from './_unrelated.js'
+import { applyCorrections, newStats } from './_apply.js'
 
 const UPSTREAM = 'https://api.visitjeju.net/vsjApi/contents/searchList'
 export const LOCALES = new Set(['kr', 'en', 'jp', 'cn', 'zh', 'my'])
@@ -18,7 +19,8 @@ export function normalizeKey(raw) {
 export class KeyMissingError extends Error {}
 
 // 관광지 목록을 가져와 화면에 쓰는 항목만 남겨 돌려줍니다. 실패하면 키가 섞이지 않은 메시지의 Error 를 던집니다.
-export async function fetchSights(locale = 'kr') {
+// 검증된 수정 목록(_corrections.js)을 적용하고, 적용 결과는 stats 에 셉니다.
+export async function fetchSights(locale = 'kr', stats = newStats()) {
   const rawKey = process.env.VISITJEJU_API_KEY
   const key = normalizeKey(rawKey)
   if (!key) throw new KeyMissingError('서버에 VISITJEJU_API_KEY 환경변수가 설정되지 않았어요')
@@ -51,6 +53,8 @@ export async function fetchSights(locale = 'kr') {
     let kept = all.filter((i) => !isHidden(i, locale))
     if (all.length > 0 && kept.length === 0) kept = all.filter((i) => !isHidden(i, locale, { sightsOnly: false }))
     return kept.map(compact).filter(Boolean)
+      .map((p) => applyCorrections('place', p.id, p, stats, { valuesToo: locale === 'kr' }))
+      .filter(Boolean)
   } catch (e) {
     throw new Error(hide(e.message))
   }

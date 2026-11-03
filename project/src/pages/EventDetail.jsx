@@ -4,6 +4,7 @@ import { fetchEvent } from '../api/events'
 import { Cover } from '../components/EventCard'
 import { EventWeather } from '../components/Weather'
 import NearbyPlaces from '../components/NearbyPlaces'
+import VerifyBadge from '../components/VerifyBadge'
 import { ErrorBox, catHue } from '../components/common'
 import { downloadIcs } from '../lib/ics'
 import { eventStatus, fmtRange } from '../lib/date'
@@ -77,6 +78,7 @@ export default function EventDetail() {
             <span className={`pay ${ev.payTag === 'FREE' ? 'free' : ''}`}>{payLabel(ev)}</span>
             {ev.loc && <span className="loc">{locLabel(ev)}</span>}
             <span className={`badge inline st-${st.kind}`}>{st.label}</span>
+            <VerifyBadge item={ev} />
           </div>
           <h1>{ev.name}</h1>
 

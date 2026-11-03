@@ -1,0 +1,1245 @@
+[
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019073",
+  "title": "후포해변",
+  "field": "area",
+  "was": "제주시내",
+  "value": "추차도",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [
+   "http://www.jejunews.com/news/articleView.html?idxno=2205274",
+   "https://triple.guide/attractions/88424705-dd8e-4611-82ee-e05f8fa03efa"
+  ],
+  "key": "place:CNTS_000000000019073:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 1
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019073",
+  "title": "후포해변",
+  "field": "region",
+  "was": "제주시",
+  "value": "섬 속의 섬",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [],
+  "key": "place:CNTS_000000000019073:region",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 2
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019090",
+  "title": "묵리해안쉼터",
+  "field": "area",
+  "was": "제주시내",
+  "value": "추차도",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [
+   "https://www.jeju.go.kr/vill/muk/index.htm"
+  ],
+  "key": "place:CNTS_000000000019090:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 3
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019090",
+  "title": "묵리해안쉼터",
+  "field": "region",
+  "was": "제주시",
+  "value": "섬 속의 섬",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [],
+  "key": "place:CNTS_000000000019090:region",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 4
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019112",
+  "title": "묵리해안포구",
+  "field": "area",
+  "was": "제주시내",
+  "value": "추차도",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [
+   "https://ko.wikipedia.org/wiki/%EC%B6%94%EC%9E%90%EB%A9%B4",
+   "https://namu.wiki/w/%EC%B6%94%EC%9E%90%EB%8F%84"
+  ],
+  "key": "place:CNTS_000000000019112:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 5
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019112",
+  "title": "묵리해안포구",
+  "field": "region",
+  "was": "제주시",
+  "value": "섬 속의 섬",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [],
+  "key": "place:CNTS_000000000019112:region",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 6
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019113",
+  "title": "상추자항",
+  "field": "area",
+  "was": "제주시내",
+  "value": "추차도",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [
+   "https://www.picjeju.com/pages/single-view?id=6741",
+   "https://www.jejudomin.co.kr/news/articleView.html?idxno=314805"
+  ],
+  "key": "place:CNTS_000000000019113:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 7
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000019113",
+  "title": "상추자항",
+  "field": "region",
+  "was": "제주시",
+  "value": "섬 속의 섬",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 추자면",
+  "evidence": [],
+  "key": "place:CNTS_000000000019113:region",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 8
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000021433",
+  "title": "천주교 순례길 - 김대건길",
+  "field": "area",
+  "was": "제주시내",
+  "value": "한경",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 제주시내(제주시(동))인데 주소와 좌표는 모두 한경면",
+  "evidence": [
+   "https://www.catholictimes.org/article/20240718500036",
+   "https://lovecatholic.kr/churches/77/%EA%B3%A0%EC%82%B0%EC%84%B1%EB%8B%B9"
+  ],
+  "key": "place:CNTS_000000000021433:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 9
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_000000000021625",
+  "title": "기독교순례길 3코스(사명의길)",
+  "field": "area",
+  "was": "한림",
+  "value": "한경",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 한림(한림읍)인데 주소와 좌표는 모두 한경면",
+  "evidence": [
+   "https://www.josu.or.kr/",
+   "https://www.hankookilbo.com/news/article/201304221448936780"
+  ],
+  "key": "place:CNTS_000000000021625:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 10
+ },
+ {
+  "kind": "place",
+  "id": "CNTS_200000000007534",
+  "title": "고살리숲길",
+  "field": "area",
+  "was": "서귀포시내",
+  "value": "남원",
+  "source": "rule",
+  "note": "지역 라벨 오류: 라벨은 서귀포시내(서귀포시(동))인데 주소와 좌표는 모두 남원읍",
+  "evidence": [
+   "https://www.welfarehello.com/community/hometownNews/606ccb57-f505-422e-bdc4-8f8dae0a011c",
+   "https://www.korea.kr/news/cultureColumnView.do?newsId=148918087"
+  ],
+  "key": "place:CNTS_200000000007534:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02",
+  "no": 11
+ },
+ {
+  "no": 12,
+  "kind": "place",
+  "id": "CNTS_300000000013298",
+  "title": "목화오름",
+  "field": "region",
+  "was": "제주시",
+  "value": "서귀포시",
+  "source": "agent:claude-opus-5-5",
+  "note": "주소인 안덕면은 서귀포시에 속하므로 시 라벨은 서귀포시여야 합니다.",
+  "evidence": [
+   "https://cottonoreum.com/bbs/login.php?url=https%3A%2F%2Fcottonoreum.com%2Fshop%2Fmypage.php"
+  ],
+  "key": "place:CNTS_300000000013298:region",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 13,
+  "kind": "event",
+  "id": "16755",
+  "title": "2026 제5회 제주비엔날레 《허끄곡 모닥치곡 이야홍: 변용의 기술》",
+  "field": "payName",
+  "was": "무료",
+  "value": "유료(제주도립미술관 성인 8,000원·청소년 4,000원·소인 2,000원 / 돌문화공원·원도심 전시공간은 무료)",
+  "source": "agent:claude-opus-5-5",
+  "note": "제주도립미술관 전시는 입장권을 사야 합니다. 나머지 전시공간만 무료입니다.",
+  "evidence": [
+   "https://jejupod.com/2026/09/23/jeju-biennale-sinsanpark/",
+   "https://www.jejudomin.co.kr/news/articleView.html?idxno=320096",
+   "https://place.tripmate.co.kr/ko/detail.php?contentId=3399432&contentTypeId=15"
+  ],
+  "key": "event:16755:payName",
+  "created": "2026-11-02",
+  "status": "rejected",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 14,
+  "kind": "place",
+  "id": "CNTS_000000000021375",
+  "title": "순례자의교회 길위에서묻다",
+  "field": "addr",
+  "was": "제주특별자치도 제주시 애월읍 금성하안길 3",
+  "value": "제주특별자치도 제주시 한경면 일주서로 3960-24",
+  "source": "agent:claude-opus-5-5",
+  "note": "순례자의교회는 한경면 용수리 올레 13코스에 있습니다. 금성하안길은 애월읍 금성교회(기독교 순례길 1코스 출발지) 쪽 주소로, 다른 장소와 혼동한 것으로 보입니다.",
+  "evidence": [
+   "https://www.tel-co.net/travel/spot/745",
+   "https://www.youtube.com/watch?v=RK473PH4Llg",
+   "https://www.kmib.co.kr/article/view.asp?arcid=0923617606"
+  ],
+  "key": "place:CNTS_000000000021375:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 15,
+  "kind": "place",
+  "id": "CNTS_000000000021375",
+  "title": "순례자의교회 길위에서묻다",
+  "field": "area",
+  "was": "한림",
+  "value": "한경",
+  "source": "agent:claude-opus-5-5",
+  "note": "실제 위치는 한경면 용수리입니다. 레코드 주소의 애월과도 맞지 않습니다.",
+  "evidence": [
+   "https://www.kmib.co.kr/article/view.asp?arcid=0923617606"
+  ],
+  "key": "place:CNTS_000000000021375:area",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 16,
+  "kind": "place",
+  "id": "CONT_000000000500035",
+  "title": "거믄여해안경승지",
+  "field": "intro",
+  "was": "올레 7코스에 속하는 아름다운 해안경승지",
+  "value": "올레 6코스에 속하는 아름다운 해안경승지",
+  "source": "agent:claude-opus-5-5",
+  "note": "여러 출처에서 6코스 경로를 쇠소깍-보목포구-구두미포구-검은여-칼호텔/허니문하우스 순으로 안내하고 있어, 검은여는 6코스 구간입니다.",
+  "evidence": [
+   "https://brunch.co.kr/@yeohae/121",
+   "https://www.expedia.co.kr/stories/8196-2/",
+   "https://brunch.co.kr/@wynn/63"
+  ],
+  "key": "place:CONT_000000000500035:intro",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 17,
+  "kind": "place",
+  "id": "CNTS_000000000019573",
+  "title": "애월환해장성",
+  "field": "tel",
+  "was": "060-728-2731",
+  "value": "064-728-2731",
+  "source": "agent:claude-opus-5-5",
+  "note": "국가유산청 페이지에 문의처가 '세계유산본부 064-728-2731~5'로 나와 있습니다. 제주 지역번호는 064이며, 060은 유료 정보서비스용 번호입니다.",
+  "evidence": [
+   "https://m.cha.go.kr/public/commentary/culSelectDetail.do?ccbaKdcd=23&ccbaAsno=00490400&ccbaCtcd=50&ccbaCpno=&menuId=03"
+  ],
+  "key": "place:CNTS_000000000019573:tel",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 18,
+  "kind": "place",
+  "id": "CNTS_000000000021250",
+  "title": "걸매예술마을",
+  "field": "addr",
+  "was": "제주특별자치도 서귀포시 서홍로 4-42",
+  "value": "제주특별자치도 서귀포시 서문로38번길 9-9",
+  "source": "agent:claude-opus-5-5",
+  "note": "서홍로 4-42는 이웃한 걸매생태공원의 주소입니다(한국관광공사 무장애여행 페이지 확인). 제주 무장애관광 사이트에는 걸매예술마을 주소가 서문로38번길 9-9로 나와 있습니다.",
+  "evidence": [
+   "https://tour.jejudsi.kr/tour.htm?act=view&id=n_map06",
+   "https://access.visitkorea.or.kr/ms/detail.do?cotId=c1ee8bad-1453-4dd7-a920-5b62f267aeef"
+  ],
+  "key": "place:CNTS_000000000021250:addr",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 19,
+  "kind": "place",
+  "id": "CNTS_000000000021642",
+  "title": "가파초등학교 마라분교장",
+  "field": "title",
+  "was": "가파초등학교 마라분교장",
+  "value": "대정초등학교 마라분교장",
+  "source": "agent:claude-opus-5-5",
+  "note": "제주도 도립학교 설치 조례 개정으로 2026-03-01부터 '가파초등학교 마라분교장'이 '대정초등학교 마라분교장'으로 바뀜. 학교는 2016년부터 휴교 중.",
+  "evidence": [
+   "https://www.jejumaeil.net/news/articleView.html?idxno=353857",
+   "https://v.daum.net/v/20250821152428695",
+   "https://www.kidshankook.kr/news/articleView.html?idxno=14707"
+  ],
+  "key": "place:CNTS_000000000021642:title",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 20,
+  "kind": "place",
+  "id": "CONT_000000000500186",
+  "title": "매오름",
+  "field": "intro",
+  "was": "마치 매가 날개를 펴고 앉아 있는 형태를 띄고 있는 오름\r\n· 서귀포시 표선면 표선리\r\n· 올레15코스",
+  "value": "마치 매가 날개를 펴고 앉아 있는 형태를 띄고 있는 오름\r\n· 서귀포시 표선면 표선리\r\n· 올레4코스",
+  "source": "agent:claude-opus-5-5",
+  "note": "매를 닮은 생김새에 대한 설명은 맞습니다. 하지만 매오름은 표선~남원을 잇는 올레 4코스를 걷다 보면 보이거나 갈림길로 빠져서 오르는 오름입니다. 올레 15코스는 한림~고내 구간이라 맞지 않습니다.",
+  "evidence": [
+   "https://www.jejunews.com/news/articleView.html?idxno=2205400",
+   "https://www.seoul.co.kr/news/society/2026/09/24/20260924500019"
+  ],
+  "key": "place:CONT_000000000500186:intro",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 21,
+  "kind": "place",
+  "id": "CONT_000000000500513",
+  "title": "정의현 일관헌",
+  "field": "intro",
+  "was": "지방문화재 7호로 지정된 정의 현감이 정사를 보던 곳",
+  "value": "정의 현감이 정사를 보던 동헌으로, 1975년 제주도 유형문화재 제7호로 지정되었으나 2012년 해제되어 국가민속문화재 제188호 제주 성읍마을에 포함된 곳",
+  "source": "agent:claude-opus-5-5",
+  "note": "정의 현감의 집무처라는 설명은 맞습니다. 그러나 도 유형문화재 제7호 지정이 2012년 5월 23일 해제되어 현재 지정 상태로 쓴 부분은 오래된 정보입니다.",
+  "evidence": [
+   "https://ko.wikipedia.org/wiki/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%EC%9D%98_%EC%9C%A0%ED%98%95%EB%AC%B8%ED%99%94%EC%9E%AC",
+   "http://jejuhistory.co.kr/bbs/view.php?id=local&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=197"
+  ],
+  "key": "place:CONT_000000000500513:intro",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 22,
+  "kind": "place",
+  "id": "CNTS_200000000010338",
+  "title": "환상숲곶자왈 담앙족욕",
+  "field": "tel",
+  "was": "064-772-2848",
+  "value": "064-772-2488",
+  "source": "agent:claude-opus-5-5",
+  "note": "공식 홈페이지에 적힌 대표번호는 064-772-2488로, 데이터셋 번호는 숫자 순서가 뒤바뀐 오기로 보입니다. 족욕카페 자체 번호는 0507-1498-2848입니다. 064-772-2848이라는 번호는 어떤 출처에서도 확인되지 않았습니다.",
+  "evidence": [
+   "https://hwansangforest.modoo.at/?link=djxgknia",
+   "https://www.diningcode.com/profile.php?rid=RFQKCX0UuBqr"
+  ],
+  "key": "place:CNTS_200000000010338:tel",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 23,
+  "kind": "place",
+  "id": "CNTS_200000000007158",
+  "title": "중문색달해변",
+  "field": "addr",
+  "was": "제주특별자치도 서귀포시 중문관광로72번길 114",
+  "value": "제주특별자치도 서귀포시 중문관광로72번길 29-51",
+  "source": "agent:claude-opus-5-5",
+  "note": "72번길 114는 하얏트리젠시제주(현 파르나스) 호텔 주소입니다. 해변 주소는 72번길 29-51(색달동 3039)입니다. 바다온(badaon)에는 '중문관광로72번길(색달동)'으로만 나옵니다.",
+  "evidence": [
+   "https://m.tripinfo.co.kr/info.html?content_type_id=12&content_id=126449",
+   "https://triple.guide/attractions/7e96dce8-7042-48fa-80dc-0f3a764c624d",
+   "https://www.followdaddy.co.kr/191",
+   "https://weathertour.co.kr/kor/pgm/TouristView.php?vdx=1147&pid=23&xx=33.499568&yy=126.531138",
+   "https://foursquare.com/v/hyatt-regency-jeju/52cc447f11d230fd22170c40"
+  ],
+  "key": "place:CNTS_200000000007158:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 24,
+  "kind": "place",
+  "id": "CNTS_000000000021074",
+  "title": "세화항구",
+  "field": "lat",
+  "was": 33.489597,
+  "value": 33.53,
+  "source": "agent:claude-opus-5-5",
+  "note": "바다타임에 표기된 세화항 위치는 북위 33°32′(약 33.53)입니다. 데이터셋 값(약 33°29′)은 해안에서 약 5km 떨어진 내륙입니다. 제안값은 분 단위로 반올림된 근사치입니다.",
+  "evidence": [
+   "https://www.badatime.com/70.html"
+  ],
+  "key": "place:CNTS_000000000021074:lat",
+  "created": "2026-11-02",
+  "status": "rejected",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 25,
+  "kind": "place",
+  "id": "CNTS_000000000021074",
+  "title": "세화항구",
+  "field": "lng",
+  "was": 126.831665,
+  "value": 126.85,
+  "source": "agent:claude-opus-5-5",
+  "note": "바다타임에 표기된 세화항 위치는 동경 126°51′(약 126.85)입니다. 제안값은 근사치입니다.",
+  "evidence": [
+   "https://www.badatime.com/70.html"
+  ],
+  "key": "place:CNTS_000000000021074:lng",
+  "created": "2026-11-02",
+  "status": "rejected",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 26,
+  "kind": "place",
+  "id": "CNTS_000000000021036",
+  "title": "용둠벙전망대",
+  "field": "addr",
+  "was": "제주특별자치도 제주시 추자면 영흥리",
+  "value": "제주특별자치도 제주시 추자면 대서리",
+  "source": "agent:claude-opus-5-5",
+  "note": "제주투데이는 '대서리 소재 속칭 용둠벙', 오마이뉴스는 '대서리 용둠벙'이라고 적었고, daytrip도 대서리로 표기합니다. 제주의소리는 나바론 해안선이 대서리에서 영흥리까지 이어진다고 설명하지만, 전망대가 있는 후포 용둠벙 자체는 대서리에 속합니다.",
+  "evidence": [
+   "https://www.ijejutoday.com/news/articleView.html?idxno=300444",
+   "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0002937323",
+   "https://app.daytrip.io/ko/daylog/63784388ab3c1c7c5c99f650"
+  ],
+  "key": "place:CNTS_000000000021036:addr",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 27,
+  "kind": "place",
+  "id": "CONT_000000000500486",
+  "title": "윗세족은오름",
+  "field": "addr",
+  "was": "제주특별자치도 제주시 애월읍 평화로",
+  "value": "제주특별자치도 제주시 애월읍 광령리 산 183-6",
+  "source": "agent:claude-opus-5-5",
+  "note": "이 오름은 한라산 영실코스 해발 약 1,600~1,700m 지점에 있어 평화로(도로)와 관계가 없습니다. 지번 주소는 광령리 산 183-6입니다.",
+  "evidence": [
+   "https://triple.guide/attractions/e6d3b681-4c9f-4832-8509-2fdc96949ed1",
+   "https://www.mpva.go.kr/jjnc/contents.do?key=1725"
+  ],
+  "key": "place:CONT_000000000500486:addr",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 28,
+  "kind": "place",
+  "id": "CNTS_200000000008025",
+  "title": "산지천갤러리",
+  "field": "tel",
+  "was": "064-800-9341",
+  "value": "064-725-1208",
+  "source": "agent:claude-opus-5-5",
+  "note": "공식 사이트의 대표번호는 064-725-1208입니다. 데이터셋 번호는 웹에서 이 갤러리와 연결된 기록을 찾지 못했으며, 재단 내선이나 예전 번호일 수 있습니다.",
+  "evidence": [
+   "http://www.sjcgallery.kr/bbs/board.php?bo_table=notice&wr_id=100",
+   "http://artnet.kr/p/gallery/146"
+  ],
+  "key": "place:CNTS_200000000008025:tel",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 29,
+  "kind": "place",
+  "id": "CNTS_200000000007157",
+  "title": "사계해안",
+  "field": "intro",
+  "was": "서귀포 산방산 해안에 자리 잡은 용머리해안. 수천 만 년 동안 층층이 쌓인 암벽으로 이루어진 용머리 해안은 서귀포에서도 손에 꼽히는 자연명소이다.",
+  "value": "",
+  "source": "agent:claude-opus-5-5",
+  "note": "소개글이 사계해안이 아니라 별도 명소인 용머리해안(사계리 112-3, 천연기념물)을 설명합니다. 사계해안은 모래가 굳어 생긴 퇴적암 해안이며, 서쪽 해안이라 노을이 아름답고 이끼 낀 바위가 특징입니다.",
+  "evidence": [
+   "https://encykorea.aks.ac.kr/Article/E0074984",
+   "https://triple.guide/attractions/63aec788-bf41-4a3a-9984-9e62a408679d",
+   "https://kr.trip.com/moments/detail/seogwipo-14755-14554064/"
+  ],
+  "key": "place:CNTS_200000000007157:intro",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 30,
+  "kind": "place",
+  "id": "CNTS_000000000019979",
+  "title": "김녕사굴",
+  "field": "addr",
+  "was": "제주특별자치도 제주시 구좌읍 덕천리 201-4",
+  "value": "제주특별자치도 제주시 구좌읍 김녕리 201-4",
+  "source": "agent:claude-opus-5-5",
+  "note": "국가유산청 소재지는 김녕리 산7-1 외이고, 나무위키는 김녕리 201-4로 적고 있습니다. 소개글에도 '구좌읍 김녕리'로 나옵니다. 덕천리는 잘못된 리 이름입니다.",
+  "evidence": [
+   "https://namu.wiki/w/%EA%B9%80%EB%85%95%EC%82%AC%EA%B5%B4",
+   "https://www.heritage.go.kr/heri/cul/culSelectDetail.do?pageNo=1_1_2_0&ccbaCpno=1363900980000",
+   "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=5e69125b-e5c8-404a-8f0d-49a808547b99"
+  ],
+  "key": "place:CNTS_000000000019979:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 31,
+  "kind": "place",
+  "id": "CNTS_000000000019979",
+  "title": "김녕사굴",
+  "field": "intro",
+  "was": "만장굴과 함께 천연기념물 제98호로 지정, 세계문화유산 등록. [제주 김녕굴 및 만장굴] 천연기념물 제98호(1962.12.03 지정)  \r\n※ 공개제한\r\n· 제주시 구좌읍 김녕리\r\n· 천연기념물 제98호\r\n· 세계자연유산 선정지역",
+  "value": "만장굴과 함께 천연기념물 제98호로 지정, 세계자연유산 등록. [제주 김녕굴 및 만장굴] 천연기념물 제98호(1962.12.07 지정) ※ 공개제한 · 제주시 구좌읍 김녕리 · 천연기념물 제98호 · 세계자연유산 선정지역",
+  "source": "agent:claude-opus-5-5",
+  "note": "김녕사굴을 소개하는 내용은 맞습니다. 다만 지정일은 1962.12.07이고, 이 동굴은 세계문화유산이 아니라 세계자연유산입니다.",
+  "evidence": [
+   "https://www.heritage.go.kr/heri/cul/culSelectDetail.do?pageNo=1_1_2_0&ccbaCpno=1363900980000",
+   "https://encykorea.aks.ac.kr/Article/E0008873"
+  ],
+  "key": "place:CNTS_000000000019979:intro",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 32,
+  "kind": "place",
+  "id": "CNTS_200000000011917",
+  "title": "수망리 마흐니숲길",
+  "field": "addr",
+  "was": "제주특별자치도 서귀포시 남원읍 남조로 534",
+  "value": "제주특별자치도 서귀포시 남원읍 남조로 973",
+  "source": "agent:claude-opus-5-5",
+  "note": "제주일보와 서귀포신문 모두 숲길 입구가 남조로변 물영아리오름 안내소 앞에서 길을 건넌 맞은편에 있다고 전합니다. 물영아리 입구 쪽 휴게소 주소는 남조로 996입니다. 남조로 534는 이 지점에서 약 4.6km 남쪽이라 입구 위치와 맞지 않습니다. 숙소 안내 페이지에는 입구 주소가 남조로 973(수망리 산 203)으로 나오지만, 이 973은 출처가 하나뿐이므로 교차 확인이 필요합니다.",
+  "evidence": [
+   "https://www.kareumstay.com/algareum-spot/%EB%A7%88%ED%9D%90%EB%8B%88%EC%88%B2%EA%B8%B8",
+   "https://www.seogwipo.co.kr/news/articleView.html?idxno=204148",
+   "https://www.diningcode.com/profile.php?rid=16kEX0OFxKcC"
+  ],
+  "key": "place:CNTS_200000000011917:addr",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 33,
+  "kind": "place",
+  "id": "CNTS_000000000022861",
+  "title": "성산초등학교 서청특별중대 주둔지",
+  "field": "addr",
+  "was": "제주특별자치도 서귀포시 성산면 성산리 171-9",
+  "value": "제주특별자치도 서귀포시 성산읍 성산리 179-4",
+  "source": "agent:claude-opus-5-5",
+  "note": "현재 행정구역 명칭은 '성산면'이 아니라 '성산읍'입니다. 지번은 제주다크투어 자료에 179-4(성산리 케이마트 뒤 공터)로 나와 있으나, 이를 확인해 준 출처는 이 한 곳뿐이므로 지번은 추가 확인이 필요합니다.",
+  "evidence": [
+   "https://www.jejudarktours.org/ko/historical-sites/seongsan-elementary-school/"
+  ],
+  "key": "place:CNTS_000000000022861:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 34,
+  "kind": "place",
+  "id": "CNTS_000000000022873",
+  "title": "원동",
+  "field": "intro",
+  "was": "1948년 군인들에 의해 마을 주민 30여 명이 집단학살을 당한 곳.",
+  "value": "1948년 11월 13일 토벌대(9연대 군인)에 의해 원동 주민과 지나가던 행인 등 50~60명이 집단총살되고 마을이 불태워져 사라진 곳(잃어버린 마을).",
+  "source": "agent:claude-opus-5-5",
+  "note": "장소 설명 자체는 맞습니다. 그러나 4·3진상보고서는 희생자를 50~60명으로 기록하고 있고, 원동 학살사건 희생자로 확인된 사람도 42명이어서 '30여 명'은 이 기록들과 맞지 않습니다.",
+  "evidence": [
+   "https://www.khan.co.kr/article/202211211221001",
+   "https://www.seoul.co.kr/news/society/2022/04/20/20220420500193",
+   "http://www.ijejutoday.com/news/articleView.html?idxno=215127"
+  ],
+  "key": "place:CNTS_000000000022873:intro",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 35,
+  "kind": "place",
+  "id": "CONT_000000000500659",
+  "title": "바굼지오름",
+  "field": "addr",
+  "was": "제주 제주시 애월읍 상귀리 332",
+  "value": "제주 제주시 애월읍 하귀리",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "제주일보 등은 바굼지오름(파군봉)이 애월읍 하귀리에 있다고 보도합니다. 상귀리는 다른 마을입니다. 정확한 지번은 확인하지 못했습니다.",
+  "evidence": [
+   "https://www.jejunews.com/news/articleView.html?idxno=2186052"
+  ],
+  "key": "place:CONT_000000000500659:addr",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 36,
+  "kind": "place",
+  "id": "CNTS_000000000021452",
+  "title": "하논마르",
+  "field": "addr",
+  "was": ".",
+  "value": "제주특별자치도 서귀포시 호근동 (하논 분화구)",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주소가 의미 없는 '.'입니다. 하논 분화구는 서귀포시 호근동에 있습니다. 정확한 지번은 확인하지 못했습니다.",
+  "evidence": [
+   "https://geovr.com/bbs/board.php?bo_table=vr_02&wr_id=29&page=2&device=mobile"
+  ],
+  "key": "place:CNTS_000000000021452:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 37,
+  "kind": "place",
+  "id": "CNTS_300000000013688",
+  "title": "전이수갤러리 걸어가는늑대들",
+  "field": "tel",
+  "was": "010-2389-3252",
+  "value": "0507-1344-9482",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "공식 사이트에 안내된 전화번호는 0507-1344-9482입니다. 데이터의 010 번호는 이전 번호이거나 개인 번호일 수 있어 확인이 더 필요합니다.",
+  "evidence": [
+   "https://www.walkingwolves.com/"
+  ],
+  "key": "place:CNTS_300000000013688:tel",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 38,
+  "kind": "place",
+  "id": "CNTS_000000000022872",
+  "title": "잃어버린 마을 종남마을",
+  "field": "addr",
+  "was": "제주특별자치도",
+  "value": "제주특별자치도 제주시 조천읍 와산리",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주소가 도 단위까지만 적혀 있어 불완전합니다. 마을은 조천읍 와산리에 있습니다. 지번은 확인하지 못했습니다.",
+  "evidence": [
+   "https://www.jejudarktours.org/ko/historical-sites/%EC%A2%85%EB%82%A8%EB%A7%88%EC%9D%84%EC%A2%85%EB%82%A8%EB%B0%AD/"
+  ],
+  "key": "place:CNTS_000000000022872:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 39,
+  "kind": "place",
+  "id": "CONT_000000000500627",
+  "title": "최영장군사당",
+  "field": "addr",
+  "was": "제주특별자치도 제주시 추자면 대서3길 10",
+  "value": "제주특별자치도 제주시 추자면 대서4길 3-13",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "국가유산청과 한국민족문화대백과 모두 소재지를 대서4길 3-13(대서리)로 표기합니다.",
+  "evidence": [
+   "https://www.heritage.go.kr/heri/cul/culSelectDetail.do?s_ctcd=50&ccbaKdcd=23&ccbaAsno=00110000&ccbaCtcd=50&ccbaCpno=2333900110000&ccbaLcto=01",
+   "https://encykorea.aks.ac.kr/Article/E0057479"
+  ],
+  "key": "place:CONT_000000000500627:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 40,
+  "kind": "event",
+  "id": "17138",
+  "title": "제32회 제주청년작가전",
+  "field": "start",
+  "was": 1797811200000,
+  "value": 1797174000000,
+  "source": "agent:claude-sonnet-5-5",
+  "note": "뉴시스 보도(2026-04)에 전시는 12월 14일부터 열린다고 되어 있습니다. 이후 일정이 바뀌었는지는 확인하지 못했습니다.",
+  "evidence": [
+   "https://m.news.nate.com/view/20260419n07680"
+  ],
+  "key": "event:17138:start",
+  "created": "2026-11-02",
+  "status": "rejected",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 41,
+  "kind": "event",
+  "id": "17138",
+  "title": "제32회 제주청년작가전",
+  "field": "end",
+  "was": 1798588800000,
+  "value": 1797951600000,
+  "source": "agent:claude-sonnet-5-5",
+  "note": "같은 보도에 전시가 12월 23일까지라고 되어 있습니다.",
+  "evidence": [
+   "https://m.news.nate.com/view/20260419n07680"
+  ],
+  "key": "event:17138:end",
+  "created": "2026-11-02",
+  "status": "rejected",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 42,
+  "kind": "event",
+  "id": "17119",
+  "title": "<자체> 「남도천지밥」 17:00",
+  "field": "ticketPrice",
+  "was": null,
+  "value": "대극장 1층 15,000원 / 2층 10,000원",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "유료인데 가격이 누락됨",
+  "evidence": [
+   "https://www.eticketjeju.co.kr/concert/detail.do?ceSeq=235511"
+  ],
+  "key": "event:17119:ticketPrice",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 43,
+  "kind": "event",
+  "id": "17119",
+  "title": "<자체> 「남도천지밥」 17:00",
+  "field": "host",
+  "was": null,
+  "value": "예술경영지원센터",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최가 누락됨",
+  "evidence": [
+   "https://www.eticketjeju.co.kr/concert/detail.do?ceSeq=235511"
+  ],
+  "key": "event:17119:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 44,
+  "kind": "event",
+  "id": "17119",
+  "title": "<자체> 「남도천지밥」 17:00",
+  "field": "oversee",
+  "was": null,
+  "value": "제주특별자치도 문화예술진흥원, 극단 갯돌",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주관이 누락됨",
+  "evidence": [
+   "https://www.eticketjeju.co.kr/concert/detail.do?ceSeq=235511"
+  ],
+  "key": "event:17119:oversee",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 45,
+  "kind": "event",
+  "id": "17103",
+  "title": "헌마공신 김만일기념관 문화프로그램 <강만익 박사의 붉은 말의 해 특별 강연>",
+  "field": "tel",
+  "was": "헌마공신 김만일기념관",
+  "value": "064-805-9801",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "전화번호 필드에 기관명이 들어 있습니다. 안내데스크 번호는 064-805-9801입니다.",
+  "evidence": [
+   "http://kimmanil.com/location"
+  ],
+  "key": "event:17103:tel",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 46,
+  "kind": "event",
+  "id": "17060",
+  "title": "<자체> 「국립합창단 <시네마 클래식>」 17:00",
+  "field": "ticketPrice",
+  "was": null,
+  "value": "대극장 1층 20,000원 / 2층 15,000원",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "요금 정보가 누락되어 있음",
+  "evidence": [
+   "https://www.eticketjeju.co.kr/concert/detail.do?ceSeq=235507"
+  ],
+  "key": "event:17060:ticketPrice",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 47,
+  "kind": "event",
+  "id": "17060",
+  "title": "<자체> 「국립합창단 <시네마 클래식>」 17:00",
+  "field": "host",
+  "was": null,
+  "value": "국립합창단, 제주특별자치도 문화예술진흥원",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최 정보가 누락되어 있음",
+  "evidence": [
+   "https://www.eticketjeju.co.kr/concert/detail.do?ceSeq=235507"
+  ],
+  "key": "event:17060:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 48,
+  "kind": "event",
+  "id": "17045",
+  "title": "제10회 박성배 한국화개인전 - 무브",
+  "field": "start",
+  "was": 1791730800000,
+  "value": 1791903600000,
+  "source": "agent:claude-sonnet-5-5",
+  "note": "전시 기간은 2026.10.14~11.02로 보도되었습니다.",
+  "evidence": [
+   "https://www.mcst.go.kr/site/s_culture/culture/cultureView.jsp?pSeq=1271",
+   "https://www.newsjeju.net/news/articleView.html?idxno=426984"
+  ],
+  "key": "event:17045:start",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 49,
+  "kind": "place",
+  "id": "CONT_000000000500596",
+  "title": "족은바리메",
+  "field": "addr",
+  "was": ".",
+  "value": "제주특별자치도 제주시 애월읍 상가리 산124",
+  "source": "agent:claude-opus-5-5",
+  "note": "주소가 '.'만 들어 있어 사실상 비어 있습니다. 오름 전문 기사에 따르면 위치는 애월읍 상가리 산124번지입니다.",
+  "evidence": [
+   "https://www.newsje.com/news/articleView.html?idxno=99971",
+   "https://zznz.co.kr/archives/17293"
+  ],
+  "key": "place:CONT_000000000500596:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 50,
+  "kind": "place",
+  "id": "CONT_000000000500484",
+  "title": "윗세누운오름",
+  "field": "addr",
+  "was": "제주특별자치도 제주시 애월읍 1100로 1579-25",
+  "value": "제주특별자치도 서귀포시 영남동 산 1-1",
+  "source": "agent:claude-opus-5-5",
+  "note": "한라일보는 윗세누운오름의 지번을 서귀포시 영남동 산 1-1, 윗세족은오름을 애월읍 광령리로 구분해 적었습니다. 1100로 1579-25는 1100고지(서귀포시 1100로 1555) 부근 도로명 주소로 보이며, 오름 정상부 주소가 아닌 것으로 판단됩니다.",
+  "evidence": [
+   "https://s1.ihalla.com/article.php?aid=1722884400761052370"
+  ],
+  "key": "place:CONT_000000000500484:addr",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 51,
+  "kind": "place",
+  "id": "CONT_000000000500484",
+  "title": "윗세누운오름",
+  "field": "region",
+  "was": "제주시",
+  "value": "서귀포시",
+  "source": "agent:claude-opus-5-5",
+  "note": "지번이 서귀포시 영남동이므로 서귀포시가 맞습니다. 다만 이 오름 줄기는 제주시와 서귀포시의 경계에 걸쳐 있습니다.",
+  "evidence": [
+   "https://s1.ihalla.com/article.php?aid=1722884400761052370"
+  ],
+  "key": "place:CONT_000000000500484:region",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 52,
+  "kind": "place",
+  "id": "CNTS_200000000011916",
+  "title": "남원항",
+  "field": "intro",
+  "was": "올레길 5코스의 시작 지점으로 잘 알려져 있는 남원포구. 이곳은 옛날의 포구가 내항으로 있는데 돌로 쌓은 모양을 그대로 간직해 더욱 매력이 있는 곳이다. 한여름 낮엔 해수풀장에서 아이들이 뛰어 노는 소리로 가득찼던 곳이지만 지금은 거리두기 시행으로 운영을 하지 않고 있다. 저녁이 되면 포구를 둘러싸고 낚시하는 낚시꾼들이 오는데 무늬오징어 등이 잡힌다고 한다. 남원포구는 남원 읍내 가운데 있기 때문에 남원의 맛집들이 근처에 있어 식사하기에도 좋다.",
+  "value": "올레길 5코스의 시작 지점으로 잘 알려져 있는 남원포구. 이곳은 옛날의 포구가 내항으로 있는데 돌로 쌓은 모양을 그대로 간직해 더욱 매력이 있는 곳이다. 여름철에는 포구 옆 남원용암해수풀장이 운영되어 아이들이 물놀이를 즐긴다. 저녁이 되면 포구를 둘러싸고 낚시하는 낚시꾼들이 오는데 무늬오징어 등이 잡힌다고 한다. 남원포구는 남원 읍내 가운데 있기 때문에 남원의 맛집들이 근처에 있어 식사하기에도 좋다.",
+  "source": "agent:claude-opus-5-5",
+  "note": "장소 설명 자체(올레 5코스 시작점, 돌로 쌓은 옛 포구)는 맞습니다. 하지만 '거리두기로 운영하지 않는다'는 코로나 시기 정보이고, 해수풀장은 2024년 7월 19일에 다시 개장했습니다(헤드라인제주, 2024-07-16 보도).",
+  "evidence": [
+   "https://www.headlinejeju.co.kr/news/articleView.html?idxno=548294",
+   "https://www.ktsketch.co.kr/news/articleView.html?idxno=5599"
+  ],
+  "key": "place:CNTS_200000000011916:intro",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 53,
+  "kind": "place",
+  "id": "CNTS_000000000021043",
+  "title": "신양항",
+  "field": "intro",
+  "was": "제주올레길 18-1코스의 시작과 끝을 함께하는 곳",
+  "value": "제주올레길 18-1코스의 종점이자 18-2코스의 시점인 곳",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "18-1코스는 추자항(추자면사무소)에서 시작해 신양항에서 끝나고, 18-2코스가 신양항에서 시작해 추자항으로 돌아옵니다. 18-1코스의 시작과 끝이 모두 신양항이라는 설명은 맞지 않습니다.",
+  "evidence": [
+   "https://www.ramblr.com/web/mymap/trip/705389/8668765/",
+   "https://www.100mountain.co.kr/2025/11/jejuolle-18-2-course.html"
+  ],
+  "key": "place:CNTS_000000000021043:intro",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 54,
+  "kind": "place",
+  "id": "CNTS_000000000022846",
+  "title": "연미마을(오라동 4.3길)",
+  "field": "addr",
+  "was": "제주특별자치도",
+  "value": "제주특별자치도 제주시 오라동 (연미마을)",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주소가 도 단위까지만 적혀 있어 불완전하다. 연미마을은 제주시 오라동에 있다. 번지 단위의 상세 주소는 확인하지 못했다.",
+  "evidence": [
+   "https://jeju.grandculture.net/jeju/index/GC00701364?category=%EC%9D%B8%EB%AA%85&depth=2&name=%EB%B0%94&page=7&search=%EB%B0%95%ED%83%9C%ED%98%95"
+  ],
+  "key": "place:CNTS_000000000022846:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 55,
+  "kind": "place",
+  "id": "CONT_000000000500653",
+  "title": "토산봉(망오름)",
+  "field": "addr",
+  "was": ".",
+  "value": "제주특별자치도 서귀포시 표선면 토산리",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주소가 의미 없는 '.'입니다. 토산봉은 표선면 토산리에 있습니다. 정확한 지번은 확인하지 못했습니다.",
+  "evidence": [
+   "https://namu.wiki/w/%EC%98%A4%EB%A6%84/%EB%AA%A9%EB%A1%9D",
+   "https://www.jeju.go.kr/vill/tosan1/intro/about.htm"
+  ],
+  "key": "place:CONT_000000000500653:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 56,
+  "kind": "place",
+  "id": "CONT_000000000500375",
+  "title": "송계순집터",
+  "field": "addr",
+  "was": ".",
+  "value": "제주특별자치도 서귀포시 대정읍 안성리 1681-1",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주소가 자리표시자(.)임. 제주일보 기사에 송계순집터는 안성리 1681-1로 나옴.",
+  "evidence": [
+   "https://www.jejunews.com/news/articleView.html?idxno=2205882"
+  ],
+  "key": "place:CONT_000000000500375:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 57,
+  "kind": "place",
+  "id": "CNTS_000000000018514",
+  "title": "봉골레산",
+  "field": "addr",
+  "was": ".",
+  "value": "제주특별자치도 제주시 추자면 대서리",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주소가 의미 없는 placeholder입니다. 봉골레산은 추자면 대서리 마을 뒤쪽에 있습니다.",
+  "evidence": [
+   "https://encykorea.aks.ac.kr/Article/E0027372",
+   "https://www.ijejutoday.com/news/articleView.html?idxno=62524"
+  ],
+  "key": "place:CNTS_000000000018514:addr",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 58,
+  "kind": "event",
+  "id": "17141",
+  "title": "제32회 제주청년작가전",
+  "field": "host",
+  "was": null,
+  "value": "제주특별자치도 문화예술진흥원",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최가 비어 있으나 보도에서 확인되는 주최는 문화예술진흥원임.",
+  "evidence": [
+   "https://www.pbsnews.kr/132609"
+  ],
+  "key": "event:17141:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 59,
+  "kind": "event",
+  "id": "17140",
+  "title": "제32회 제주청년작가전",
+  "field": "location",
+  "was": "제2전시실",
+  "value": "제주도 문예회관 1~3전시실",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "한라일보는 1~3전시실에서 열린다고 보도했습니다. 다른 보도는 '전시실'이라고만 적었습니다. 제2전시실만 쓰는 것은 불완전합니다.",
+  "evidence": [
+   "http://www.ihalla.com/article.php?aid=1781583799787133036"
+  ],
+  "key": "event:17140:location",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 60,
+  "kind": "event",
+  "id": "17095",
+  "title": "<대관> 「그때는 그랬지!」 12~13일 19:00",
+  "field": "host",
+  "was": null,
+  "value": "극단가람, 제주특별자치도 문화예술진흥원",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최가 확인되는데 값이 비어 있습니다. 주관은 극단가람입니다.",
+  "evidence": [
+   "https://www.eticketjeju.co.kr/concert/detail.do?ceSeq=235510"
+  ],
+  "key": "event:17095:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 61,
+  "kind": "event",
+  "id": "17074",
+  "title": "<자체> 「캔터빌의 유령」 14:00 / 17:00",
+  "field": "ticketPrice",
+  "was": null,
+  "value": "1층 20,000원 / 2층 15,000원 (6세 이상)",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "요금 정보가 누락됨",
+  "evidence": [
+   "https://www.newsjeju.net/news/articleView.html?idxno=427654"
+  ],
+  "key": "event:17074:ticketPrice",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 62,
+  "kind": "event",
+  "id": "17074",
+  "title": "<자체> 「캔터빌의 유령」 14:00 / 17:00",
+  "field": "host",
+  "was": null,
+  "value": "제주문화예술진흥원",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최가 비어 있음",
+  "evidence": [
+   "https://www.jejusori.net/news/articleView.html?idxno=507799"
+  ],
+  "key": "event:17074:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 63,
+  "kind": "event",
+  "id": "17063",
+  "title": "문숙연 첼로 독주회 <The Evolution>",
+  "field": "location",
+  "was": null,
+  "value": "제주대학교 아라뮤즈홀",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "장소명이 누락됨",
+  "evidence": [
+   "https://www.jejusori.net/news/articleView.html?idxno=507808"
+  ],
+  "key": "event:17063:location",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 64,
+  "kind": "event",
+  "id": "17018",
+  "title": "2026 마을문화공동체활성화사업 <시詩나라 물메이야기>",
+  "field": "addr1",
+  "was": "제주특별자치도 제주시 신산로 82",
+  "value": "제주특별자치도 제주시 애월읍 하소로 161",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "물메쉼팡은 애월읍 수산리(하소로 161 2층)에 있음. 신산로는 제주시 도심이라 다른 장소임.",
+  "evidence": [
+   "https://www.diningcode.com/profile.php?rid=mB6bpch35cP6"
+  ],
+  "key": "event:17018:addr1",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 65,
+  "kind": "event",
+  "id": "16594",
+  "title": "2026년 제주전국국악대전",
+  "field": "host",
+  "was": null,
+  "value": "(사)한국국악협회 제주특별자치도지회",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최·주관이 비어 있으나 공고에 명시되어 있습니다.",
+  "evidence": [
+   "https://www.kukak21.com/bbs/board.php?bo_table=news&wr_id=43472"
+  ],
+  "key": "event:16594:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 66,
+  "kind": "event",
+  "id": "16540",
+  "title": "켈파트아카데미 1기 〈아일랜드 디스코스〉",
+  "field": "start",
+  "was": 1784041200000,
+  "value": 1789138800000,
+  "source": "agent:claude-sonnet-5-5",
+  "note": "7/15는 접수 시작일입니다. 교육 기간은 2026.9.12~11.8입니다. 접수 기간까지 포함해 표기한 것이라면 의도된 값일 수 있습니다.",
+  "evidence": [
+   "http://www.artbuy.net/p/competition/830"
+  ],
+  "key": "event:16540:start",
+  "created": "2026-11-02",
+  "status": "pending"
+ },
+ {
+  "no": 67,
+  "kind": "event",
+  "id": "16229",
+  "title": "기획전 '제주의 낭(木)'",
+  "field": "host",
+  "was": null,
+  "value": "제주영상동인",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "주최가 제주영상동인으로 보도되었으나 데이터에는 비어 있음.",
+  "evidence": [
+   "https://www.newsnjeju.com/news/articleView.html?idxno=303473"
+  ],
+  "key": "event:16229:host",
+  "created": "2026-11-02",
+  "status": "approved",
+  "decided": "2026-11-02"
+ },
+ {
+  "no": 68,
+  "kind": "event",
+  "id": "16111",
+  "title": "2026 버스킹 있는 날[계절이 들리는 원도심]",
+  "field": "time",
+  "was": "매주 수요일 11:30, 12:30 (1일 2회 공연)",
+  "value": "매주 수요일 11:30, 13:00 (1일 2회 공연)",
+  "source": "agent:claude-sonnet-5-5",
+  "note": "3월 31일자 보도 두 건이 모두 오전 11시 30분과 오후 1시로 보도함. 이후 운영 시간이 변경됐을 가능성은 있음.",
+  "evidence": [
+   "https://www.jejudomin.co.kr/news/articleView.html?idxno=318003",
+   "https://newsseoul.co.kr/news/view/1065609049489180"
+  ],
+  "key": "event:16111:time",
+  "created": "2026-11-02",
+  "status": "pending"
+ }
+]

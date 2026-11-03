@@ -29,5 +29,7 @@ function normalize(p) {
     pos: { lat: p.lat, lng: p.lng },
     img: https(p.img),
     thumb: https(p.thumb) ?? https(p.img),
+    verified: p._verified?.ok ? p._verified : null, // 서버가 검증 데이터와 실시간 대조한 결과
+    corrected: p._corrected ?? [],
   }
 }

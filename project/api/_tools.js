@@ -7,6 +7,7 @@
 import { FESTIVALS } from '../src/data/festivalList.js'
 import { isFestival } from '../src/lib/festival.js'
 import { fetchSights } from './_visitjeju.js'
+import { applyCorrections } from './_apply.js'
 
 const KST = 9 * 3600000
 const dayKey = (ms) => new Date(Number(ms) + KST).toISOString().slice(0, 10)
@@ -60,7 +61,7 @@ function normEvent(r) {
 
 const loadEvents = () => memo('events', 10 * 60 * 1000, async () => {
   const data = await getJson(`${EVENT_API}?page=1&pageSize=500`)
-  return (data.items ?? []).map(normEvent)
+  return (data.items ?? []).map((e) => applyCorrections('event', e.seq, e)).filter(Boolean).map(normEvent)
 })
 
 const LOC_LABEL = { IN: 'indoor', OUT: 'outdoor', INOUT: 'indoor and outdoor' }
@@ -101,7 +102,8 @@ async function getEvent(input) {
   const seq = Number(input.seq)
   if (!Number.isInteger(seq) || seq <= 0) throw new Error('seq must be a positive integer')
   const data = await getJson(`${EVENT_API}?event=${seq}`)
-  const raw = data.event ?? data.evnet // 상대 서버 응답의 키가 오타('evnet')라 둘 다 받습니다
+  const found = data.event ?? data.evnet // 상대 서버 응답의 키가 오타('evnet')라 둘 다 받습니다
+  const raw = found && applyCorrections('event', found.seq, found)
   if (!raw) throw new Error('event not found')
   const e = normEvent(raw)
   return { ...brief(e), host: raw.host ?? raw.ownerName ?? undefined, tel: String(raw.tel ?? '').trim() || undefined, description: plain(raw.intro) || undefined }
