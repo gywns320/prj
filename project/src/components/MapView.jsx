@@ -7,6 +7,9 @@ import { distanceKm, fmtKm, placeMapUrl } from '../lib/geo'
 import { tr, useT } from '../i18n'
 
 const JEJU_CENTER = [33.38, 126.55]
+// 카페 아이콘: 하얀 잔 안에 검은 커피, 위로 피어오르는 김 (고정된 문자열이라 HTML 로 넣어도 안전)
+const CAFE_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 2.6c-1 1 1 2 0 3.2M12.2 1.8c-1 1 1 2.2 0 3.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M4 9h13v5.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z" fill="#fff"/><path d="M17 10.5h1.5a2.5 2.5 0 0 1 0 5h-1.9" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="10.5" cy="9.7" rx="5.8" ry="1.5" fill="#3b2216"/><path d="M3 21.7h15" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'
+const FOOD_ICON = { cafe: CAFE_ICON, restaurant: '🍴' }
 const MAX_SIGHTS = 10 // 번호를 붙여 보여줄 주변 장소 수 — 너무 많으면 어느 것이 가까운지 알 수 없음
 
 // 실제 지도(Leaflet + OpenStreetMap)에 행사 좌표를 핀으로 찍습니다.
@@ -103,7 +106,7 @@ export default function MapView({ events, places = [], placesOn = false, placesS
     // eslint-disable-next-line react-hooks/exhaustive-deps -- sights 는 nearby 에서 바로 나오는 값
   }, [nearby, placesOn, nearOn, active, radiusKm])
 
-  // 카페·식당 — 네모 핀(식당 주황 🍴, 카페 갈색 ☕)
+  // 카페·식당 — 네모 핀(식당 주황 🍴, 카페 분홍 + 김 나는 커피잔)
   useEffect(() => {
     const layer = foodLayerRef.current
     if (!layer) return
@@ -111,7 +114,7 @@ export default function MapView({ events, places = [], placesOn = false, placesS
     foodMarkers.current = new Map()
     if (!foodsOn || !active) return
     foodShown.forEach((f) => {
-      const icon = L.divIcon({ className: `fpin ${f.kind}`, html: `<span>${f.kind === 'cafe' ? '☕' : '🍴'}</span>`, iconSize: [26, 26], iconAnchor: [13, 13] }) // 고정 문자만 들어가므로 안전
+      const icon = L.divIcon({ className: `fpin ${f.kind}`, html: `<span>${FOOD_ICON[f.kind]}</span>`, iconSize: [26, 26], iconAnchor: [13, 13] }) // 고정 문자만 들어가므로 안전
       const marker = L.marker([f.pos.lat, f.pos.lng], { icon, riseOnHover: true, zIndexOffset: -150, alt: f.title })
       marker.bindTooltip(textNode(f.title), { direction: 'top', offset: [0, -12] })
       marker.bindPopup(() => foodPopup(f), { minWidth: 170 })
@@ -193,8 +196,8 @@ export default function MapView({ events, places = [], placesOn = false, placesS
           <p className="mapkey" aria-hidden="true">
             <span>{t('mv.key')}</span>
             {placesOn && <span><i className="k-sight" />{t('mv.keySight')}</span>}
-            {foodsOn && <span><i className="k-restaurant" />🍴 {t('map.fk.restaurant')}</span>}
-            {foodsOn && <span><i className="k-cafe" />☕ {t('map.fk.cafe')}</span>}
+            {foodsOn && <span><i className="k-restaurant" />{t('map.fk.restaurant')}</span>}
+            {foodsOn && <span><i className="k-cafe" />{t('map.fk.cafe')}</span>}
           </p>
         )}
 
@@ -225,7 +228,7 @@ export default function MapView({ events, places = [], placesOn = false, placesS
             {foodsState === 'ready' && foodShown.length === 0 && <p className="muted">{t('mv.foodNone', { km: radiusKm })}</p>}
             {foodShown.map((f) => (
               <button key={f.id} type="button" className="sight" onClick={() => focusFood(f)}>
-                <span className={`fno ${f.kind}`} aria-hidden="true">{f.kind === 'cafe' ? '☕' : '🍴'}</span>
+                <span className={`fno ${f.kind}`} aria-hidden="true" dangerouslySetInnerHTML={{ __html: FOOD_ICON[f.kind] }} />
                 <span className="sight-body">
                   <b>{f.title}</b>
                   <small className="muted">{[fmtKm(f.km), f.region].filter(Boolean).join(' · ')}</small>

@@ -349,6 +349,7 @@ button { cursor: pointer; }
 /* 지도: 고른 행사 주변 가볼 만한 곳 — 번호 핀과 목록 */
 .fpin span { color: transparent; text-shadow: 0 0 0 #fff; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: #ffa94d; font-size: .85rem; line-height: 1; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
 .fpin.cafe span { background: #ff8fa3; }
+.fpin span svg, .fno svg { display: block; }
 .fno { color: transparent; text-shadow: 0 0 0 #fff; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: #ffa94d; flex: none; }
 .fno.cafe { background: #ff8fa3; }
 .mapkey { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-size: .85rem; margin: 0 0 .5rem; }
